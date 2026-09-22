@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Automatisation de workflow · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Remplissez un formulaire : une ligne est ajoutée dans Google Sheets, un email de bienvenue part et Slack est prévenu. Démo n8n interactive.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="automatisation" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" data-i18n="p_hint"></p>
+      <form id="form" novalidate>
+        <div class="row row-2">
+          <div class="field"><label for="nom" data-i18n="f_nom"></label><input type="text" id="nom" name="nom" required maxlength="80" data-i18n-placeholder="f_nom_ph"></div>
+          <div class="field"><label for="email" data-i18n="f_email"></label><input type="email" id="email" name="email" required maxlength="120" placeholder="vous@entreprise.com"></div>
+        </div>
+        <div class="field"><label for="entreprise" data-i18n="f_entreprise"></label><input type="text" id="entreprise" name="entreprise" maxlength="80" data-i18n-placeholder="f_entreprise_ph"></div>
+        <div class="field"><label for="besoin" data-i18n="f_besoin"></label><textarea id="besoin" name="besoin" style="min-height:90px" maxlength="600" data-i18n-placeholder="f_besoin_ph"></textarea></div>
+        <button type="submit" class="btn" id="run" data-run data-i18n="p_run"></button>
+      </form>
+      <div class="quota-msg" data-quota-msg></div>
+      <div class="result" id="result"></div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card" data-embed="sheetEmbed" hidden>
+      <!-- Google Sheet public (TODO_SHEET_EMBED dans config.js) : affiché seulement si configuré -->
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="automatisation"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Automatisation de workflow',
+        p_benefit: 'Environ 4 heures gagnées par semaine',
+        p_lead: 'Un formulaire rempli déclenche toute la chaîne : ligne ajoutée dans Google Sheets, email de bienvenue envoyé, équipe prévenue sur Slack. Zéro saisie manuelle, zéro oubli.',
+        p_hint: 'Remplissez ce mini formulaire de contact (données fictives bienvenues) et regardez le workflow n8n s\'exécuter.',
+        f_nom: 'Nom', f_nom_ph: 'Marie Dupont',
+        f_email: 'Email',
+        f_entreprise: 'Entreprise', f_entreprise_ph: 'Dupont & Fils',
+        f_besoin: 'Votre besoin', f_besoin_ph: 'Ex. : automatiser l\'envoi de nos devis',
+        p_run: 'Envoyer et lancer le workflow',
+        p_invalid: 'Merci de renseigner au moins un nom et un email valide.',
+        t1: 'Formulaire reçu', t1d: 'Le webhook n8n reçoit les données en JSON.',
+        t2: 'Ligne ajoutée dans Google Sheets', t2d: 'Nom, email, entreprise, besoin, date.',
+        t3: 'Email de bienvenue envoyé', t3d: 'Envoyé à {email} via Gmail.',
+        t4: 'Équipe prévenue sur Slack', t4d: 'Message dans #leads avec le résumé du besoin.',
+        p_done: 'Workflow terminé en {ms} ms.',
+        col_date: 'Date', col_nom: 'Nom', col_email: 'Email', col_entreprise: 'Entreprise', col_besoin: 'Besoin',
+        s1t: 'Un déclencheur', s1d: 'Formulaire web, Typeform, Tally, Shopify, Stripe, Calendly… n\'importe quel événement démarre le workflow.',
+        s2t: 'Des actions en chaîne', s2d: 'n8n (ou Make / Zapier) écrit dans Google Sheets, envoie l\'email, notifie Slack, met à jour votre CRM.',
+        s3t: 'Vous suivez tout', s3d: 'Chaque exécution est journalisée ; en cas d\'erreur, vous êtes alerté et l\'action est rejouée.'
+      },
+      en: {
+        p_title: 'Workflow automation',
+        p_benefit: 'About 4 hours saved per week',
+        p_lead: 'One submitted form triggers the whole chain: row added to Google Sheets, welcome email sent, team notified on Slack. Zero manual entry, zero oversight.',
+        p_hint: 'Fill in this mini contact form (fake data welcome) and watch the n8n workflow run.',
+        f_nom: 'Name', f_nom_ph: 'Mary Smith',
+        f_email: 'Email',
+        f_entreprise: 'Company', f_entreprise_ph: 'Smith & Co',
+        f_besoin: 'Your need', f_besoin_ph: 'E.g.: automate sending our quotes',
+        p_run: 'Submit and run the workflow',
+        p_invalid: 'Please provide at least a name and a valid email.',
+        t1: 'Form received', t1d: 'The n8n webhook receives the data as JSON.',
+        t2: 'Row added to Google Sheets', t2d: 'Name, email, company, need, date.',
+        t3: 'Welcome email sent', t3d: 'Sent to {email} via Gmail.',
+        t4: 'Team notified on Slack', t4d: 'Message in #leads with a summary of the need.',
+        p_done: 'Workflow completed in {ms} ms.',
+        col_date: 'Date', col_nom: 'Name', col_email: 'Email', col_entreprise: 'Company', col_besoin: 'Need',
+        s1t: 'A trigger', s1d: 'Web form, Typeform, Tally, Shopify, Stripe, Calendly… any event starts the workflow.',
+        s2t: 'Chained actions', s2d: 'n8n (or Make / Zapier) writes to Google Sheets, sends the email, notifies Slack, updates your CRM.',
+        s3t: 'You keep track', s3d: 'Every run is logged; on error you are alerted and the action is retried.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'automatisation';
+      var form = D.qs('#form'), btn = D.qs('#run'), result = D.qs('#result');
+
+      function payload() {
+        return {
+          nom: D.qs('#nom').value.trim(), email: D.qs('#email').value.trim(),
+          entreprise: D.qs('#entreprise').value.trim(), besoin: D.qs('#besoin').value.trim()
+        };
+      }
+      function valid(p) { return p.nom.length >= 2 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(p.email); }
+
+      function timelineHtml(p) {
+        var steps = ['t1', 't2', 't3', 't4'];
+        return '<ol class="timeline" id="tl">' + steps.map(function (k, i) {
+          return '<li><span class="dot">' + (i + 1) + '</span><span class="tl-text"><b>' + D.escapeHtml(D.t(k)) + '</b>' + D.escapeHtml(D.t(k + 'd', { email: p.email })) + '</span></li>';
+        }).join('') + '</ol>';
+      }
+      function sheetHtml(p) {
+        var d = new Date(), date = d.toLocaleDateString(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB') + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        var cols = ['col_date', 'col_nom', 'col_email', 'col_entreprise', 'col_besoin'];
+        return '<div class="table-wrap" style="margin-top:12px"><table><thead><tr>' + cols.map(function (c) { return '<th>' + D.escapeHtml(D.t(c)) + '</th>'; }).join('') + '</tr></thead>' +
+          '<tbody><tr class="best"><td>' + D.escapeHtml(date) + '</td><td>' + D.escapeHtml(p.nom) + '</td><td>' + D.escapeHtml(p.email) + '</td><td>' + D.escapeHtml(p.entreprise || '—') + '</td><td>' + D.escapeHtml(p.besoin || '—') + '</td></tr></tbody></table></div>';
+      }
+      function animate(p, message, offline) {
+        var start = Date.now();
+        result.innerHTML = timelineHtml(p);
+        var items = D.qsa('#tl li');
+        return items.reduce(function (chain, li) { return chain.then(function () { li.classList.add('done'); return D.sleep(450); }); }, Promise.resolve())
+          .then(function () {
+            result.insertAdjacentHTML('beforeend', sheetHtml(p));
+            var ok = document.createElement('div'); ok.className = 'banner banner-success';
+            ok.textContent = (message ? message + ' ' : '') + D.t('p_done', { ms: Date.now() - start });
+            result.appendChild(ok);
+            if (offline) D.offlineBanner(result);
+          });
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var p = payload();
+        result.innerHTML = '';
+        if (!valid(p)) { D.errorBanner(result, D.t('p_invalid')); return; }
+        if (!D.consumeQuota(SLUG)) return;
+        D.setBusy(btn, true);
+        var url = D.CFG.webhookAutomatisation;
+        var run = D.isTodo(url)
+          ? animate(p, '', true)
+          : D.postJson(url, p).then(function (data) {
+              if (!data || data.ok !== true) throw new Error('webhook failed');
+              return animate(p, data.message || '', false);
+            }).catch(function () { return animate(p, '', true); });
+        run.then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); form.reset(); });
+      });
+    })();
+  </script>
+</body>
+</html>

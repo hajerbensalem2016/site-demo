@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scraping & veille de prix · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Les prix de vos concurrents collectés chaque matin par un script Python dans un tableau filtrable. Démo interactive gratuite.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="scraping" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" data-i18n="p_hint"></p>
+      <div class="toolbar">
+        <div class="field" style="flex:2 1 220px"><label for="cible" data-i18n="f_cible"></label><input type="text" id="cible" maxlength="200" data-i18n-placeholder="f_cible_ph"></div>
+        <button type="button" class="btn" id="run" data-run data-i18n="p_run"></button>
+      </div>
+      <div class="quota-msg" data-quota-msg></div>
+      <div id="status"></div>
+
+      <div class="toolbar" style="margin-top:14px">
+        <div class="field"><label for="q" data-i18n="f_search"></label><input type="text" id="q" data-i18n-placeholder="f_search_ph"></div>
+        <div class="field" style="flex:0 1 140px"><label for="note-min" data-i18n="f_note"></label>
+          <select id="note-min"><option value="0">—</option><option value="4">≥ 4,0</option><option value="4.5">≥ 4,5</option></select></div>
+        <div class="field" style="flex:0 1 160px"><label for="prix-max" data-i18n="f_prix"></label><input type="number" id="prix-max" min="0" step="1" placeholder="200"></div>
+      </div>
+      <div class="table-wrap">
+        <table id="table">
+          <thead><tr>
+            <th data-sort="titre" data-i18n="col_titre"></th>
+            <th data-sort="prix" class="num" data-i18n="col_prix"></th>
+            <th data-sort="note" class="num" data-i18n="col_note"></th>
+            <th data-i18n="col_lien"></th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <p class="muted small" id="meta" style="margin:8px 0 0"></p>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="scraping"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Scraping & veille de prix',
+        p_benefit: 'Environ 6 heures gagnées par semaine',
+        p_lead: 'Un script Python (Playwright / BeautifulSoup) visite chaque matin les sites de vos concurrents, extrait prix, notes et disponibilités, et remplit un tableau Google Sheets. Vous ajustez vos prix en connaissance de cause.',
+        p_hint: 'Le tableau ci-dessous est le résultat de la dernière collecte. Filtrez-le, triez-le, ou lancez une mise à jour (entrez une URL ou une ville pour cibler la collecte).',
+        f_cible: 'URL ou ville à surveiller (optionnel)', f_cible_ph: 'https://concurrent.com/casques ou « Lyon »',
+        p_run: 'Lancer une mise à jour',
+        f_search: 'Rechercher', f_search_ph: 'casque, enceinte…',
+        f_note: 'Note min.', f_prix: 'Prix max. (€)',
+        col_titre: 'Produit / source', col_prix: 'Prix', col_note: 'Note', col_lien: 'Lien',
+        col_open: 'Voir',
+        p_meta: '{n} résultats affichés sur {total} · meilleur prix surligné · dernière mise à jour : {date}',
+        p_updating: 'Collecte en cours… (visite des pages, extraction, nettoyage)',
+        p_updated: 'Mise à jour terminée : {n} lignes collectées.',
+        p_load_error: 'Impossible de charger data/prix.json — données d\'exemple affichées.',
+        s1t: 'Planification', s1d: 'Un cron (n8n ou GitHub Actions, gratuit) lance le script tous les jours à 7 h.',
+        s2t: 'Extraction & nettoyage', s2d: 'Python visite les pages, gère la pagination et les sites en JavaScript, normalise prix et devises.',
+        s3t: 'Livraison', s3d: 'Résultats écrits dans Google Sheets ou Airtable, alerte Slack / email si un concurrent baisse son prix.'
+      },
+      en: {
+        p_title: 'Scraping & price monitoring',
+        p_benefit: 'About 6 hours saved per week',
+        p_lead: 'A Python script (Playwright / BeautifulSoup) visits your competitors\' sites every morning, extracts prices, ratings and availability, and fills a Google Sheet. You adjust your prices with full visibility.',
+        p_hint: 'The table below is the result of the last run. Filter it, sort it, or launch an update (enter a URL or a city to target the crawl).',
+        f_cible: 'URL or city to monitor (optional)', f_cible_ph: 'https://competitor.com/headphones or "Lyon"',
+        p_run: 'Run an update',
+        f_search: 'Search', f_search_ph: 'headphones, speaker…',
+        f_note: 'Min. rating', f_prix: 'Max. price (€)',
+        col_titre: 'Product / source', col_prix: 'Price', col_note: 'Rating', col_lien: 'Link',
+        col_open: 'Open',
+        p_meta: '{n} results shown out of {total} · best price highlighted · last update: {date}',
+        p_updating: 'Crawling… (visiting pages, extracting, cleaning)',
+        p_updated: 'Update done: {n} rows collected.',
+        p_load_error: 'Could not load data/prix.json — sample data shown.',
+        s1t: 'Scheduling', s1d: 'A cron (n8n or GitHub Actions, free) runs the script every day at 7 am.',
+        s2t: 'Extraction & cleaning', s2d: 'Python visits the pages, handles pagination and JavaScript sites, normalises prices and currencies.',
+        s3t: 'Delivery', s3d: 'Results written to Google Sheets or Airtable, Slack / email alert when a competitor lowers a price.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'scraping';
+      var tbody = D.qs('#tbody'), meta = D.qs('#meta'), status = D.qs('#status'), btn = D.qs('#run');
+      var rows = [], lastUpdate = new Date(), sortKey = 'prix', sortDir = 1;
+
+      /* Données de secours si data/prix.json est inaccessible (ex. ouverture en file://) */
+      var FALLBACK = [
+        { titre: 'Casque Bluetooth ANC Pro — Boutique A', prix: 129.90, lien: 'https://exemple-boutique-a.test/casque-anc-pro', note: 4.6 },
+        { titre: 'Casque Bluetooth ANC Pro — Boutique B', prix: 119.00, lien: 'https://exemple-boutique-b.test/casque-anc-pro', note: 4.4 },
+        { titre: 'Enceinte portable 20 W — Boutique A', prix: 59.99, lien: 'https://exemple-boutique-a.test/enceinte-20w', note: 4.2 },
+        { titre: 'Montre connectée Sport — Boutique A', prix: 189.00, lien: 'https://exemple-boutique-a.test/montre-sport', note: 4.5 }
+      ];
+
+      function fmtPrice(p) { return new Intl.NumberFormat(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB', { style: 'currency', currency: 'EUR' }).format(p); }
+      function productKey(t) { return String(t).split(' — ')[0].trim().toLowerCase(); }
+
+      function render() {
+        var q = D.qs('#q').value.trim().toLowerCase();
+        var noteMin = parseFloat(D.qs('#note-min').value) || 0;
+        var prixMax = parseFloat(D.qs('#prix-max').value);
+        var best = {};
+        rows.forEach(function (r) { var k = productKey(r.titre); if (best[k] === undefined || r.prix < best[k]) best[k] = r.prix; });
+        var list = rows.filter(function (r) {
+          return (!q || String(r.titre).toLowerCase().indexOf(q) !== -1) && (Number(r.note) || 0) >= noteMin && (isNaN(prixMax) || Number(r.prix) <= prixMax);
+        }).sort(function (a, b) {
+          var va = a[sortKey], vb = b[sortKey];
+          if (typeof va === 'string') return va.localeCompare(vb) * sortDir;
+          return ((Number(va) || 0) - (Number(vb) || 0)) * sortDir;
+        });
+        tbody.innerHTML = list.map(function (r) {
+          var isBest = best[productKey(r.titre)] === r.prix;
+          return '<tr' + (isBest ? ' class="best"' : '') + '><td>' + D.escapeHtml(r.titre) + '</td><td class="num">' + fmtPrice(Number(r.prix) || 0) + '</td><td class="num">' + (Number(r.note) || 0).toFixed(1) + ' / 5</td>' +
+            '<td><a href="' + D.escapeHtml(r.lien) + '" target="_blank" rel="noopener nofollow">' + D.escapeHtml(D.t('col_open')) + ' ↗</a></td></tr>';
+        }).join('') || '<tr><td colspan="4" class="muted">—</td></tr>';
+        meta.textContent = D.t('p_meta', { n: list.length, total: rows.length, date: lastUpdate.toLocaleString(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB') });
+      }
+
+      ['#q', '#note-min', '#prix-max'].forEach(function (s) { D.qs(s).addEventListener('input', render); });
+      D.qsa('th[data-sort]').forEach(function (th) {
+        th.addEventListener('click', function () {
+          var k = th.getAttribute('data-sort');
+          if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = 1; }
+          render();
+        });
+      });
+      document.addEventListener('demo:lang', render);
+
+      /* Chargement initial : data/prix.json (tableau d'objets { titre, prix, lien, note }) */
+      fetch('../../data/prix.json', { cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (data) { if (!Array.isArray(data)) throw new Error('bad json'); rows = data; render(); })
+        .catch(function () { rows = FALLBACK; render(); D.errorBanner(status, D.t('p_load_error')); });
+
+      /* Mise à jour : webhook n8n si configuré, sinon simulation locale */
+      function simulateUpdate() {
+        rows = rows.map(function (r) {
+          var delta = (Math.random() - 0.5) * 0.08; /* ±4 % */
+          return Object.assign({}, r, { prix: Math.round(Number(r.prix) * (1 + delta) * 100) / 100 });
+        });
+        lastUpdate = new Date();
+        render();
+      }
+      btn.addEventListener('click', function () {
+        status.innerHTML = '';
+        if (!D.consumeQuota(SLUG)) return;
+        D.setBusy(btn, true);
+        var info = document.createElement('div'); info.className = 'banner banner-success'; info.innerHTML = '<span class="spinner"></span> ' + D.escapeHtml(D.t('p_updating'));
+        status.appendChild(info);
+        var cible = D.qs('#cible').value.trim();
+        var url = D.CFG.webhookScraping;
+        var run = D.isTodo(url)
+          ? D.sleep(1600).then(function () { simulateUpdate(); status.innerHTML = ''; D.offlineBanner(status); return rows.length; })
+          : D.postJson(url, { cible: cible }, 60000).then(function (data) {
+              if (!data || data.ok !== true) throw new Error('webhook failed');
+              if (Array.isArray(data.resultats) && data.resultats.length) rows = data.resultats;
+              lastUpdate = new Date(); render(); status.innerHTML = '';
+              if (data.message) { var m = document.createElement('div'); m.className = 'banner banner-success'; m.textContent = data.message; status.appendChild(m); }
+              return rows.length;
+            }).catch(function () { simulateUpdate(); status.innerHTML = ''; D.offlineBanner(status); return rows.length; });
+        run.then(function (n) {
+          var ok = document.createElement('div'); ok.className = 'banner banner-success'; ok.textContent = D.t('p_updated', { n: n });
+          status.appendChild(ok);
+          D.setBusy(btn, false); D.renderQuota(SLUG);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

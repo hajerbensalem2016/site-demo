@@ -1,0 +1,10 @@
+[
+  { "titre": "Casque Bluetooth ANC Pro — Boutique A", "prix": 129.90, "lien": "https://exemple-boutique-a.test/casque-anc-pro", "note": 4.6 },
+  { "titre": "Casque Bluetooth ANC Pro — Boutique B", "prix": 119.00, "lien": "https://exemple-boutique-b.test/casque-anc-pro", "note": 4.4 },
+  { "titre": "Casque Bluetooth ANC Pro — Marketplace C", "prix": 134.50, "lien": "https://exemple-marketplace-c.test/casque-anc-pro", "note": 4.7 },
+  { "titre": "Enceinte portable 20 W — Boutique A", "prix": 59.99, "lien": "https://exemple-boutique-a.test/enceinte-20w", "note": 4.2 },
+  { "titre": "Enceinte portable 20 W — Boutique B", "prix": 54.90, "lien": "https://exemple-boutique-b.test/enceinte-20w", "note": 4.0 },
+  { "titre": "Montre connectée Sport — Boutique A", "prix": 189.00, "lien": "https://exemple-boutique-a.test/montre-sport", "note": 4.5 },
+  { "titre": "Montre connectée Sport — Marketplace C", "prix": 174.99, "lien": "https://exemple-marketplace-c.test/montre-sport", "note": 4.3 },
+  { "titre": "Chargeur sans fil 15 W — Boutique B", "prix": 24.90, "lien": "https://exemple-boutique-b.test/chargeur-15w", "note": 3.9 }
+]

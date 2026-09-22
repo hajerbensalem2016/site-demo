@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent email IA · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Collez un email : l'agent IA le classe, évalue l'urgence, le résume et rédige une réponse. Démo interactive gratuite.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="agent-email" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <!-- 2. Zone de test -->
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" data-i18n="p_examples"></p>
+      <div class="examples">
+        <button type="button" class="chip" data-example="0" data-i18n="p_ex1"></button>
+        <button type="button" class="chip" data-example="1" data-i18n="p_ex2"></button>
+        <button type="button" class="chip" data-example="2" data-i18n="p_ex3"></button>
+      </div>
+      <div class="field">
+        <label for="email-input" data-i18n="p_label"></label>
+        <textarea id="email-input" data-i18n-placeholder="p_placeholder"></textarea>
+      </div>
+      <button type="button" class="btn" id="run" data-run data-i18n="p_run"></button>
+      <div class="quota-msg" data-quota-msg></div>
+      <div class="result" id="result"></div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <!-- 3. Vidéo Loom -->
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="agentEmail"></div>
+    </section>
+
+    <!-- 4. Comment ça marche -->
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <!-- 5. CTA -->
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Agent email IA',
+        p_benefit: 'Environ 5 heures gagnées par semaine',
+        p_lead: 'Un agent qui lit chaque email entrant, le classe, mesure son urgence, le résume en une phrase et prépare la réponse. Vous n\'avez plus qu\'à relire et envoyer.',
+        p_examples: 'Collez un email reçu, ou choisissez un exemple :',
+        p_ex1: 'Réclamation client', p_ex2: 'Demande de devis', p_ex3: 'Prise de rendez-vous',
+        p_label: 'Email à traiter',
+        p_placeholder: 'Bonjour, je vous écris car…',
+        p_run: 'Analyser et rédiger la réponse',
+        p_cat: 'Catégorie', p_urg: 'Urgence', p_sum: 'Résumé', p_reply: 'Réponse proposée',
+        p_copy: 'Copier la réponse', p_copied: 'Copié !',
+        p_empty: 'Collez d\'abord un email (au moins 20 caractères).',
+        s1t: 'L\'email arrive', s1d: 'Gmail ou Outlook déclenche un workflow n8n à chaque réception.',
+        s2t: 'L\'IA analyse', s2d: 'Claude classe l\'email, évalue l\'urgence, le résume et rédige une réponse dans votre ton.',
+        s3t: 'Vous validez', s3d: 'La réponse est placée en brouillon ou envoyée automatiquement selon vos règles ; le reste est trié en libellés.',
+        u_high: 'Haute', u_mid: 'Moyenne', u_low: 'Basse'
+      },
+      en: {
+        p_title: 'AI email agent',
+        p_benefit: 'About 5 hours saved per week',
+        p_lead: 'An agent that reads every incoming email, classifies it, rates its urgency, summarises it in one sentence and drafts the reply. You only proofread and send.',
+        p_examples: 'Paste an email you received, or pick an example:',
+        p_ex1: 'Customer complaint', p_ex2: 'Quote request', p_ex3: 'Meeting request',
+        p_label: 'Email to process',
+        p_placeholder: 'Hello, I am writing because…',
+        p_run: 'Analyse and draft the reply',
+        p_cat: 'Category', p_urg: 'Urgency', p_sum: 'Summary', p_reply: 'Suggested reply',
+        p_copy: 'Copy the reply', p_copied: 'Copied!',
+        p_empty: 'Paste an email first (at least 20 characters).',
+        s1t: 'The email arrives', s1d: 'Gmail or Outlook triggers an n8n workflow on every new message.',
+        s2t: 'The AI analyses it', s2d: 'Claude classifies the email, rates urgency, summarises it and drafts a reply in your tone.',
+        s3t: 'You approve', s3d: 'The reply is saved as a draft or sent automatically based on your rules; everything else is labelled and filed.',
+        u_high: 'High', u_mid: 'Medium', u_low: 'Low'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'agent-email';
+      var input = D.qs('#email-input'), btn = D.qs('#run'), result = D.qs('#result');
+
+      var EXAMPLES = {
+        fr: [
+          'Bonjour,\n\nJ\'ai commandé le casque ANC Pro il y a 10 jours (commande #48213) et je ne l\'ai toujours pas reçu. Le suivi n\'a pas bougé depuis mardi. C\'est urgent, c\'est un cadeau pour samedi. Que pouvez-vous faire ?\n\nCordialement,\nMarc Delorme',
+          'Bonjour,\n\nNous sommes une agence immobilière de 12 personnes. Nous aimerions un devis pour automatiser l\'envoi de nos relances locataires et la synchronisation de nos leads avec HubSpot. Quel serait le tarif et le délai ?\n\nMerci,\nSophie Martin',
+          'Bonjour Hajer,\n\nSuite à notre échange sur Malt, seriez-vous disponible jeudi ou vendredi après-midi pour un appel de 15 minutes ? Pas d\'urgence, la semaine prochaine me va aussi.\n\nBonne journée,\nKarim'
+        ],
+        en: [
+          'Hi,\n\nI ordered the ANC Pro headphones 10 days ago (order #48213) and still have not received them. Tracking has not moved since Tuesday. This is urgent, it is a gift for Saturday. What can you do?\n\nRegards,\nMark Dell',
+          'Hello,\n\nWe are a 12-person real-estate agency. We would like a quote to automate our tenant reminder emails and sync our leads with HubSpot. What would be the price and timeline?\n\nThanks,\nSophie Martin',
+          'Hi Hajer,\n\nFollowing our chat on Upwork, would you be available Thursday or Friday afternoon for a 15-minute call? No rush, next week works too.\n\nHave a good day,\nKarim'
+        ]
+      };
+      D.qsa('[data-example]').forEach(function (b) {
+        b.addEventListener('click', function () { input.value = EXAMPLES[D.getLang()][+b.getAttribute('data-example')]; input.focus(); });
+      });
+
+      /* Simulation locale (mode hors ligne) : heuristiques simples, même format que /api/agent-email */
+      function simulate(email) {
+        var fr = D.getLang() === 'fr', e = email.toLowerCase();
+        var cat, reply, urg = fr ? 'moyenne' : 'medium';
+        if (/factur|invoice|paiement|payment|rembours|refund|prélèv/.test(e)) { cat = fr ? 'Facturation' : 'Billing'; reply = fr ? 'Bonjour,\n\nMerci pour votre message. J\'ai bien pris note de votre demande concernant la facturation. Je vérifie votre dossier et reviens vers vous sous 24 h avec une réponse précise.\n\nBien cordialement,\nL\'équipe' : 'Hello,\n\nThank you for your message. I have noted your billing request. I am checking your file and will get back to you within 24 hours with a precise answer.\n\nBest regards,\nThe team'; }
+        else if (/commande|order|livraison|delivery|colis|parcel|reçu|received|suivi|tracking|réclam|complain/.test(e)) { cat = fr ? 'Réclamation / SAV' : 'Complaint / Support'; reply = fr ? 'Bonjour,\n\nJe suis désolée pour ce retard et je comprends votre inquiétude. J\'ai ouvert une réclamation auprès du transporteur et je vous confirme par retour un nouveau délai de livraison. Si le colis ne peut pas arriver à temps, je vous propose un renvoi en express à nos frais.\n\nBien cordialement,\nLe service client' : 'Hello,\n\nI am sorry for this delay and I understand your concern. I have opened a claim with the carrier and will confirm a new delivery date shortly. If the parcel cannot arrive on time, I will reship it by express at our cost.\n\nBest regards,\nCustomer service'; }
+        else if (/devis|quote|tarif|price|pricing|proposal|budget|combien/.test(e)) { cat = fr ? 'Demande commerciale' : 'Sales inquiry'; reply = fr ? 'Bonjour,\n\nMerci pour votre intérêt. Votre besoin correspond tout à fait à ce que je mets en place. Pour vous envoyer un devis fixe, je vous propose un appel gratuit de 15 minutes : quel créneau vous conviendrait cette semaine ?\n\nBien cordialement,\nHajer' : 'Hello,\n\nThank you for your interest. Your need is exactly the kind of system I build. To send you a fixed quote, I suggest a free 15-minute call: which slot would suit you this week?\n\nBest regards,\nHajer'; }
+        else if (/rendez|meeting|appel|call|disponib|available|créneau|slot/.test(e)) { cat = fr ? 'Prise de rendez-vous' : 'Meeting request'; reply = fr ? 'Bonjour,\n\nAvec plaisir. Je suis disponible jeudi à 14 h ou vendredi à 15 h. Dites-moi ce qui vous arrange et je vous envoie l\'invitation.\n\nBonne journée,\nHajer' : 'Hello,\n\nWith pleasure. I am available Thursday at 2 pm or Friday at 3 pm. Let me know what suits you and I will send the invite.\n\nHave a good day,\nHajer'; }
+        else if (/candidat|cv\b|resume|job|poste|stage|intern/.test(e)) { cat = fr ? 'Candidature' : 'Job application'; reply = fr ? 'Bonjour,\n\nMerci pour votre candidature. Nous l\'étudions avec attention et reviendrons vers vous sous 10 jours.\n\nCordialement' : 'Hello,\n\nThank you for your application. We are reviewing it carefully and will get back to you within 10 days.\n\nRegards'; }
+        else if (/newsletter|promo|offre spéciale|unsubscribe|désabonn|webinar/.test(e)) { cat = fr ? 'Marketing / Spam' : 'Marketing / Spam'; urg = fr ? 'basse' : 'low'; reply = fr ? '(Aucune réponse nécessaire — email archivé automatiquement.)' : '(No reply needed — email archived automatically.)'; }
+        else { cat = fr ? 'Demande d\'information' : 'Information request'; reply = fr ? 'Bonjour,\n\nMerci pour votre message. Je reviens vers vous très rapidement avec les informations demandées.\n\nBien cordialement' : 'Hello,\n\nThank you for your message. I will get back to you shortly with the requested information.\n\nBest regards'; }
+        if (/urgent|asap|immédiat|aujourd'hui|today|dès que possible|toujours pas|still have not/.test(e)) urg = fr ? 'haute' : 'high';
+        else if (/pas d'urgence|pas pressé|no rush|quand vous pouvez|whenever/.test(e)) urg = fr ? 'basse' : 'low';
+        var body = email.replace(/^(bonjour|hello|hi)[^\n]*\n/i, '').replace(/\s+/g, ' ').trim();
+        var resume = body.length > 160 ? body.slice(0, 157) + '…' : body;
+        return { categorie: cat, urgence: urg, resume: resume, reponse_proposee: reply };
+      }
+
+      function urgTag(u) {
+        var s = String(u || '').toLowerCase(), cls = 'tag-mid', label = D.t('u_mid');
+        if (/haute|high|élevée|urgent/.test(s)) { cls = 'tag-high'; label = D.t('u_high'); }
+        else if (/basse|low|faible/.test(s)) { cls = 'tag-low'; label = D.t('u_low'); }
+        return '<span class="tag ' + cls + '">' + D.escapeHtml(label) + '</span>';
+      }
+      function render(data, offline) {
+        result.innerHTML =
+          '<div class="result-grid">' +
+          '<div class="kv"><div class="k">' + D.escapeHtml(D.t('p_cat')) + '</div><div class="v"><span class="tag tag-info">' + D.escapeHtml(data.categorie) + '</span></div></div>' +
+          '<div class="kv"><div class="k">' + D.escapeHtml(D.t('p_urg')) + '</div><div class="v">' + urgTag(data.urgence) + '</div></div>' +
+          '<div class="kv wide"><div class="k">' + D.escapeHtml(D.t('p_sum')) + '</div><div class="v pre">' + D.escapeHtml(data.resume) + '</div></div>' +
+          '<div class="kv wide"><div class="k">' + D.escapeHtml(D.t('p_reply')) + '</div><div class="v pre" id="reply-text">' + D.escapeHtml(data.reponse_proposee) + '</div>' +
+          '<div class="md-tools"><button type="button" class="btn btn-ghost btn-sm" id="copy">' + D.escapeHtml(D.t('p_copy')) + '</button></div></div>' +
+          '</div>';
+        if (offline) D.offlineBanner(result);
+        D.qs('#copy').addEventListener('click', function () {
+          var txt = data.reponse_proposee, b = this;
+          try { navigator.clipboard.writeText(txt).then(function () { b.textContent = D.t('p_copied'); }); } catch (e) { /* ignore */ }
+        });
+      }
+
+      btn.addEventListener('click', function () {
+        var email = input.value.trim();
+        result.innerHTML = '';
+        if (email.length < 20) { D.errorBanner(result, D.t('p_empty')); return; }
+        if (!D.consumeQuota(SLUG)) return;
+        D.setBusy(btn, true);
+        D.apiPost('agent-email', { email: email })
+          .then(function (data) {
+            if (!data || !data.categorie) throw new Error('bad payload');
+            render(data, false);
+          })
+          .catch(function () { return D.sleep(700).then(function () { render(simulate(email), true); }); })
+          .then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); });
+      });
+    })();
+  </script>
+</body>
+</html>

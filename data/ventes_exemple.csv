@@ -1,0 +1,22 @@
+date,client,produit,quantite,prix_unitaire,cout_unitaire
+2026-06-02,marie@dupont.fr,Casque Bluetooth ANC Pro,1,129.90,78.00
+2026-06-04,karim@atelier-k.fr,Enceinte portable 20 W,2,59.99,32.00
+2026-06-09,lea@studio-lp.com,Montre connectée Sport,1,189.00,110.00
+2026-06-12,marie@dupont.fr,Chargeur sans fil 15 W,3,24.90,9.50
+2026-06-18,paul@menuiserie-p.fr,Casque Bluetooth ANC Pro,1,129.90,78.00
+2026-06-25,sonia@cabinet-s.fr,Enceinte portable 20 W,1,59.99,32.00
+2026-06-30,karim@atelier-k.fr,Montre connectée Sport,1,189.00,110.00
+2026-07-03,nadia@boulangerie-n.fr,Chargeur sans fil 15 W,2,24.90,9.50
+2026-07-07,lea@studio-lp.com,Casque Bluetooth ANC Pro,2,129.90,78.00
+2026-07-11,paul@menuiserie-p.fr,Enceinte portable 20 W,1,59.99,32.00
+2026-07-15,omar@garage-o.fr,Montre connectée Sport,1,189.00,110.00
+2026-07-19,sonia@cabinet-s.fr,Casque Bluetooth ANC Pro,1,129.90,78.00
+2026-07-22,ines@fleuriste-i.fr,Chargeur sans fil 15 W,4,24.90,9.50
+2026-07-28,nadia@boulangerie-n.fr,Enceinte portable 20 W,2,59.99,32.00
+2026-08-01,marie@dupont.fr,Montre connectée Sport,1,189.00,110.00
+2026-08-05,omar@garage-o.fr,Casque Bluetooth ANC Pro,1,129.90,78.00
+2026-08-08,yanis@conseil-y.fr,Enceinte portable 20 W,1,59.99,32.00
+2026-08-13,ines@fleuriste-i.fr,Casque Bluetooth ANC Pro,1,129.90,78.00
+2026-08-19,lea@studio-lp.com,Chargeur sans fil 15 W,2,24.90,9.50
+2026-08-24,yanis@conseil-y.fr,Montre connectée Sport,2,189.00,110.00
+2026-08-29,paul@menuiserie-p.fr,Casque Bluetooth ANC Pro,1,129.90,78.00

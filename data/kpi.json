@@ -1,0 +1,58 @@
+{
+  "periode": {
+    "debut": "2026-06-02",
+    "fin": "2026-08-29"
+  },
+  "ca": 2867.03,
+  "depenses": 1612.5,
+  "clients": 9,
+  "marge": 1254.53,
+  "taux_marge_pct": 43.8,
+  "nb_commandes": 21,
+  "panier_moyen": 136.53,
+  "ca_par_client": 318.56,
+  "top_produits": [
+    {
+      "produit": "Montre connectée Sport",
+      "ca": 1134.0,
+      "quantite": 6
+    },
+    {
+      "produit": "Casque Bluetooth ANC Pro",
+      "ca": 1039.2,
+      "quantite": 8
+    },
+    {
+      "produit": "Enceinte portable 20 W",
+      "ca": 419.93,
+      "quantite": 7
+    },
+    {
+      "produit": "Chargeur sans fil 15 W",
+      "ca": 273.9,
+      "quantite": 11
+    }
+  ],
+  "ca_par_mois": [
+    {
+      "mois": "2026-06",
+      "ca": 892.47,
+      "commandes": 7,
+      "evolution_pct": null
+    },
+    {
+      "mois": "2026-07",
+      "ca": 908.07,
+      "commandes": 7,
+      "evolution_pct": 1.7
+    },
+    {
+      "mois": "2026-08",
+      "ca": 1066.49,
+      "commandes": 7,
+      "evolution_pct": 17.4
+    }
+  ],
+  "source_csv": "ventes_exemple.csv",
+  "derniere_execution": "2026-09-22T03:49:35+00:00"
+}

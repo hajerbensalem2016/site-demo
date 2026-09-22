@@ -1,0 +1,456 @@
+{
+  "name": "03 — Démo rapport (webhook → /api/rapport → Gmail)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 03 — Démo rapport\nWebhook `{ email, ca, depenses, clients, lang }` → `/api/rapport` du site → Markdown → HTML → email Gmail (HTML + pièce jointe `.md`) → réponse au site.\n\n**À remplacer (nœud *Config et données*) :** `TODO_SITE_URL` → URL publique du site Vercel (ex. `https://mon-site.vercel.app`).\n\n**Credential :** `Gmail account` (OAuth2).\n\nURL production : `https://<n8n>/webhook/demo-rapport`.\nPDF : l'email HTML s'imprime en PDF depuis Gmail ; voir README-03 pour une conversion PDF gratuite optionnelle.",
+        "height": 320,
+        "width": 620,
+        "color": 4
+      },
+      "id": "14e57dcb-0e51-58c9-ae76-3f15900a0fd1",
+      "name": "Note 04306489",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-rapport",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "ad2cb126-7d27-5d8f-9926-6317fa9bbdaa",
+      "name": "Demande de rapport",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "b60bdbf5-b003-56a5-a58b-6dcb6c313322"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9b5bfa7d-498b-5c6d-84b9-21acc3aa4494",
+              "name": "siteUrl",
+              "value": "TODO_SITE_URL",
+              "type": "string"
+            },
+            {
+              "id": "3035ff76-ed51-5ff3-b965-75648e61cf2d",
+              "name": "email",
+              "value": "={{ String(($json.body || {}).email || '').trim().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "64b78ec4-d613-5cc0-9574-b61279089ec3",
+              "name": "ca",
+              "value": "={{ Math.max(0, Number(($json.body || {}).ca) || 0) }}",
+              "type": "number"
+            },
+            {
+              "id": "b8e885c0-f20e-56ca-9caa-1a085ae9d5a6",
+              "name": "depenses",
+              "value": "={{ Math.max(0, Number(($json.body || {}).depenses) || 0) }}",
+              "type": "number"
+            },
+            {
+              "id": "965a6dff-a2a5-5cd5-bada-7e711955209f",
+              "name": "clients",
+              "value": "={{ Math.max(0, Math.round(Number(($json.body || {}).clients) || 0)) }}",
+              "type": "number"
+            },
+            {
+              "id": "0c013e78-b7ab-5c18-a1de-750eb490e71e",
+              "name": "lang",
+              "value": "={{ String(($json.body || {}).lang) === 'en' ? 'en' : 'fr' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "83404cd8-c171-5e3f-b76f-06be94ffb0f6",
+      "name": "Config et données",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34e2de6c-c69c-5613-b50a-62ae06b8e256",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "77733188-f48c-50f3-8c5a-5b9a837bcf82",
+      "name": "Email valide ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.siteUrl.replace(/\\/+$/, '') }}/api/rapport",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ lang: $json.lang, ca: $json.ca, depenses: $json.depenses, clients: $json.clients }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "e4f16d04-2d32-5c88-bb49-71c893cabc2b",
+      "name": "Générer le rapport",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "markdownToHtml",
+        "markdown": "={{ $json.rapport_markdown }}",
+        "destinationKey": "rapport_html",
+        "options": {}
+      },
+      "id": "26eb38ba-22a4-58ca-9110-2216186ea828",
+      "name": "Markdown vers HTML",
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "rapport_markdown",
+        "binaryPropertyName": "data",
+        "options": {
+          "fileName": "rapport-activite.md",
+          "encoding": "utf8"
+        }
+      },
+      "id": "ee66125e-fb83-5bd2-8870-71fb824af90b",
+      "name": "Fichier .md en pièce jointe",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $('Config et données').first().json.email }}",
+        "subject": "=Votre rapport d'activité — {{ $now.setZone('Europe/Paris').toFormat('dd/MM/yyyy') }}",
+        "emailType": "html",
+        "message": "=<div style=\"font-family:Arial,sans-serif;max-width:720px;color:#222;line-height:1.5\">{{ $('Markdown vers HTML').first().json.rapport_html }}<hr style=\"border:0;border-top:1px solid #ddd;margin:24px 0\"><p style=\"color:#777;font-size:12px\">Rapport généré automatiquement (n8n + IA) à partir de : CA {{ $('Config et données').first().json.ca }} €, dépenses {{ $('Config et données').first().json.depenses }} €, {{ $('Config et données').first().json.clients }} clients. Le fichier Markdown est en pièce jointe.</p></div>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Hajer — Automatisation & IA",
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "data"
+              }
+            ]
+          }
+        }
+      },
+      "id": "946fdba2-fca9-5df7-9738-63851bf57d04",
+      "name": "Envoyer le rapport (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1560,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fd5a11c5-218b-504a-bde9-e9914f874c27",
+              "name": "ok",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "0874a0c0-0484-5dc3-b381-269c4ead9e85",
+              "name": "message",
+              "value": "=Rapport généré et envoyé par email à {{ $('Config et données').first().json.email }}.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "a08512d8-da3a-55ae-9eab-a97ed36c2936",
+      "name": "Réponse OK",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1820,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "id": "53ab2537-2c0a-5271-a9be-4487af85936d",
+      "name": "Répondre au site",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2080,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fd5a11c5-218b-504a-bde9-e9914f874c27",
+              "name": "ok",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "0874a0c0-0484-5dc3-b381-269c4ead9e85",
+              "name": "message",
+              "value": "Email invalide : indiquez l'adresse qui doit recevoir le rapport.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "2977eac8-5c15-53c3-862a-4ab79a191c20",
+      "name": "Réponse erreur",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {
+          "responseCode": 400,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "id": "7c736e4a-eef4-5813-b9e3-03ab22d8bef9",
+      "name": "Répondre erreur 400",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1300,
+        540
+      ]
+    }
+  ],
+  "connections": {
+    "Demande de rapport": {
+      "main": [
+        [
+          {
+            "node": "Config et données",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config et données": {
+      "main": [
+        [
+          {
+            "node": "Email valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email valide ?": {
+      "main": [
+        [
+          {
+            "node": "Générer le rapport",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Réponse erreur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Générer le rapport": {
+      "main": [
+        [
+          {
+            "node": "Markdown vers HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown vers HTML": {
+      "main": [
+        [
+          {
+            "node": "Fichier .md en pièce jointe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fichier .md en pièce jointe": {
+      "main": [
+        [
+          {
+            "node": "Envoyer le rapport (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer le rapport (Gmail)": {
+      "main": [
+        [
+          {
+            "node": "Réponse OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réponse OK": {
+      "main": [
+        [
+          {
+            "node": "Répondre au site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réponse erreur": {
+      "main": [
+        [
+          {
+            "node": "Répondre erreur 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "pinData": {},
+  "tags": []
+}

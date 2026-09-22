@@ -1,0 +1,394 @@
+{
+  "name": "04 — Agent email Gmail (brouillons de réponse IA)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 04 — Agent email Gmail\nToutes les 15 min : emails non lus (sans le label) → `/api/agent-email` du site → brouillon de réponse dans le fil + label.\n\n**À remplacer (nœud *Config*) :** `TODO_SITE_URL` → URL publique du site ; `labelName` → nom exact du label créé dans Gmail (par défaut `IA-traite`, sans accent ni espace).\n\n**Credential :** `Gmail account` (OAuth2).\n\nRien n'est envoyé automatiquement : l'agent crée seulement un **brouillon** à relire.\nActivez le workflow (bouton *Active*) pour que la planification tourne.",
+        "height": 320,
+        "width": 640,
+        "color": 4
+      },
+      "id": "4e4f462c-b931-5b60-8585-8340c2a0ad36",
+      "name": "Note 2edcfc2e",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "a13e8963-0293-5204-80c4-4dae9ad46a0c",
+      "name": "Toutes les 15 minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d51ee151-f8a9-5436-b4d7-3748eb0219b1",
+              "name": "siteUrl",
+              "value": "TODO_SITE_URL",
+              "type": "string"
+            },
+            {
+              "id": "e3e4ad6a-49b1-517d-a38b-c2fb0d871617",
+              "name": "labelName",
+              "value": "IA-traite",
+              "type": "string"
+            },
+            {
+              "id": "14fca9b0-df47-5118-b152-adffa682d35b",
+              "name": "maxEmails",
+              "value": 10,
+              "type": "number"
+            },
+            {
+              "id": "dbaf0ce5-63a8-568b-8882-0b76b96616a7",
+              "name": "lang",
+              "value": "fr",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "2805d30d-5218-5e4c-b1a2-d9bb701bec60",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "label",
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "id": "81958299-6657-50b7-b9b9-55ef0613b022",
+      "name": "Lister les labels Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        520,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Retrouve l'ID du label Gmail à partir de son nom (défini dans le nœud Config).\nconst cfg = $('Config').first().json;\nconst labels = $input.all().map(i => i.json);\nconst cible = String(cfg.labelName || '').trim().toLowerCase();\nconst label = labels.find(l => String(l.name || '').trim().toLowerCase() === cible);\nif (!label) {\n  throw new Error(`Label Gmail \"${cfg.labelName}\" introuvable. Créez-le dans Gmail (Paramètres > Libellés > Nouveau libellé) puis relancez le workflow.`);\n}\nreturn [{ json: { ...cfg, labelId: label.id } }];\n"
+      },
+      "id": "e8b5fe43-4fd6-59d6-9195-60df47e916d4",
+      "name": "Trouver le label",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "operation": "getAll",
+        "returnAll": false,
+        "limit": "={{ $json.maxEmails }}",
+        "simple": false,
+        "filters": {
+          "readStatus": "unread",
+          "q": "=-label:{{ $json.labelName }} -in:sent -in:drafts newer_than:7d"
+        },
+        "options": {}
+      },
+      "id": "4342cf32-db5b-574b-9438-e8d5c006259f",
+      "name": "Emails non lus (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extrait expéditeur, objet et texte de l'email (sortie Gmail non simplifiée ou simplifiée).\nconst j = $input.item.json;\nconst s = v => (v == null ? '' : String(v));\n\nlet fromText = '';\nif (j.from && typeof j.from === 'object') {\n  fromText = s(j.from.text || (j.from.value && j.from.value[0] && j.from.value[0].address));\n} else {\n  fromText = s(j.from || j.From);\n}\nconst m = fromText.match(/<([^>]+)>/);\nconst fromEmail = (m ? m[1] : fromText).trim().toLowerCase();\n\nconst subject = s(j.subject || j.Subject);\nlet texte = s(j.text || j.textPlain || j.snippet);\nif (!texte && (j.html || j.textAsHtml)) {\n  texte = s(j.html || j.textAsHtml).replace(/<style[\\s\\S]*?<\\/style>/gi, ' ').replace(/<[^>]+>/g, ' ');\n}\ntexte = texte.replace(/\\s+/g, ' ').trim().slice(0, 6000);\n\nreturn { json: {\n  messageId: j.id,\n  threadId: j.threadId,\n  fromEmail,\n  subject,\n  texte: `Objet : ${subject}\\n\\n${texte}`,\n} };\n",
+        "mode": "runOnceForEachItem"
+      },
+      "id": "73d7d31f-4811-503b-90ba-d95ac84a06ef",
+      "name": "Préparer le texte",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7f668a2a-9d9f-554c-aa2c-6f445e7ff97e",
+              "leftValue": "={{ $json.fromEmail }}",
+              "rightValue": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "cf8bf3b6-9afa-5e67-80d8-7cdfd30287dd",
+      "name": "Expéditeur valide ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Trouver le label').first().json.siteUrl.replace(/\\/+$/, '') }}/api/agent-email",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ lang: $('Trouver le label').first().json.lang, email: $json.texte }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "20511f5a-584d-59ce-9a53-9c1550b06d88",
+      "name": "Analyser via /api/agent-email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1820,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine la réponse de /api/agent-email avec les infos de l'email d'origine.\nconst a = $input.item.json || {};\nconst src = $('Préparer le texte').item.json;\nconst s = v => (v == null ? '' : String(v));\n\nconst urg = s(a.urgence).toLowerCase();\nconst urgence = urg === 'high' ? 'haute' : urg === 'medium' ? 'moyenne' : urg === 'low' ? 'basse' : (urg || 'moyenne');\nconst categorie = s(a.categorie) || 'Non classé';\n\nconst entete = `[Analyse IA — catégorie : ${categorie} | urgence : ${urgence}]\\n` +\n  `Résumé : ${s(a.resume) || '—'}\\n` +\n  `--- Supprimez ce bloc avant d'envoyer ---\\n\\n`;\n\nconst reponse = s(a.reponse_proposee) ||\n  'Bonjour,\\n\\nMerci pour votre message, je reviens vers vous très rapidement.\\n\\nCordialement';\n\nreturn { json: {\n  messageId: src.messageId,\n  threadId: src.threadId,\n  fromEmail: src.fromEmail,\n  subject: src.subject,\n  categorie,\n  urgence,\n  resume: s(a.resume),\n  brouillon: entete + reponse,\n} };\n",
+        "mode": "runOnceForEachItem"
+      },
+      "id": "7f1129f7-85e0-5917-a562-b9d0fd1126e5",
+      "name": "Fusionner analyse et email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2080,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "draft",
+        "operation": "create",
+        "subject": "=Re: {{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.brouillon }}",
+        "options": {
+          "sendTo": "={{ $json.fromEmail }}",
+          "threadId": "={{ $json.threadId }}"
+        }
+      },
+      "id": "a59da8fb-ba1f-56c1-98d1-186cfe596da5",
+      "name": "Créer le brouillon de réponse",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2340,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "operation": "addLabels",
+        "messageId": "={{ $('Fusionner analyse et email').item.json.messageId }}",
+        "labelIds": "={{ [ $('Trouver le label').first().json.labelId ] }}"
+      },
+      "id": "7bcbe3ec-fe3e-5d11-9f65-6b48855ea597",
+      "name": "Ajouter le label",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2600,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Toutes les 15 minutes": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Lister les labels Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lister les labels Gmail": {
+      "main": [
+        [
+          {
+            "node": "Trouver le label",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trouver le label": {
+      "main": [
+        [
+          {
+            "node": "Emails non lus (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Emails non lus (Gmail)": {
+      "main": [
+        [
+          {
+            "node": "Préparer le texte",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer le texte": {
+      "main": [
+        [
+          {
+            "node": "Expéditeur valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expéditeur valide ?": {
+      "main": [
+        [
+          {
+            "node": "Analyser via /api/agent-email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyser via /api/agent-email": {
+      "main": [
+        [
+          {
+            "node": "Fusionner analyse et email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fusionner analyse et email": {
+      "main": [
+        [
+          {
+            "node": "Créer le brouillon de réponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer le brouillon de réponse": {
+      "main": [
+        [
+          {
+            "node": "Ajouter le label",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "pinData": {},
+  "tags": []
+}

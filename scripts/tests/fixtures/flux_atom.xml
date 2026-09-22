@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Blog de test (Atom)</title>
+  <id>tag:exemple.test,2026:blog</id>
+  <updated>2026-09-21T10:00:00Z</updated>
+  <entry>
+    <title>Nouvelle version 2.0 publiée</title>
+    <id>tag:exemple.test,2026:post-2</id>
+    <link rel="alternate" type="text/html" href="https://exemple.test/blog/version-2"/>
+    <published>2026-09-21T10:00:00Z</published>
+    <updated>2026-09-21T10:00:00Z</updated>
+    <summary type="html">&lt;p&gt;La version 2.0 apporte &lt;em&gt;trois&lt;/em&gt; nouveautés.&lt;/p&gt;</summary>
+  </entry>
+  <entry>
+    <title>Bienvenue sur le blog</title>
+    <id>tag:exemple.test,2026:post-1</id>
+    <link href="https://exemple.test/blog/bienvenue"/>
+    <updated>2026-09-01T08:00:00Z</updated>
+    <content type="text">Premier billet du blog.</content>
+  </entry>
+</feed>

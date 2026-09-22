@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rapport automatique · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Trois chiffres suffisent : l'IA rédige votre rapport d'activité, prêt à exporter en PDF. Démo interactive gratuite.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="rapport" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back no-print" href="../../" data-i18n="back_home"></a>
+    <span class="benefit no-print" data-i18n="p_benefit"></span>
+    <h1 class="no-print" data-i18n="p_title"></h1>
+    <p class="lead no-print" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <div class="no-print">
+        <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+        <p class="muted small" data-i18n="p_hint"></p>
+        <form id="form" novalidate>
+          <div class="row row-3">
+            <div class="field"><label for="ca" data-i18n="f_ca"></label><input type="number" id="ca" min="0" step="1" value="48200" required></div>
+            <div class="field"><label for="depenses" data-i18n="f_dep"></label><input type="number" id="depenses" min="0" step="1" value="31500" required></div>
+            <div class="field"><label for="clients" data-i18n="f_cli"></label><input type="number" id="clients" min="0" step="1" value="37" required></div>
+          </div>
+          <button type="submit" class="btn" id="run" data-run data-i18n="p_run"></button>
+        </form>
+        <div class="quota-msg" data-quota-msg></div>
+      </div>
+      <div class="result" id="result"></div>
+      <div class="md-tools no-print" id="tools" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" id="dl" data-i18n="p_download"></button>
+        <button type="button" class="btn btn-ghost btn-sm" id="print" data-i18n="p_print"></button>
+      </div>
+      <div class="quota no-print" data-quota></div>
+    </section>
+
+    <section class="card no-print">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="rapport"></div>
+    </section>
+
+    <section class="no-print">
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta no-print" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p class="no-print" style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Rapport d\'activité automatique',
+        p_benefit: 'Environ 3 heures gagnées par semaine',
+        p_lead: 'Chaque lundi, n8n lit vos chiffres dans Google Sheets, Stripe ou votre CRM, l\'IA rédige un rapport clair avec recommandations, et le PDF part par email et sur Slack. Ici, entrez trois chiffres pour voir le résultat.',
+        p_hint: 'Chiffres du mois (fictifs bienvenus) :',
+        f_ca: 'Chiffre d\'affaires (€)', f_dep: 'Dépenses (€)', f_cli: 'Nombre de clients',
+        p_run: 'Générer mon rapport',
+        p_invalid: 'Merci d\'entrer trois nombres positifs.',
+        p_download: 'Télécharger (.md)', p_print: 'Imprimer / enregistrer en PDF',
+        s1t: 'Collecte des chiffres', s1d: 'n8n lit automatiquement Google Sheets, Stripe, Shopify, HubSpot ou votre base de données chaque semaine ou chaque mois.',
+        s2t: 'Rédaction par l\'IA', s2d: 'Claude analyse les indicateurs, compare avec la période précédente et rédige un rapport avec 3 recommandations concrètes.',
+        s3t: 'Envoi automatique', s3d: 'Le rapport est converti en PDF puis envoyé par email à la direction et posté sur Slack, sans intervention.'
+      },
+      en: {
+        p_title: 'Automatic activity report',
+        p_benefit: 'About 3 hours saved per week',
+        p_lead: 'Every Monday, n8n reads your numbers from Google Sheets, Stripe or your CRM, the AI writes a clear report with recommendations, and the PDF goes out by email and Slack. Here, enter three numbers to see the result.',
+        p_hint: 'This month\'s numbers (fake ones welcome):',
+        f_ca: 'Revenue (€)', f_dep: 'Expenses (€)', f_cli: 'Number of customers',
+        p_run: 'Generate my report',
+        p_invalid: 'Please enter three positive numbers.',
+        p_download: 'Download (.md)', p_print: 'Print / save as PDF',
+        s1t: 'Data collection', s1d: 'n8n automatically reads Google Sheets, Stripe, Shopify, HubSpot or your database every week or month.',
+        s2t: 'AI writing', s2d: 'Claude analyses the KPIs, compares with the previous period and writes a report with 3 concrete recommendations.',
+        s3t: 'Automatic delivery', s3d: 'The report is converted to PDF then emailed to management and posted on Slack, hands-free.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'rapport';
+      var form = D.qs('#form'), btn = D.qs('#run'), result = D.qs('#result'), tools = D.qs('#tools');
+      var lastMd = '';
+
+      function num(id) { return parseFloat(D.qs(id).value); }
+      function fmt(n) { return new Intl.NumberFormat(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n); }
+      function pct(n) { return (Math.round(n * 10) / 10).toLocaleString(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB') + ' %'; }
+
+      /* Simulation locale (mode hors ligne) : même format de sortie que /api/rapport ({ rapport_markdown }) */
+      function simulate(ca, dep, cli) {
+        var fr = D.getLang() === 'fr';
+        var marge = ca - dep, taux = ca > 0 ? (marge / ca) * 100 : 0, panier = cli > 0 ? ca / cli : 0, coutClient = cli > 0 ? dep / cli : 0;
+        var date = new Date().toLocaleDateString(fr ? 'fr-FR' : 'en-GB', { month: 'long', year: 'numeric' });
+        var reco = [];
+        if (taux < 15) reco.push(fr ? 'Marge sous 15 % : passer en revue les 5 postes de dépenses les plus lourds et renégocier ou automatiser au moins deux d\'entre eux.' : 'Margin under 15%: review the 5 heaviest expense lines and renegotiate or automate at least two of them.');
+        else if (taux < 30) reco.push(fr ? 'Marge correcte (15–30 %) : viser 30 % en réduisant les tâches manuelles répétitives (facturation, relances, reporting).' : 'Healthy margin (15–30%): aim for 30% by cutting repetitive manual tasks (invoicing, follow-ups, reporting).');
+        else reco.push(fr ? 'Marge solide (> 30 %) : réinvestir une partie dans l\'acquisition (publicité, contenu, partenariats) pour accélérer.' : 'Strong margin (> 30%): reinvest part of it in acquisition (ads, content, partnerships) to accelerate.');
+        if (panier < 500) reco.push(fr ? 'Panier moyen faible : proposer une offre supérieure ou un abonnement pour augmenter la valeur par client.' : 'Low average basket: introduce a premium tier or a subscription to raise value per customer.');
+        else reco.push(fr ? 'Panier moyen élevé : mettre en place une séquence de fidélisation automatique (email + relance à 30 jours) pour sécuriser le renouvellement.' : 'High average basket: set up an automatic retention sequence (email + 30-day follow-up) to secure renewals.');
+        reco.push(fr ? 'Automatiser ce rapport : collecte des chiffres, rédaction et envoi PDF chaque lundi à 8 h, sans intervention.' : 'Automate this report: data collection, writing and PDF delivery every Monday at 8 am, hands-free.');
+        var verdict = taux >= 30 ? (fr ? 'excellente' : 'excellent') : taux >= 15 ? (fr ? 'saine' : 'healthy') : (fr ? 'fragile' : 'fragile');
+        if (fr) return [
+          '# Rapport d\'activité — ' + date,
+          '',
+          '## Synthèse',
+          'Sur la période, l\'activité a généré **' + fmt(ca) + '** de chiffre d\'affaires pour **' + fmt(dep) + '** de dépenses, soit une marge de **' + fmt(marge) + '** (' + pct(taux) + '). Avec **' + cli + ' clients**, le panier moyen s\'établit à **' + fmt(panier) + '**. La rentabilité est ' + verdict + '.',
+          '',
+          '## Indicateurs clés',
+          '| Indicateur | Valeur |',
+          '|---|---|',
+          '| Chiffre d\'affaires | ' + fmt(ca) + ' |',
+          '| Dépenses | ' + fmt(dep) + ' |',
+          '| Marge nette | ' + fmt(marge) + ' |',
+          '| Taux de marge | ' + pct(taux) + ' |',
+          '| Clients actifs | ' + cli + ' |',
+          '| Panier moyen | ' + fmt(panier) + ' |',
+          '| Coût par client | ' + fmt(coutClient) + ' |',
+          '',
+          '## Recommandations',
+          reco.map(function (r, i) { return (i + 1) + '. ' + r; }).join('\n'),
+          '',
+          '## Prochaine étape',
+          'Ce rapport peut être généré et envoyé automatiquement chaque semaine (Google Sheets → n8n → IA → PDF → email + Slack). Temps gagné estimé : **3 heures par semaine**.'
+        ].join('\n');
+        return [
+          '# Activity report — ' + date,
+          '',
+          '## Summary',
+          'Over the period, the business generated **' + fmt(ca) + '** in revenue against **' + fmt(dep) + '** in expenses, a margin of **' + fmt(marge) + '** (' + pct(taux) + '). With **' + cli + ' customers**, the average basket is **' + fmt(panier) + '**. Profitability is ' + verdict + '.',
+          '',
+          '## Key indicators',
+          '| Indicator | Value |',
+          '|---|---|',
+          '| Revenue | ' + fmt(ca) + ' |',
+          '| Expenses | ' + fmt(dep) + ' |',
+          '| Net margin | ' + fmt(marge) + ' |',
+          '| Margin rate | ' + pct(taux) + ' |',
+          '| Active customers | ' + cli + ' |',
+          '| Average basket | ' + fmt(panier) + ' |',
+          '| Cost per customer | ' + fmt(coutClient) + ' |',
+          '',
+          '## Recommendations',
+          reco.map(function (r, i) { return (i + 1) + '. ' + r; }).join('\n'),
+          '',
+          '## Next step',
+          'This report can be generated and sent automatically every week (Google Sheets → n8n → AI → PDF → email + Slack). Estimated time saved: **3 hours per week**.'
+        ].join('\n');
+      }
+
+      function render(md, offline) {
+        lastMd = md;
+        result.innerHTML = '<div class="md" id="md">' + D.md2html(md) + '</div>';
+        if (offline) D.offlineBanner(result);
+        tools.removeAttribute('hidden');
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var ca = num('#ca'), dep = num('#depenses'), cli = num('#clients');
+        result.innerHTML = ''; tools.setAttribute('hidden', '');
+        if (!(ca >= 0) || !(dep >= 0) || !(cli >= 0)) { D.errorBanner(result, D.t('p_invalid')); return; }
+        if (!D.consumeQuota(SLUG)) return;
+        D.setBusy(btn, true);
+        D.apiPost('rapport', { ca: ca, depenses: dep, clients: cli })
+          .then(function (data) {
+            if (!data || typeof data.rapport_markdown !== 'string') throw new Error('bad payload');
+            render(data.rapport_markdown, false);
+          })
+          .catch(function () { return D.sleep(900).then(function () { render(simulate(ca, dep, cli), true); }); })
+          .then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); });
+      });
+
+      D.qs('#dl').addEventListener('click', function () {
+        var blob = new Blob([lastMd], { type: 'text/markdown;charset=utf-8' });
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'rapport.md'; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      });
+      D.qs('#print').addEventListener('click', function () { window.print(); });
+    })();
+  </script>
+</body>
+</html>

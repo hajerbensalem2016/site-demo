@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Démos interactives · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Testez vous-même 7 automatisations et agents IA (email, chatbot, agent vocal, scraping, CRM, rapport) avant de me contacter. n8n, Make, Zapier, Claude, Python.">
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js"></script>
+</head>
+<body data-root="./" data-title-key="home_title">
+  <header id="site-header"></header>
+
+  <main>
+    <section class="container hero">
+      <span class="eyebrow" data-i18n="site_tag"></span>
+      <h1 data-i18n="home_h1"></h1>
+      <p class="lead" data-i18n="home_lead"></p>
+      <div class="btns">
+        <a class="btn" href="#demos" data-i18n="home_cta_demos"></a>
+        <a class="btn btn-outline" href="#contact" data-i18n="home_cta_contact"></a>
+      </div>
+    </section>
+
+    <section class="container" id="demos">
+      <h2 data-i18n="home_demos_title"></h2>
+      <p class="muted" data-i18n="home_demos_sub"></p>
+      <div class="grid">
+        <a class="card demo-card" href="demos/agent-email/"><span class="num">01</span><h3 data-i18n="c1_t"></h3><p data-i18n="c1_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/automatisation/"><span class="num">02</span><h3 data-i18n="c2_t"></h3><p data-i18n="c2_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/chatbot/"><span class="num">03</span><h3 data-i18n="c3_t"></h3><p data-i18n="c3_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/agent-vocal/"><span class="num">04</span><h3 data-i18n="c4_t"></h3><p data-i18n="c4_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/scraping/"><span class="num">05</span><h3 data-i18n="c5_t"></h3><p data-i18n="c5_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/crm-notion/"><span class="num">06</span><h3 data-i18n="c6_t"></h3><p data-i18n="c6_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/rapport/"><span class="num">07</span><h3 data-i18n="c7_t"></h3><p data-i18n="c7_d"></p><span class="go" data-i18n="home_try"></span></a>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 data-i18n="home_method_title"></h2>
+      <div class="method">
+        <div class="card"><h3 data-i18n="m1_t"></h3><p data-i18n="m1_d"></p></div>
+        <div class="card"><h3 data-i18n="m2_t"></h3><p data-i18n="m2_d"></p></div>
+        <div class="card"><h3 data-i18n="m3_t"></h3><p data-i18n="m3_d"></p></div>
+        <div class="card"><h3 data-i18n="m4_t"></h3><p data-i18n="m4_d"></p></div>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 data-i18n="home_tools_title"></h2>
+      <p class="muted" data-i18n="home_tools_list"></p>
+    </section>
+
+    <section class="container" id="contact">
+      <div class="cta" data-cta>
+        <h2 data-i18n="home_contact_title"></h2>
+        <p data-i18n="home_contact_text"></p>
+        <div class="btns">
+          <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+          <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        home_title: 'Démos interactives',
+        home_h1: 'Testez mes automatisations avant de me contacter.',
+        home_lead: 'Je conçois des automatisations et des agents IA qui font gagner plusieurs heures par semaine aux entreprises en supprimant les tâches répétitives. Chaque démo ci-dessous est réelle : essayez-la avec vos propres textes, gratuitement.',
+        home_cta_demos: 'Voir les 7 démos',
+        home_cta_contact: 'Me contacter',
+        home_demos_title: '7 démos à tester en 2 minutes',
+        home_demos_sub: '5 tests gratuits par démo et par jour. Aucune inscription, aucune donnée conservée.',
+        home_try: 'Tester →',
+        c1_t: 'Agent email IA', c1_d: 'Collez un email : il est classé, priorisé, résumé et une réponse est rédigée. Environ 5 h gagnées par semaine.',
+        c2_t: 'Automatisation de workflow', c2_d: 'Un formulaire → une ligne dans Google Sheets → un email de bienvenue → une alerte Slack. En 3 secondes, sans intervention.',
+        c3_t: 'Chatbot de site web', c3_d: 'Un assistant qui répond aux questions 24h/24, qualifie les visiteurs et propose un rendez-vous.',
+        c4_t: 'Agent vocal IA', c4_d: 'Un standard téléphonique qui décroche, qualifie l\'appel et prend rendez-vous. Écoutez un appel réel.',
+        c5_t: 'Scraping & veille de prix', c5_d: 'Les prix de vos concurrents collectés chaque matin dans un tableau filtrable.',
+        c6_t: 'CRM Notion / Airtable', c6_d: 'Chaque lead entrant est scoré, rangé dans le bon pipeline et suivi automatiquement.',
+        c7_t: 'Rapport automatique', c7_d: 'Trois chiffres → un rapport d\'activité rédigé, prêt à envoyer en PDF.',
+        home_method_title: 'Ma méthode',
+        m1_t: 'Appel gratuit de 15 min', m1_d: 'Pour comprendre la tâche et confirmer honnêtement qu\'elle peut être automatisée.',
+        m2_t: 'Devis fixe avant de commencer', m2_d: 'Cadrage clair, prix fixé, aucune surprise.',
+        m3_t: 'Vidéo explicative + documentation', m3_d: 'Chaque système livré avec une vidéo Loom et une documentation pour que votre équipe soit autonome.',
+        m4_t: '14 jours de support gratuit', m4_d: 'Après la livraison, je reste disponible pour ajuster et corriger.',
+        home_tools_title: 'Outils que je maîtrise',
+        home_tools_list: 'n8n · Make · Zapier · Claude API · OpenAI API · Python (Playwright, BeautifulSoup) · Vapi · Retell AI · ElevenLabs · Twilio · Voiceflow · Botpress · ManyChat · WhatsApp Business API · HubSpot · GoHighLevel · Pipedrive · Notion · Airtable · Google Sheets · Slack · Shopify · Stripe · Power Automate',
+        home_contact_title: 'Quelle tâche vous prend le plus de temps ?',
+        home_contact_text: 'Dites-le-moi : je vous dirai franchement si elle peut être automatisée, comment, et à quel prix.'
+      },
+      en: {
+        home_title: 'Interactive demos',
+        home_h1: 'Try my automations before you hire me.',
+        home_lead: 'I build automation systems and AI agents that save businesses hours every week by removing repetitive manual work. Every demo below is real: try it with your own text, for free.',
+        home_cta_demos: 'See the 7 demos',
+        home_cta_contact: 'Contact me',
+        home_demos_title: '7 demos to try in 2 minutes',
+        home_demos_sub: '5 free tests per demo per day. No sign-up, nothing stored.',
+        home_try: 'Try it →',
+        c1_t: 'AI email agent', c1_d: 'Paste an email: it gets classified, prioritised, summarised and a reply is drafted. About 5 hours saved per week.',
+        c2_t: 'Workflow automation', c2_d: 'A form → a row in Google Sheets → a welcome email → a Slack alert. In 3 seconds, hands-free.',
+        c3_t: 'Website chatbot', c3_d: 'An assistant that answers questions 24/7, qualifies visitors and offers a meeting.',
+        c4_t: 'AI voice agent', c4_d: 'A phone receptionist that picks up, qualifies the call and books appointments. Listen to a real call.',
+        c5_t: 'Scraping & price monitoring', c5_d: 'Your competitors\' prices collected every morning into a filterable table.',
+        c6_t: 'Notion / Airtable CRM', c6_d: 'Every incoming lead is scored, placed in the right pipeline and followed up automatically.',
+        c7_t: 'Automatic report', c7_d: 'Three numbers → a written activity report, ready to send as PDF.',
+        home_method_title: 'How I work',
+        m1_t: 'Free 15-minute call', m1_d: 'To understand the task and honestly confirm it can be automated.',
+        m2_t: 'Fixed price before starting', m2_d: 'Clear scope, fixed quote, no surprises.',
+        m3_t: 'Loom walkthrough + documentation', m3_d: 'Every system ships with a Loom video and documentation so your team can maintain it without me.',
+        m4_t: '14 days of free support', m4_d: 'After delivery, I stay available to adjust and fix.',
+        home_tools_title: 'Tools I work with',
+        home_tools_list: 'n8n · Make · Zapier · Claude API · OpenAI API · Python (Playwright, BeautifulSoup) · Vapi · Retell AI · ElevenLabs · Twilio · Voiceflow · Botpress · ManyChat · WhatsApp Business API · HubSpot · GoHighLevel · Pipedrive · Notion · Airtable · Google Sheets · Slack · Shopify · Stripe · Power Automate',
+        home_contact_title: 'Which task takes you the most time?',
+        home_contact_text: 'Tell me: I will tell you honestly whether it can be automated, how, and what it will cost.'
+      }
+    };
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

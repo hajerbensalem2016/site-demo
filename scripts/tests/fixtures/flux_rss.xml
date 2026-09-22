@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Annonces de test</title>
+    <link>https://exemple.test/annonces</link>
+    <description>Flux fictif pour les tests, aucun appel réseau.</description>
+    <item>
+      <title>Appartement T3 &#8212; Lyon 3e</title>
+      <link>https://exemple.test/annonces/t3-lyon-3</link>
+      <guid isPermaLink="false">annonce-1003</guid>
+      <pubDate>Mon, 21 Sep 2026 08:15:00 +0000</pubDate>
+      <description><![CDATA[<p>Bel appartement <b>lumineux</b> de 68 m², proche métro.&nbsp;Disponible immédiatement.</p>]]></description>
+    </item>
+    <item>
+      <title>Studio meublé &#8212; Villeurbanne</title>
+      <link>https://exemple.test/annonces/studio-villeurbanne</link>
+      <guid isPermaLink="false">annonce-1002</guid>
+      <pubDate>Sun, 20 Sep 2026 17:40:00 +0000</pubDate>
+      <description>Studio de 22 m² entièrement meublé, charges comprises.</description>
+    </item>
+    <item>
+      <title>Maison 4 pièces avec jardin &#8212; Bron</title>
+      <link>https://exemple.test/annonces/maison-bron</link>
+      <guid isPermaLink="false">annonce-1001</guid>
+      <pubDate>Sat, 19 Sep 2026 09:00:00 +0000</pubDate>
+      <description>Maison de plain-pied, jardin de 300 m², garage.</description>
+    </item>
+  </channel>
+</rss>

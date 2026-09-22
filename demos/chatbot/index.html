@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chatbot de site web · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Testez un chatbot IA qui répond aux clients 24h/24, qualifie les visiteurs et propose un rendez-vous. Démo interactive gratuite.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="chatbot" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" data-i18n="p_hint"></p>
+      <div class="chat" id="chat">
+        <div class="chat-head"><span class="status"></span><span data-i18n="p_bot_name"></span></div>
+        <div class="chat-body" id="chat-body" aria-live="polite"></div>
+        <div class="chat-suggest" id="suggest">
+          <button type="button" class="chip" data-i18n="p_q1"></button>
+          <button type="button" class="chip" data-i18n="p_q2"></button>
+          <button type="button" class="chip" data-i18n="p_q3"></button>
+        </div>
+        <form class="chat-input" id="chat-form">
+          <input type="text" id="chat-input" autocomplete="off" maxlength="500" data-i18n-placeholder="p_placeholder">
+          <button type="submit" class="btn" id="send" data-run data-i18n="p_send"></button>
+        </form>
+      </div>
+      <div class="quota-msg" data-quota-msg></div>
+      <div id="banner-zone"></div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="chatbot"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Chatbot de site web',
+        p_benefit: 'Répond 24h/24, environ 8 heures gagnées par semaine',
+        p_lead: 'Un assistant intégré à votre site, WhatsApp ou Instagram qui répond aux questions fréquentes, qualifie les visiteurs et propose un rendez-vous. Ici, il joue le rôle d\'assistant d\'une agence d\'automatisation.',
+        p_hint: 'Posez-lui une question comme un visiteur le ferait (5 messages gratuits par jour).',
+        p_bot_name: 'Assistant — Agence Automatisation',
+        p_q1: 'Quels services proposez-vous ?', p_q2: 'Combien ça coûte ?', p_q3: 'Je veux un rendez-vous',
+        p_placeholder: 'Écrivez votre message…',
+        p_send: 'Envoyer',
+        p_welcome: 'Bonjour ! Je suis l\'assistant de l\'agence. Je peux vous présenter nos services, donner une idée de tarif ou vous proposer un rendez-vous. Que puis-je faire pour vous ?',
+        s1t: 'Le visiteur écrit', s1d: 'Le widget (site web, WhatsApp, Messenger ou Instagram) envoie le message à un workflow n8n.',
+        s2t: 'L\'IA répond avec vos données', s2d: 'Claude répond à partir de votre FAQ, de vos tarifs et de vos horaires, dans votre ton, en français ou en anglais.',
+        s3t: 'Le lead est capturé', s3d: 'Nom, email et besoin sont enregistrés dans votre CRM ; un rendez-vous peut être pris via Calendly.'
+      },
+      en: {
+        p_title: 'Website chatbot',
+        p_benefit: 'Answers 24/7, about 8 hours saved per week',
+        p_lead: 'An assistant embedded in your website, WhatsApp or Instagram that answers frequent questions, qualifies visitors and offers a meeting. Here it plays the assistant of an automation agency.',
+        p_hint: 'Ask it a question as a visitor would (5 free messages per day).',
+        p_bot_name: 'Assistant — Automation Agency',
+        p_q1: 'What services do you offer?', p_q2: 'How much does it cost?', p_q3: 'I want a meeting',
+        p_placeholder: 'Type your message…',
+        p_send: 'Send',
+        p_welcome: 'Hi! I am the agency assistant. I can present our services, give a price range or offer you a meeting. What can I do for you?',
+        s1t: 'The visitor writes', s1d: 'The widget (website, WhatsApp, Messenger or Instagram) sends the message to an n8n workflow.',
+        s2t: 'The AI answers with your data', s2d: 'Claude answers from your FAQ, prices and opening hours, in your tone, in French or English.',
+        s3t: 'The lead is captured', s3d: 'Name, email and need are saved in your CRM; a meeting can be booked through Calendly.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'chatbot';
+      var body = D.qs('#chat-body'), form = D.qs('#chat-form'), input = D.qs('#chat-input'), send = D.qs('#send'), bannerZone = D.qs('#banner-zone');
+      var history = []; /* [{role, content}] envoyé à /api/chat */
+
+      function addMsg(role, text) {
+        var div = document.createElement('div');
+        div.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
+        div.textContent = text;
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+        return div;
+      }
+      function typing() {
+        var div = document.createElement('div');
+        div.className = 'msg bot typing'; div.innerHTML = '<i></i><i></i><i></i>';
+        body.appendChild(div); body.scrollTop = body.scrollHeight; return div;
+      }
+
+      /* Simulation locale (mode hors ligne) : réponses par mots-clés, même format que /api/chat */
+      function simulate(text) {
+        var fr = D.getLang() === 'fr', q = text.toLowerCase();
+        if (/service|propos|offer|what do you|faites|build|construi/.test(q)) return fr
+          ? 'Nous construisons : des agents IA (tri et réponse aux emails), des automatisations n8n / Make / Zapier entre vos outils, des chatbots (site, WhatsApp, Instagram), des agents vocaux qui répondent au téléphone, du scraping Python et des CRM Notion / Airtable / HubSpot. Quel sujet vous intéresse ?'
+          : 'We build: AI agents (email triage and replies), n8n / Make / Zapier automations between your tools, chatbots (website, WhatsApp, Instagram), voice agents that answer the phone, Python scraping and Notion / Airtable / HubSpot CRMs. Which topic interests you?';
+        if (/prix|tarif|co[uû]t|combien|price|cost|how much|budget/.test(q)) return fr
+          ? 'Chaque projet a un devis fixe, établi après un appel gratuit de 15 minutes. Ordre de grandeur : une automatisation simple à partir de 150 €, un chatbot à partir de 400 €, un agent vocal à partir de 700 €. Voulez-vous que je vous propose un créneau ?'
+          : 'Every project gets a fixed quote after a free 15-minute call. Rough range: a simple automation from $150, a chatbot from $400, a voice agent from $700. Would you like me to suggest a time slot?';
+        if (/rendez|rdv|meeting|appel|call|book|créneau|slot|disponib/.test(q)) return fr
+          ? 'Avec plaisir. Les prochains créneaux disponibles sont jeudi 14 h et vendredi 10 h (appel de 15 minutes, gratuit). Indiquez-moi votre email et le créneau qui vous convient, et je vous envoie l\'invitation.'
+          : 'With pleasure. The next available slots are Thursday 2 pm and Friday 10 am (free 15-minute call). Give me your email and the slot that suits you and I will send the invite.';
+        if (/@/.test(q)) return fr
+          ? 'Merci ! J\'ai bien noté votre email. Vous recevrez l\'invitation dans quelques minutes, avec un lien pour la déplacer si besoin. À très vite !'
+          : 'Thank you! I have noted your email. You will receive the invite in a few minutes, with a link to reschedule if needed. Talk soon!';
+        if (/délai|delay|combien de temps|how long|timeline|quand/.test(q)) return fr
+          ? 'Une automatisation simple est livrée en 2 à 5 jours, un chatbot en 1 à 2 semaines, un agent vocal en 2 à 3 semaines. Chaque livraison inclut une vidéo explicative et 14 jours de support.'
+          : 'A simple automation ships in 2 to 5 days, a chatbot in 1 to 2 weeks, a voice agent in 2 to 3 weeks. Every delivery includes a Loom walkthrough and 14 days of support.';
+        if (/n8n|make|zapier|outil|tool|hubspot|notion|airtable|whatsapp/.test(q)) return fr
+          ? 'Oui, nous travaillons avec n8n, Make, Zapier, HubSpot, GoHighLevel, Notion, Airtable, Google Sheets, Slack, Shopify, Stripe, WhatsApp Business API, Vapi et les API Claude / OpenAI. Quel outil utilisez-vous aujourd\'hui ?'
+          : 'Yes, we work with n8n, Make, Zapier, HubSpot, GoHighLevel, Notion, Airtable, Google Sheets, Slack, Shopify, Stripe, WhatsApp Business API, Vapi and the Claude / OpenAI APIs. Which tool do you use today?';
+        if (/merci|thank/.test(q)) return fr ? 'Avec plaisir ! N\'hésitez pas si vous avez d\'autres questions.' : 'You are welcome! Feel free to ask if you have other questions.';
+        if (/bonjour|salut|hello|hi\b|hey/.test(q)) return fr ? 'Bonjour ! Comment puis-je vous aider : services, tarifs ou rendez-vous ?' : 'Hello! How can I help: services, pricing or a meeting?';
+        return fr
+          ? 'Bonne question. Pour vous répondre précisément, le plus simple est un appel gratuit de 15 minutes avec Hajer. Voulez-vous un créneau, ou préférez-vous décrire votre besoin ici ?'
+          : 'Good question. To answer precisely, the easiest is a free 15-minute call with Hajer. Would you like a slot, or would you rather describe your need here?';
+      }
+
+      function ask(text) {
+        text = (text || '').trim();
+        if (!text) return;
+        if (!D.consumeQuota(SLUG)) return;
+        addMsg('user', text);
+        history.push({ role: 'user', content: text });
+        input.value = '';
+        send.disabled = true;
+        var tp = typing();
+        D.apiPost('chat', { messages: history.slice(-12) })
+          .then(function (data) {
+            if (!data || typeof data.reply !== 'string') throw new Error('bad payload');
+            tp.remove(); addMsg('bot', data.reply); history.push({ role: 'assistant', content: data.reply });
+          })
+          .catch(function () {
+            return D.sleep(900).then(function () {
+              var r = simulate(text);
+              tp.remove(); addMsg('bot', r); history.push({ role: 'assistant', content: r });
+              if (!bannerZone.querySelector('.banner-offline')) D.offlineBanner(bannerZone);
+            });
+          })
+          .then(function () { D.renderQuota(SLUG); });
+      }
+
+      form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); });
+      D.qsa('#suggest .chip').forEach(function (c) { c.addEventListener('click', function () { ask(c.textContent); }); });
+
+      function welcome() {
+        body.innerHTML = ''; history = [];
+        var w = D.t('p_welcome'); addMsg('bot', w); history.push({ role: 'assistant', content: w });
+      }
+      welcome();
+      document.addEventListener('demo:lang', welcome);
+    })();
+  </script>
+</body>
+</html>

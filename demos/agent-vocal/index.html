@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent vocal IA · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Un standard téléphonique IA qui décroche, qualifie l'appel et prend rendez-vous. Appelez la démo ou écoutez un appel réel.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="agent-vocal" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" id="mode-hint"></p>
+      <div class="call-box">
+        <button type="button" class="call-btn" id="call" data-run aria-label="Appeler">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.8 2z"/></svg>
+        </button>
+        <p style="margin:14px 0 0;font-weight:600" id="call-label"></p>
+        <p class="muted small" id="call-timer"></p>
+        <div class="transcript" id="transcript" aria-live="polite"></div>
+      </div>
+      <div class="quota-msg" data-quota-msg></div>
+      <div id="banner-zone"></div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <p class="muted small" data-i18n="p_video_hint"></p>
+      <div class="video" data-loom="agentVocal"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Agent vocal IA',
+        p_benefit: 'Aucun appel manqué, environ 10 heures gagnées par semaine',
+        p_lead: 'Un standard téléphonique IA (Vapi, Retell, ElevenLabs, Twilio) qui décroche en 1 seconde, répond aux questions, qualifie l\'appelant et prend rendez-vous dans votre agenda. Ici, il joue le rôle d\'une réceptionniste de clinique dentaire.',
+        p_hint_live: 'Cliquez sur le bouton pour parler à l\'agent depuis votre navigateur (micro requis). L\'appel dure 2 minutes maximum.',
+        p_hint_sim: 'Le widget d\'appel n\'est pas encore activé : cliquez pour écouter la transcription d\'un appel type, ou regardez la vidéo ci-dessous.',
+        p_call: 'Lancer l\'appel démo', p_hangup: 'Raccrocher', p_connecting: 'Connexion…', p_ended: 'Appel terminé', p_in_call: 'En communication',
+        p_video_hint: 'Vidéo d\'un appel réel (enregistrement Loom).',
+        agent: 'Agent', caller: 'Appelant',
+        s1t: 'L\'appel arrive', s1d: 'Twilio ou votre opérateur transfère l\'appel à l\'agent vocal, 24h/24, sans file d\'attente.',
+        s2t: 'L\'agent comprend et répond', s2d: 'Reconnaissance vocale, Claude pour le raisonnement, ElevenLabs pour la voix : une conversation naturelle, en français ou en anglais.',
+        s3t: 'L\'action est faite', s3d: 'Rendez-vous créé dans Google Calendar, fiche ajoutée au CRM, résumé de l\'appel envoyé par SMS ou Slack.'
+      },
+      en: {
+        p_title: 'AI voice agent',
+        p_benefit: 'No missed call, about 10 hours saved per week',
+        p_lead: 'An AI phone receptionist (Vapi, Retell, ElevenLabs, Twilio) that picks up in 1 second, answers questions, qualifies the caller and books appointments in your calendar. Here it plays a dental clinic receptionist.',
+        p_hint_live: 'Click the button to talk to the agent from your browser (microphone required). Calls last 2 minutes max.',
+        p_hint_sim: 'The call widget is not enabled yet: click to hear the transcript of a typical call, or watch the video below.',
+        p_call: 'Start the demo call', p_hangup: 'Hang up', p_connecting: 'Connecting…', p_ended: 'Call ended', p_in_call: 'In call',
+        p_video_hint: 'Video of a real call (Loom recording).',
+        agent: 'Agent', caller: 'Caller',
+        s1t: 'The call comes in', s1d: 'Twilio or your carrier forwards the call to the voice agent, 24/7, no queue.',
+        s2t: 'The agent understands and answers', s2d: 'Speech recognition, Claude for reasoning, ElevenLabs for the voice: a natural conversation in French or English.',
+        s3t: 'The action gets done', s3d: 'Appointment created in Google Calendar, record added to the CRM, call summary sent by SMS or Slack.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'agent-vocal';
+      var btn = D.qs('#call'), label = D.qs('#call-label'), timer = D.qs('#call-timer'), transcript = D.qs('#transcript'), hint = D.qs('#mode-hint'), bannerZone = D.qs('#banner-zone');
+      var live = !D.isTodo(D.CFG.vapiPublicKey) && !D.isTodo(D.CFG.vapiAssistantId);
+      var inCall = false, vapi = null, tick = null, seconds = 0, cancelled = false;
+
+      function setLabels() {
+        hint.textContent = D.t(live ? 'p_hint_live' : 'p_hint_sim');
+        label.textContent = inCall ? D.t('p_in_call') : D.t('p_call');
+        btn.setAttribute('aria-label', inCall ? D.t('p_hangup') : D.t('p_call'));
+      }
+      setLabels();
+      document.addEventListener('demo:lang', setLabels);
+
+      function startTimer() { seconds = 0; timer.textContent = '00:00'; tick = setInterval(function () { seconds++; timer.textContent = String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0'); if (seconds >= 120 && live) hangup(); }, 1000); }
+      function stopTimer() { clearInterval(tick); }
+      function line(who, text) {
+        var d = document.createElement('div'); d.className = 'line ' + who;
+        d.innerHTML = '<span class="who">' + D.escapeHtml(D.t(who)) + '</span>' + D.escapeHtml(text);
+        transcript.appendChild(d); return d;
+      }
+
+      /* --- Mode live : widget Vapi (clé PUBLIQUE uniquement, chargée depuis le CDN) --- */
+      function loadVapi() {
+        return new Promise(function (resolve, reject) {
+          if (window.vapiSDK) return resolve(window.vapiSDK);
+          var s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js';
+          s.async = true; s.onload = function () { resolve(window.vapiSDK); }; s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      }
+      function startLive() {
+        label.textContent = D.t('p_connecting');
+        return loadVapi().then(function (sdk) {
+          vapi = sdk.run({ apiKey: D.CFG.vapiPublicKey, assistant: D.CFG.vapiAssistantId, config: { position: 'bottom-right', offset: '24px', width: '0px', height: '0px' } });
+          if (vapi && vapi.on) {
+            vapi.on('call-start', function () { inCall = true; btn.classList.add('active'); setLabels(); startTimer(); });
+            vapi.on('call-end', function () { endCall(); });
+            vapi.on('message', function (m) { if (m && m.type === 'transcript' && m.transcriptType === 'final') line(m.role === 'assistant' ? 'agent' : 'caller', m.transcript); });
+            vapi.on('error', function () { endCall(); startSimulation(); });
+          }
+        }).catch(function () { startSimulation(); });
+      }
+
+      /* --- Mode simulation : transcription scriptée (aucun service payant) --- */
+      var SCRIPT = {
+        fr: [
+          ['agent', 'Clinique dentaire Saint-Louis, bonjour ! Je suis l\'assistante virtuelle. Comment puis-je vous aider ?'],
+          ['caller', 'Bonjour, j\'ai une douleur à une molaire depuis hier, j\'aimerais un rendez-vous rapidement.'],
+          ['agent', 'Je comprends, on va régler ça vite. Êtes-vous déjà patient chez nous ?'],
+          ['caller', 'Oui, Marc Delorme.'],
+          ['agent', 'Merci Monsieur Delorme, je vous retrouve. Le docteur Nguyen a une urgence disponible demain à 9 h 15 ou aujourd\'hui à 17 h 30. Quel créneau préférez-vous ?'],
+          ['caller', 'Aujourd\'hui 17 h 30, c\'est parfait.'],
+          ['agent', 'C\'est noté : aujourd\'hui à 17 h 30 avec le docteur Nguyen. Vous recevez la confirmation par SMS dans une minute. En attendant, évitez les aliments très chauds ou très froids. Autre chose ?'],
+          ['caller', 'Non, merci beaucoup.'],
+          ['agent', 'Avec plaisir, à tout à l\'heure Monsieur Delorme !']
+        ],
+        en: [
+          ['agent', 'Saint-Louis Dental Clinic, hello! I am the virtual assistant. How can I help you?'],
+          ['caller', 'Hi, I have had a toothache in a molar since yesterday, I would like an appointment quickly.'],
+          ['agent', 'I understand, let us sort this out fast. Are you already a patient with us?'],
+          ['caller', 'Yes, Mark Dell.'],
+          ['agent', 'Thank you Mr Dell, I found your file. Dr Nguyen has an emergency slot tomorrow at 9:15 am or today at 5:30 pm. Which do you prefer?'],
+          ['caller', 'Today at 5:30 pm is perfect.'],
+          ['agent', 'Noted: today at 5:30 pm with Dr Nguyen. You will get an SMS confirmation within a minute. Meanwhile, avoid very hot or very cold food. Anything else?'],
+          ['caller', 'No, thank you very much.'],
+          ['agent', 'My pleasure, see you soon Mr Dell!']
+        ]
+      };
+      function startSimulation() {
+        inCall = true; cancelled = false; btn.classList.add('active'); setLabels(); startTimer();
+        if (!bannerZone.querySelector('.banner-offline')) D.offlineBanner(bannerZone);
+        var lines = SCRIPT[D.getLang()] || SCRIPT.fr;
+        lines.reduce(function (chain, l) {
+          return chain.then(function () { if (cancelled) return; line(l[0], l[1]); return D.sleep(1400 + Math.min(2600, l[1].length * 28)); });
+        }, D.sleep(900)).then(function () { if (!cancelled) endCall(); });
+      }
+
+      function endCall() {
+        inCall = false; stopTimer(); btn.classList.remove('active'); setLabels();
+        label.textContent = D.t('p_ended') + ' · ' + timer.textContent;
+        D.renderQuota(SLUG);
+      }
+      function hangup() {
+        cancelled = true;
+        if (vapi && vapi.stop) { try { vapi.stop(); } catch (e) { /* ignore */ } }
+        endCall();
+      }
+
+      btn.addEventListener('click', function () {
+        if (inCall) { hangup(); return; }
+        if (!D.consumeQuota(SLUG)) return;
+        transcript.innerHTML = '';
+        if (live) startLive(); else startSimulation();
+      });
+    })();
+  </script>
+</body>
+</html>

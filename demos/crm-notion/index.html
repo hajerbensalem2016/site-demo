@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CRM Notion / Airtable · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Chaque lead est scoré et rangé automatiquement dans le bon pipeline Notion ou Airtable. Démo interactive gratuite.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+</head>
+<body data-root="../../" data-demo="crm-notion" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" data-i18n="p_hint"></p>
+      <form id="form" novalidate>
+        <div class="row row-2">
+          <div class="field"><label for="nom" data-i18n="f_nom"></label><input type="text" id="nom" required maxlength="80" data-i18n-placeholder="f_nom_ph"></div>
+          <div class="field"><label for="email" data-i18n="f_email"></label><input type="email" id="email" required maxlength="120" placeholder="vous@entreprise.com"></div>
+        </div>
+        <div class="field"><label for="entreprise" data-i18n="f_entreprise"></label><input type="text" id="entreprise" maxlength="80" data-i18n-placeholder="f_entreprise_ph"></div>
+        <div class="field"><label for="besoin" data-i18n="f_besoin"></label><textarea id="besoin" style="min-height:90px" maxlength="600" data-i18n-placeholder="f_besoin_ph"></textarea></div>
+        <button type="submit" class="btn" id="run" data-run data-i18n="p_run"></button>
+      </form>
+      <div class="quota-msg" data-quota-msg></div>
+      <div class="result" id="result"></div>
+
+      <h3 style="margin-top:22px" data-i18n="p_board"></h3>
+      <p class="muted small" data-i18n="p_board_hint"></p>
+      <div class="kanban" id="kanban"></div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card embed" data-embed="airtableEmbed" hidden>
+      <!-- Vue Airtable / Notion publique (TODO_AIRTABLE_EMBED dans config.js) : affichée seulement si configurée -->
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="crmNotion"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'CRM Notion / Airtable automatisé',
+        p_benefit: 'Environ 3 heures gagnées par semaine, zéro lead oublié',
+        p_lead: 'Chaque nouveau contact est enregistré, scoré selon son potentiel, rangé dans la bonne étape du pipeline et relancé automatiquement. Votre tableau de bord Notion ou Airtable reste toujours à jour.',
+        p_hint: 'Ajoutez un lead fictif : il est scoré puis placé dans le tableau de bord ci-dessous.',
+        f_nom: 'Nom du contact', f_nom_ph: 'Julien Morel',
+        f_email: 'Email',
+        f_entreprise: 'Entreprise', f_entreprise_ph: 'Morel Immobilier',
+        f_besoin: 'Besoin exprimé', f_besoin_ph: 'Ex. : nous perdons des leads, il nous faut un CRM et des relances automatiques',
+        p_run: 'Ajouter le lead au CRM',
+        p_invalid: 'Merci de renseigner au moins un nom et un email valide.',
+        p_added: 'Lead enregistré avec un score de {score}/100 et placé dans « {col} ».',
+        p_board: 'Tableau de bord (extrait)',
+        p_board_hint: 'Simulation d\'une vue Kanban Notion / Airtable. Le vrai tableau public s\'affiche ici une fois TODO_AIRTABLE_EMBED renseigné.',
+        col1: 'Nouveau', col2: 'Qualifié', col3: 'Client',
+        score_label: 'Score',
+        s1t: 'Le lead entre', s1d: 'Formulaire, chatbot, email ou LinkedIn : chaque source alimente le même workflow n8n.',
+        s2t: 'L\'IA qualifie', s2d: 'Claude attribue un score (budget, urgence, taille d\'entreprise) et la bonne étape du pipeline.',
+        s3t: 'Le CRM se met à jour', s3d: 'Fiche créée dans Notion / Airtable / HubSpot, relance programmée, alerte à l\'équipe pour les leads chauds.'
+      },
+      en: {
+        p_title: 'Automated Notion / Airtable CRM',
+        p_benefit: 'About 3 hours saved per week, zero lost lead',
+        p_lead: 'Every new contact is recorded, scored by potential, placed in the right pipeline stage and followed up automatically. Your Notion or Airtable dashboard is always up to date.',
+        p_hint: 'Add a fake lead: it gets scored and placed in the dashboard below.',
+        f_nom: 'Contact name', f_nom_ph: 'Julian Moore',
+        f_email: 'Email',
+        f_entreprise: 'Company', f_entreprise_ph: 'Moore Realty',
+        f_besoin: 'Stated need', f_besoin_ph: 'E.g.: we lose leads, we need a CRM and automatic follow-ups',
+        p_run: 'Add the lead to the CRM',
+        p_invalid: 'Please provide at least a name and a valid email.',
+        p_added: 'Lead saved with a score of {score}/100 and placed in "{col}".',
+        p_board: 'Dashboard (excerpt)',
+        p_board_hint: 'Simulation of a Notion / Airtable Kanban view. The real public board appears here once TODO_AIRTABLE_EMBED is set.',
+        col1: 'New', col2: 'Qualified', col3: 'Customer',
+        score_label: 'Score',
+        s1t: 'The lead comes in', s1d: 'Form, chatbot, email or LinkedIn: every source feeds the same n8n workflow.',
+        s2t: 'The AI qualifies', s2d: 'Claude assigns a score (budget, urgency, company size) and the right pipeline stage.',
+        s3t: 'The CRM updates itself', s3d: 'Record created in Notion / Airtable / HubSpot, follow-up scheduled, team alerted for hot leads.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'crm-notion';
+      var form = D.qs('#form'), btn = D.qs('#run'), result = D.qs('#result'), kanban = D.qs('#kanban');
+
+      var board = {
+        col1: [{ nom: 'Léa Bernard', entreprise: 'Bernard Conseil', score: 48 }, { nom: 'Tom Girard', entreprise: 'Girard Bio', score: 35 }],
+        col2: [{ nom: 'Nadia Khelifi', entreprise: 'Khelifi Immo', score: 74 }, { nom: 'Paul Lefèvre', entreprise: 'LFV Agency', score: 68 }],
+        col3: [{ nom: 'Clinique Saint-Louis', entreprise: 'Santé', score: 91 }]
+      };
+      function renderBoard() {
+        kanban.innerHTML = ['col1', 'col2', 'col3'].map(function (c) {
+          return '<div class="col"><h4><span>' + D.escapeHtml(D.t(c)) + '</span><span>' + board[c].length + '</span></h4>' +
+            board[c].map(function (l) {
+              return '<div class="lead-card' + (l.isNew ? ' new' : '') + '"><span class="score" title="' + D.escapeHtml(D.t('score_label')) + '">' + l.score + '</span><b>' + D.escapeHtml(l.nom) + '</b><span class="muted">' + D.escapeHtml(l.entreprise || '—') + '</span></div>';
+            }).join('') + '</div>';
+        }).join('');
+      }
+      renderBoard();
+      document.addEventListener('demo:lang', renderBoard);
+
+      function payload() {
+        return { nom: D.qs('#nom').value.trim(), email: D.qs('#email').value.trim(), entreprise: D.qs('#entreprise').value.trim(), besoin: D.qs('#besoin').value.trim() };
+      }
+      function valid(p) { return p.nom.length >= 2 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(p.email); }
+
+      /* Score local (simulation) : entreprise + longueur/mots-clés du besoin + domaine email pro */
+      function score(p) {
+        var s = 30, b = p.besoin.toLowerCase();
+        if (p.entreprise) s += 15;
+        if (!/gmail|yahoo|hotmail|outlook|free\.fr/.test(p.email)) s += 10;
+        if (b.length > 40) s += 10;
+        if (/urgent|rapidement|asap|vite|quickly/.test(b)) s += 15;
+        if (/budget|€|\$|devis|quote|prix|price/.test(b)) s += 10;
+        if (/crm|automat|chatbot|agent|n8n|make|zapier|hubspot|notion|airtable/.test(b)) s += 10;
+        return Math.min(98, s);
+      }
+      function place(p, sc, message, offline) {
+        var col = sc >= 65 ? 'col2' : 'col1';
+        board[col].forEach(function (l) { l.isNew = false; });
+        board[col].unshift({ nom: p.nom, entreprise: p.entreprise, score: sc, isNew: true });
+        renderBoard();
+        result.innerHTML = '';
+        var ok = document.createElement('div'); ok.className = 'banner banner-success';
+        ok.textContent = (message ? message + ' ' : '') + D.t('p_added', { score: sc, col: D.t(col) });
+        result.appendChild(ok);
+        if (offline) D.offlineBanner(result);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var p = payload();
+        result.innerHTML = '';
+        if (!valid(p)) { D.errorBanner(result, D.t('p_invalid')); return; }
+        if (!D.consumeQuota(SLUG)) return;
+        D.setBusy(btn, true);
+        var url = D.CFG.webhookCrm, sc = score(p);
+        var run = D.isTodo(url)
+          ? D.sleep(800).then(function () { place(p, sc, '', true); })
+          : D.postJson(url, p).then(function (data) {
+              if (!data || data.ok !== true) throw new Error('webhook failed');
+              place(p, typeof data.score === 'number' ? data.score : sc, data.message || '', false);
+            }).catch(function () { place(p, sc, '', true); });
+        run.then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); form.reset(); });
+      });
+    })();
+  </script>
+</body>
+</html>

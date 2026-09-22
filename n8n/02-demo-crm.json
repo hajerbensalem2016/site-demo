@@ -1,0 +1,431 @@
+{
+  "name": "02 — Démo CRM (lead → scoring → Airtable)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 02 — Démo CRM\nFormulaire du site → scoring (Code) → fiche Airtable → réponse au site avec le score.\n\n**À remplacer (nœud *Créer la fiche Airtable*) :**\n- `appTODOBASEID` → ID de la base (commence par `app…`)\n- `tblTODOTABLEID` → ID de la table (commence par `tbl…`)\n\nChamps attendus dans la table : `Nom, Email, Entreprise, Besoin, Score (nombre), Priorité, Date, Source`.\n\n**Credential :** `Airtable Personal Access Token account` (jeton gratuit, scopes `data.records:write` + `schema.bases:read`).\n\nURL production : `https://<n8n>/webhook/demo-crm` → `config.js` → `webhookCrm`.",
+        "height": 300,
+        "width": 620,
+        "color": 4
+      },
+      "id": "23fd591e-ea2f-5859-a40c-0eed45eb9c5c",
+      "name": "Note fae328be",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-crm",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "2840cf7b-ca5a-5270-ab88-8ba5866d30d9",
+      "name": "Formulaire CRM du site",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "876630e7-e1b6-562d-895f-420fc3a75511"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Scoring simple et transparent d'un lead (0-100), sans service payant.\nconst b = $input.item.json.body || {};\nconst s = v => String(v == null ? '' : v).trim();\nconst nom = s(b.nom);\nconst email = s(b.email).toLowerCase();\nconst entreprise = s(b.entreprise);\nconst besoin = s(b.besoin);\n\nlet score = 10;\nconst domaine = email.split('@')[1] || '';\nconst generiques = ['gmail.com', 'yahoo.fr', 'yahoo.com', 'hotmail.com', 'hotmail.fr', 'outlook.com',\n  'outlook.fr', 'live.fr', 'icloud.com', 'free.fr', 'orange.fr', 'wanadoo.fr', 'laposte.net', 'sfr.fr'];\nif (domaine && !generiques.includes(domaine)) score += 25;   // email professionnel\nif (entreprise) score += 20;                                  // entreprise renseignée\nif (besoin.length > 20) score += 10;                          // besoin décrit\nif (besoin.length > 80) score += 5;                           // besoin détaillé\n\nconst motsCles = [['automatis', 10], ['crm', 8], ['devis', 8], ['factur', 8], ['chatbot', 8], [' ia ', 6],\n  ['intelligence artificielle', 6], ['scraping', 6], ['urgent', 10], ['rapidement', 5], ['budget', 5],\n  ['rendez-vous', 6], ['n8n', 8], ['notion', 6], ['airtable', 6], ['email', 4], ['relance', 6]];\nconst texte = ' ' + besoin.toLowerCase() + ' ';\nfor (const [mot, pts] of motsCles) if (texte.includes(mot)) score += pts;\n\nscore = Math.max(0, Math.min(100, score));\nconst priorite = score >= 70 ? 'Chaud' : score >= 40 ? 'Tiède' : 'Froid';\n\nreturn { json: {\n  nom, email, entreprise, besoin, score, priorite,\n  date: new Date().toISOString(),\n  source: 'Site de démos',\n  emailValide: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email),\n} };\n",
+        "mode": "runOnceForEachItem"
+      },
+      "id": "a1aad7fc-861f-5418-9af3-1528f297e121",
+      "name": "Scorer le lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "52e9bf7a-2125-56c0-b2b7-07c3051971d5",
+              "leftValue": "={{ $json.emailValide }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "bd66965f-705a-55b0-ae29-099b27c5333b",
+      "name": "Email valide ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "airtableTokenApi",
+        "resource": "record",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "appTODOBASEID"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "tblTODOTABLEID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom": "={{ $json.nom }}",
+            "Email": "={{ $json.email }}",
+            "Entreprise": "={{ $json.entreprise }}",
+            "Besoin": "={{ $json.besoin }}",
+            "Score": "={{ $json.score }}",
+            "Priorité": "={{ $json.priorite }}",
+            "Date": "={{ $json.date }}",
+            "Source": "={{ $json.source }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nom",
+              "displayName": "Nom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Entreprise",
+              "displayName": "Entreprise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Besoin",
+              "displayName": "Besoin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Priorité",
+              "displayName": "Priorité",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "04d1e210-78bf-52bb-9a1a-5ba513e8e48d",
+      "name": "Créer la fiche Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        300
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cd889dae-c5e0-5c99-9cd0-a62366765cea",
+              "name": "ok",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "780738c1-5d26-51c8-a4da-532fc12382de",
+              "name": "message",
+              "value": "=Lead ajouté au CRM Airtable — score {{ $('Scorer le lead').first().json.score }}/100 ({{ $('Scorer le lead').first().json.priorite }}).",
+              "type": "string"
+            },
+            {
+              "id": "811840eb-9560-5921-b786-5b7b742f1fd2",
+              "name": "score",
+              "value": "={{ $('Scorer le lead').first().json.score }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "852736a1-d9e0-5287-bfd3-c9a9fd9758c2",
+      "name": "Réponse OK",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "id": "910d998d-3cd1-510a-b199-352f0ea4d4a4",
+      "name": "Répondre au site",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cd889dae-c5e0-5c99-9cd0-a62366765cea",
+              "name": "ok",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "780738c1-5d26-51c8-a4da-532fc12382de",
+              "name": "message",
+              "value": "Email invalide : merci de renseigner une adresse email valide.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "6ec7e4a4-e8ff-554f-86d3-0628a057d72e",
+      "name": "Réponse erreur",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {
+          "responseCode": 400,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "id": "35b45109-3a63-52f9-8315-222fff58f407",
+      "name": "Répondre erreur 400",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1300,
+        540
+      ]
+    }
+  ],
+  "connections": {
+    "Formulaire CRM du site": {
+      "main": [
+        [
+          {
+            "node": "Scorer le lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scorer le lead": {
+      "main": [
+        [
+          {
+            "node": "Email valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email valide ?": {
+      "main": [
+        [
+          {
+            "node": "Créer la fiche Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Réponse erreur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer la fiche Airtable": {
+      "main": [
+        [
+          {
+            "node": "Réponse OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réponse OK": {
+      "main": [
+        [
+          {
+            "node": "Répondre au site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réponse erreur": {
+      "main": [
+        [
+          {
+            "node": "Répondre erreur 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "pinData": {},
+  "tags": []
+}

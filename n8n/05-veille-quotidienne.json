@@ -1,0 +1,303 @@
+{
+  "name": "05 — Veille quotidienne (scraper → résumé Gmail)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 05 — Veille quotidienne\nChaque matin à 8 h : lit les résultats du scraper (Google Sheet **ou** JSON du site) → résumé HTML → Gmail.\n\n**À remplacer (nœud *Config*) :**\n- `source` : `sheet` (Google Sheets) ou `json` (fichier `data/prix.json` du site)\n- `sheetId` : `TODO_GOOGLE_SHEET_ID` — onglet `Prix` avec les en-têtes `titre | prix | lien | note`\n- `jsonUrl` : `TODO_SITE_URL/data/prix.json`\n- `destinataire` : `TODO_EMAIL_DESTINATAIRE`\n\n**Credentials :** `Google Sheets account` (si source = sheet), `Gmail account`.",
+        "height": 340,
+        "width": 640,
+        "color": 4
+      },
+      "id": "a256e61b-9eed-54df-9709-55c6b3373061",
+      "name": "Note 2a0df970",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 8,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "b5fd0478-3d72-5a02-806b-9b383e7f800e",
+      "name": "Chaque matin à 8h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bf9f4d6c-6eb6-5890-a110-15a871ecc07f",
+              "name": "source",
+              "value": "sheet",
+              "type": "string"
+            },
+            {
+              "id": "c9e9d8ba-c024-5b63-abac-7cf3071fe660",
+              "name": "sheetId",
+              "value": "TODO_GOOGLE_SHEET_ID",
+              "type": "string"
+            },
+            {
+              "id": "dc245293-4eb0-5a62-bc90-e80d5cb42c64",
+              "name": "sheetTab",
+              "value": "Prix",
+              "type": "string"
+            },
+            {
+              "id": "16e738a3-0ff5-5ecf-b2eb-6e2eb09c0861",
+              "name": "jsonUrl",
+              "value": "TODO_SITE_URL/data/prix.json",
+              "type": "string"
+            },
+            {
+              "id": "7d4eb2a4-a68a-54dc-b6ad-9a89651555c0",
+              "name": "destinataire",
+              "value": "TODO_EMAIL_DESTINATAIRE",
+              "type": "string"
+            },
+            {
+              "id": "aaa2172a-3f5a-551b-bc91-5097c7d4b9c0",
+              "name": "titre",
+              "value": "Veille prix quotidienne",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "8a0c38a0-8835-5fcb-8f36-e3d8d241d984",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4b6f1369-2f32-5927-8646-e598ed2b069f",
+              "leftValue": "={{ $json.source }}",
+              "rightValue": "sheet",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6a1b77a3-df66-5d88-95d3-c37661f53bac",
+      "name": "Source Google Sheets ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Config').first().json.sheetId }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Config').first().json.sheetTab }}"
+        },
+        "options": {}
+      },
+      "id": "3a0fd8c8-9d45-5320-ac41-ff9ec33362d5",
+      "name": "Lire la feuille des prix",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        780,
+        200
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "name": "Google Sheets account"
+        }
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config').first().json.jsonUrl }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "69ef7fbe-3f46-51c7-baee-0ec2ee23eefc",
+      "name": "Lire le JSON du site",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        420
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construit le résumé quotidien à partir des lignes { titre, prix, lien, note } (Google Sheet ou JSON).\nconst cfg = $('Config').first().json;\nconst num = v => {\n  const n = parseFloat(String(v == null ? '' : v).replace(/[^\\d.,-]/g, '').replace(',', '.'));\n  return isNaN(n) ? null : n;\n};\nconst pick = (r, ...keys) => { for (const k of keys) if (r[k] != null && r[k] !== '') return r[k]; return null; };\n\nconst rows = $input.all().map(i => i.json).map(r => ({\n  titre: String(pick(r, 'titre', 'Titre', 'title') || '').trim(),\n  prix: num(pick(r, 'prix', 'Prix', 'price')),\n  lien: String(pick(r, 'lien', 'Lien', 'url', 'link') || '').trim(),\n  note: num(pick(r, 'note', 'Note', 'rating')),\n})).filter(r => r.titre && r.prix != null);\n\nconst esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\nconst today = new Date().toLocaleDateString('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: 'long', year: 'numeric' });\nconst titre = cfg.titre || 'Veille quotidienne';\n\nif (!rows.length) {\n  return [{ json: {\n    subject: `${titre} — ${today} : aucune donnée`,\n    html: `<p>Aucune ligne exploitable dans la source (${cfg.source === 'sheet' ? 'Google Sheets' : esc(cfg.jsonUrl)}). Vérifiez le nœud Config.</p>`,\n    count: 0,\n  } }];\n}\n\nconst prix = rows.map(r => r.prix);\nconst min = Math.min(...prix), max = Math.max(...prix);\nconst moy = prix.reduce((a, b) => a + b, 0) / prix.length;\nconst fmt = n => n.toFixed(2).replace('.', ',') + ' €';\nconst moinsChers = [...rows].sort((a, b) => a.prix - b.prix).slice(0, 5);\nconst mieuxNotes = rows.filter(r => r.note != null).sort((a, b) => b.note - a.note).slice(0, 3);\n\nconst td = 'padding:6px 10px;border-bottom:1px solid #eee';\nconst ligne = r => `<tr><td style=\"${td}\">${r.lien ? `<a href=\"${esc(r.lien)}\">${esc(r.titre)}</a>` : esc(r.titre)}</td>` +\n  `<td style=\"${td};text-align:right\"><b>${fmt(r.prix)}</b></td>` +\n  `<td style=\"${td};text-align:center\">${r.note != null ? r.note.toFixed(1) + ' / 5' : '—'}</td></tr>`;\nconst table = arr => `<table style=\"border-collapse:collapse;width:100%;font-size:14px\"><thead><tr style=\"background:#f4f4f5\">` +\n  `<th style=\"text-align:left;padding:6px 10px\">Produit</th><th style=\"text-align:right;padding:6px 10px\">Prix</th>` +\n  `<th style=\"padding:6px 10px\">Note</th></tr></thead><tbody>${arr.map(ligne).join('')}</tbody></table>`;\nconst tuile = (label, val, bg) => `<td style=\"padding:8px 14px;background:${bg};border-radius:6px\"><b>${label}</b><br>${val}</td><td style=\"width:8px\"></td>`;\n\nconst html = `<div style=\"font-family:Arial,sans-serif;max-width:680px;color:#222\">\n<h2 style=\"margin:0 0 4px\">${esc(titre)}</h2>\n<p style=\"color:#666;margin:0 0 16px\">${today} — ${rows.length} offres analysées</p>\n<table style=\"border-collapse:collapse;margin-bottom:16px\"><tr>${tuile('Prix min', fmt(min), '#ecfdf5')}${tuile('Prix moyen', fmt(moy), '#eff6ff')}${tuile('Prix max', fmt(max), '#fef2f2')}</tr></table>\n<h3 style=\"margin:16px 0 6px\">Top 5 des moins chers</h3>${table(moinsChers)}\n${mieuxNotes.length ? `<h3 style=\"margin:16px 0 6px\">Les mieux notés</h3>${table(mieuxNotes)}` : ''}\n<p style=\"color:#888;font-size:12px;margin-top:20px\">Résumé généré automatiquement par n8n (workflow 05 — veille quotidienne).</p>\n</div>`;\n\nreturn [{ json: {\n  subject: `${titre} — ${today} : ${rows.length} offres, min ${fmt(min)}`,\n  html,\n  count: rows.length,\n  min, max,\n  moyenne: Math.round(moy * 100) / 100,\n} }];\n"
+      },
+      "id": "d61ad587-c6dc-588b-a2e0-83ea84bab728",
+      "name": "Résumer la veille",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $('Config').first().json.destinataire }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Veille n8n"
+        }
+      },
+      "id": "34cd0e77-e828-5e0d-b0c9-bc43929e78bc",
+      "name": "Envoyer le résumé (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Chaque matin à 8h": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Source Google Sheets ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source Google Sheets ?": {
+      "main": [
+        [
+          {
+            "node": "Lire la feuille des prix",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Lire le JSON du site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire la feuille des prix": {
+      "main": [
+        [
+          {
+            "node": "Résumer la veille",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire le JSON du site": {
+      "main": [
+        [
+          {
+            "node": "Résumer la veille",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Résumer la veille": {
+      "main": [
+        [
+          {
+            "node": "Envoyer le résumé (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "pinData": {},
+  "tags": []
+}

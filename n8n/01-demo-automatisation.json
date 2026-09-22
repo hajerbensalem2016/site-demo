@@ -1,0 +1,509 @@
+{
+  "name": "01 — Démo automatisation (formulaire → Sheets + Gmail)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 01 — Démo automatisation\nFormulaire du site → Google Sheets → email de bienvenue (Gmail) → réponse au site.\n\n**À remplacer :**\n- `TODO_GOOGLE_SHEET_ID` (nœud *Ajouter dans Google Sheets*) — onglet `Leads` avec les en-têtes `Nom | Email | Entreprise | Besoin | Date | Source`\n- `TODO_SLACK_WEBHOOK_URL` (nœud *Prévenir Slack*, désactivé, optionnel)\n\n**Credentials :** `Google Sheets account` (OAuth2), `Gmail account` (OAuth2).\n\nURL production : `https://<n8n>/webhook/demo-automatisation` → `config.js` → `webhookAutomatisation`.",
+        "height": 300,
+        "width": 620,
+        "color": 4
+      },
+      "id": "c2a472ff-d814-552f-9f40-35cd56763ecd",
+      "name": "Note c2866df6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "demo-automatisation",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "efe911b7-d95e-5c10-b9bd-f4c8e0fb7f83",
+      "name": "Formulaire du site",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "4de90459-e1d4-5686-94c3-de9fd6b16401"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "49d3d7f5-9ad7-5088-bc0d-af0563b016af",
+              "name": "nom",
+              "value": "={{ String(($json.body || {}).nom || '').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "5deff195-e8d1-5d4c-a3f0-7dc2bef0fee0",
+              "name": "email",
+              "value": "={{ String(($json.body || {}).email || '').trim().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "c81fc88c-3f33-5a6d-8957-31b9eb2e15ae",
+              "name": "entreprise",
+              "value": "={{ String(($json.body || {}).entreprise || '').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "b2ac2a66-3d94-5621-a4c6-bd980187ff92",
+              "name": "besoin",
+              "value": "={{ String(($json.body || {}).besoin || '').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "369e6570-533c-5fcb-8e6c-883fe88f14a0",
+              "name": "date",
+              "value": "={{ $now.setZone('Europe/Paris').toFormat('yyyy-MM-dd HH:mm') }}",
+              "type": "string"
+            },
+            {
+              "id": "b61437fb-c662-5ae2-b1b3-c708aa23ff2f",
+              "name": "source",
+              "value": "Site de démos",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "19c9477f-2f7c-5fa2-812a-b07f96e10a47",
+      "name": "Normaliser le lead",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0621afbd-b65a-50e7-b74e-04a61e7f4641",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "436f10e4-0ca9-5983-9e4e-ab725228f825",
+      "name": "Email valide ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "TODO_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nom": "={{ $json.nom }}",
+            "Email": "={{ $json.email }}",
+            "Entreprise": "={{ $json.entreprise }}",
+            "Besoin": "={{ $json.besoin }}",
+            "Date": "={{ $json.date }}",
+            "Source": "={{ $json.source }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nom",
+              "displayName": "Nom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Entreprise",
+              "displayName": "Entreprise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Besoin",
+              "displayName": "Besoin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "a3b107eb-9de3-529c-ad58-fc90683fdc58",
+      "name": "Ajouter dans Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        780,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $('Normaliser le lead').first().json.email }}",
+        "subject": "=Bienvenue {{ $('Normaliser le lead').first().json.nom }} — votre demande est bien reçue",
+        "emailType": "html",
+        "message": "=<div style=\"font-family:Arial,sans-serif;max-width:600px;color:#222\"><h2 style=\"margin:0 0 12px\">Bonjour {{ $('Normaliser le lead').first().json.nom }},</h2><p>Merci pour votre demande{{ $('Normaliser le lead').first().json.entreprise ? ' pour <b>' + $('Normaliser le lead').first().json.entreprise + '</b>' : '' }}. Elle vient d'être enregistrée automatiquement dans notre CRM.</p><p style=\"background:#f4f4f5;padding:12px;border-radius:8px\"><b>Votre besoin :</b><br>{{ $('Normaliser le lead').first().json.besoin || 'non précisé' }}</p><p>Je reviens vers vous sous 24 h avec une première proposition.</p><p>À très vite,<br><b>Hajer</b><br>Automatisation &amp; IA</p><p style=\"color:#888;font-size:12px;margin-top:24px\">Cet email a été envoyé automatiquement par un workflow n8n ({{ $('Normaliser le lead').first().json.date }}).</p></div>",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Hajer — Automatisation & IA"
+        }
+      },
+      "id": "c7e1d41a-7800-5048-a1c0-e7526ac7f35e",
+      "name": "Email de bienvenue (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "TODO_SLACK_WEBHOOK_URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: ':new: Nouveau lead : ' + $('Normaliser le lead').first().json.nom + ' — ' + ($('Normaliser le lead').first().json.entreprise || 'entreprise non précisée') + ' — ' + ($('Normaliser le lead').first().json.besoin || 'besoin non précisé') }) }}",
+        "options": {}
+      },
+      "id": "a1fcc910-eb50-5bf8-9b1c-7a5ebd03cda7",
+      "name": "Prévenir Slack (optionnel)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        300
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7509dc52-b57d-56b4-a1f2-79e27e3aae8a",
+              "name": "ok",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "fe1fc8e8-baba-5511-838e-09afd5d9e7a4",
+              "name": "message",
+              "value": "=Lead enregistré dans Google Sheets, email de bienvenue envoyé à {{ $('Normaliser le lead').first().json.email }}.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "68a93dd2-be41-5558-bd14-87f4175497be",
+      "name": "Réponse OK",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1560,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "id": "17eb1843-9ecf-5523-a8d6-c6b9eb483b2e",
+      "name": "Répondre au site",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1820,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7509dc52-b57d-56b4-a1f2-79e27e3aae8a",
+              "name": "ok",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "fe1fc8e8-baba-5511-838e-09afd5d9e7a4",
+              "name": "message",
+              "value": "Email invalide : merci de renseigner une adresse email valide.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "47400d9f-06b0-58c6-873c-d10d99490a3f",
+      "name": "Réponse erreur",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {
+          "responseCode": 400,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "id": "2c2dfce5-88ff-56c3-ac3e-516e196bf147",
+      "name": "Répondre erreur 400",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1300,
+        540
+      ]
+    }
+  ],
+  "connections": {
+    "Formulaire du site": {
+      "main": [
+        [
+          {
+            "node": "Normaliser le lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normaliser le lead": {
+      "main": [
+        [
+          {
+            "node": "Email valide ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email valide ?": {
+      "main": [
+        [
+          {
+            "node": "Ajouter dans Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Réponse erreur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ajouter dans Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Email de bienvenue (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email de bienvenue (Gmail)": {
+      "main": [
+        [
+          {
+            "node": "Prévenir Slack (optionnel)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prévenir Slack (optionnel)": {
+      "main": [
+        [
+          {
+            "node": "Réponse OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réponse OK": {
+      "main": [
+        [
+          {
+            "node": "Répondre au site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réponse erreur": {
+      "main": [
+        [
+          {
+            "node": "Répondre erreur 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Paris"
+  },
+  "pinData": {},
+  "tags": []
+}

@@ -1,0 +1,9 @@
+# Dépendances des scripts de démo (Python 3.11+)
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5
+pandas>=2.1,<3
+pytest>=8,<9
+
+# Optionnel — publication dans un Google Sheet (installé par le workflow
+# uniquement si le secret GOOGLE_SERVICE_ACCOUNT_JSON est défini) :
+# gspread>=6,<7
