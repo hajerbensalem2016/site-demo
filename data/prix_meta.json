@@ -1,0 +1,9 @@
+{
+  "derniere_execution": "2026-09-23T09:42:01+00:00",
+  "source": "Books to Scrape",
+  "source_url": "https://books.toscrape.com/",
+  "cible": "catalogue",
+  "nb_lignes": 40,
+  "devise_source": "GBP",
+  "taux_applique": 1.0
+}

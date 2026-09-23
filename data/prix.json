@@ -1,10 +1,242 @@
 [
-  { "titre": "Casque Bluetooth ANC Pro — Boutique A", "prix": 129.90, "lien": "https://exemple-boutique-a.test/casque-anc-pro", "note": 4.6 },
-  { "titre": "Casque Bluetooth ANC Pro — Boutique B", "prix": 119.00, "lien": "https://exemple-boutique-b.test/casque-anc-pro", "note": 4.4 },
-  { "titre": "Casque Bluetooth ANC Pro — Marketplace C", "prix": 134.50, "lien": "https://exemple-marketplace-c.test/casque-anc-pro", "note": 4.7 },
-  { "titre": "Enceinte portable 20 W — Boutique A", "prix": 59.99, "lien": "https://exemple-boutique-a.test/enceinte-20w", "note": 4.2 },
-  { "titre": "Enceinte portable 20 W — Boutique B", "prix": 54.90, "lien": "https://exemple-boutique-b.test/enceinte-20w", "note": 4.0 },
-  { "titre": "Montre connectée Sport — Boutique A", "prix": 189.00, "lien": "https://exemple-boutique-a.test/montre-sport", "note": 4.5 },
-  { "titre": "Montre connectée Sport — Marketplace C", "prix": 174.99, "lien": "https://exemple-marketplace-c.test/montre-sport", "note": 4.3 },
-  { "titre": "Chargeur sans fil 15 W — Boutique B", "prix": 24.90, "lien": "https://exemple-boutique-b.test/chargeur-15w", "note": 3.9 }
+  {
+    "titre": "In Her Wake — Books to Scrape",
+    "prix": 12.84,
+    "lien": "https://books.toscrape.com/catalogue/in-her-wake_980/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Starving Hearts (Triangular Trade Trilogy, #1) — Books to Scrape",
+    "prix": 13.99,
+    "lien": "https://books.toscrape.com/catalogue/starving-hearts-triangular-trade-trilogy-1_990/index.html",
+    "note": 2.0
+  },
+  {
+    "titre": "Sophie's World — Books to Scrape",
+    "prix": 15.94,
+    "lien": "https://books.toscrape.com/catalogue/sophies-world_966/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Set Me Free — Books to Scrape",
+    "prix": 17.46,
+    "lien": "https://books.toscrape.com/catalogue/set-me-free_988/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "The Four Agreements: A Practical Guide to Personal Freedom — Books to Scrape",
+    "prix": 17.66,
+    "lien": "https://books.toscrape.com/catalogue/the-four-agreements-a-practical-guide-to-personal-freedom_970/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "The Coming Woman: A Novel Based on the Life of the Infamous Feminist, Victoria Woodhull — Books to Scrape",
+    "prix": 17.93,
+    "lien": "https://books.toscrape.com/catalogue/the-coming-woman-a-novel-based-on-the-life-of-the-infamous-feminist-victoria-woodhull_993/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "Maude (1883-1993):She Grew Up with the country — Books to Scrape",
+    "prix": 18.02,
+    "lien": "https://books.toscrape.com/catalogue/maude-1883-1993she-grew-up-with-the-country_964/index.html",
+    "note": 2.0
+  },
+  {
+    "titre": "In a Dark, Dark Wood — Books to Scrape",
+    "prix": 19.63,
+    "lien": "https://books.toscrape.com/catalogue/in-a-dark-dark-wood_963/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Shakespeare's Sonnets — Books to Scrape",
+    "prix": 20.66,
+    "lien": "https://books.toscrape.com/catalogue/shakespeares-sonnets_989/index.html",
+    "note": 4.0
+  },
+  {
+    "titre": "America's Cradle of Quarterbacks: Western Pennsylvania's Football Factory from Johnny Unitas to Joe Montana — Books to Scrape",
+    "prix": 22.5,
+    "lien": "https://books.toscrape.com/catalogue/americas-cradle-of-quarterbacks-western-pennsylvanias-football-factory-from-johnny-unitas-to-joe-montana_974/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics — Books to Scrape",
+    "prix": 22.6,
+    "lien": "https://books.toscrape.com/catalogue/the-boys-in-the-boat-nine-americans-and-their-epic-quest-for-gold-at-the-1936-berlin-olympics_992/index.html",
+    "note": 4.0
+  },
+  {
+    "titre": "The Requiem Red — Books to Scrape",
+    "prix": 22.65,
+    "lien": "https://books.toscrape.com/catalogue/the-requiem-red_995/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "The Elephant Tree — Books to Scrape",
+    "prix": 23.82,
+    "lien": "https://books.toscrape.com/catalogue/the-elephant-tree_968/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Olio — Books to Scrape",
+    "prix": 23.88,
+    "lien": "https://books.toscrape.com/catalogue/olio_984/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Chase Me (Paris Nights #2) — Books to Scrape",
+    "prix": 25.27,
+    "lien": "https://books.toscrape.com/catalogue/chase-me-paris-nights-2_977/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Foolproof Preserving: A Guide to Small Batch Jams, Jellies, Pickles, Condiments, and More: A Foolproof Guide to Making Small Batch Jams, Jellies, Pickles, Condiments, and More — Books to Scrape",
+    "prix": 30.52,
+    "lien": "https://books.toscrape.com/catalogue/foolproof-preserving-a-guide-to-small-batch-jams-jellies-pickles-condiments-and-more-a-foolproof-guide-to-making-small-batch-jams-jellies-pickles-condiments-and-more_978/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "The Five Love Languages: How to Express Heartfelt Commitment to Your Mate — Books to Scrape",
+    "prix": 31.05,
+    "lien": "https://books.toscrape.com/catalogue/the-five-love-languages-how-to-express-heartfelt-commitment-to-your-mate_969/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "Penny Maybe — Books to Scrape",
+    "prix": 33.29,
+    "lien": "https://books.toscrape.com/catalogue/penny-maybe_965/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "The Dirty Little Secrets of Getting Your Dream Job — Books to Scrape",
+    "prix": 33.34,
+    "lien": "https://books.toscrape.com/catalogue/the-dirty-little-secrets-of-getting-your-dream-job_994/index.html",
+    "note": 4.0
+  },
+  {
+    "titre": "You can't bury them all: Poems — Books to Scrape",
+    "prix": 33.63,
+    "lien": "https://books.toscrape.com/catalogue/you-cant-bury-them-all-poems_961/index.html",
+    "note": 2.0
+  },
+  {
+    "titre": "Black Dust — Books to Scrape",
+    "prix": 34.53,
+    "lien": "https://books.toscrape.com/catalogue/black-dust_976/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Rip it Up and Start Again — Books to Scrape",
+    "prix": 35.02,
+    "lien": "https://books.toscrape.com/catalogue/rip-it-up-and-start-again_986/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "The Bear and the Piano — Books to Scrape",
+    "prix": 36.89,
+    "lien": "https://books.toscrape.com/catalogue/the-bear-and-the-piano_967/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "How Music Works — Books to Scrape",
+    "prix": 37.32,
+    "lien": "https://books.toscrape.com/catalogue/how-music-works_979/index.html",
+    "note": 2.0
+  },
+  {
+    "titre": "Mesaerion: The Best Science Fiction Stories 1800-1849 — Books to Scrape",
+    "prix": 37.59,
+    "lien": "https://books.toscrape.com/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Worlds Elsewhere: Journeys Around Shakespeareâs Globe — Books to Scrape",
+    "prix": 40.3,
+    "lien": "https://books.toscrape.com/catalogue/worlds-elsewhere-journeys-around-shakespeares-globe_972/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Wall and Piece — Books to Scrape",
+    "prix": 44.18,
+    "lien": "https://books.toscrape.com/catalogue/wall-and-piece_971/index.html",
+    "note": 4.0
+  },
+  {
+    "titre": "It's Only the Himalayas — Books to Scrape",
+    "prix": 45.17,
+    "lien": "https://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html",
+    "note": 2.0
+  },
+  {
+    "titre": "Sharp Objects — Books to Scrape",
+    "prix": 47.82,
+    "lien": "https://books.toscrape.com/catalogue/sharp-objects_997/index.html",
+    "note": 4.0
+  },
+  {
+    "titre": "Soumission — Books to Scrape",
+    "prix": 50.1,
+    "lien": "https://books.toscrape.com/catalogue/soumission_998/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Libertarianism for Beginners — Books to Scrape",
+    "prix": 51.33,
+    "lien": "https://books.toscrape.com/catalogue/libertarianism-for-beginners_982/index.html",
+    "note": 2.0
+  },
+  {
+    "titre": "A Light in the Attic — Books to Scrape",
+    "prix": 51.77,
+    "lien": "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "The Black Maria — Books to Scrape",
+    "prix": 52.15,
+    "lien": "https://books.toscrape.com/catalogue/the-black-maria_991/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Behind Closed Doors — Books to Scrape",
+    "prix": 52.22,
+    "lien": "https://books.toscrape.com/catalogue/behind-closed-doors_962/index.html",
+    "note": 4.0
+  },
+  {
+    "titre": "Scott Pilgrim's Precious Little Life (Scott Pilgrim #1) — Books to Scrape",
+    "prix": 52.29,
+    "lien": "https://books.toscrape.com/catalogue/scott-pilgrims-precious-little-life-scott-pilgrim-1_987/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Aladdin and His Wonderful Lamp — Books to Scrape",
+    "prix": 53.13,
+    "lien": "https://books.toscrape.com/catalogue/aladdin-and-his-wonderful-lamp_973/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "Tipping the Velvet — Books to Scrape",
+    "prix": 53.74,
+    "lien": "https://books.toscrape.com/catalogue/tipping-the-velvet_999/index.html",
+    "note": 1.0
+  },
+  {
+    "titre": "Sapiens: A Brief History of Humankind — Books to Scrape",
+    "prix": 54.23,
+    "lien": "https://books.toscrape.com/catalogue/sapiens-a-brief-history-of-humankind_996/index.html",
+    "note": 5.0
+  },
+  {
+    "titre": "Birdsong: A Story in Pictures — Books to Scrape",
+    "prix": 54.64,
+    "lien": "https://books.toscrape.com/catalogue/birdsong-a-story-in-pictures_975/index.html",
+    "note": 3.0
+  },
+  {
+    "titre": "Our Band Could Be Your Life: Scenes from the American Indie Underground, 1981-1991 — Books to Scrape",
+    "prix": 57.25,
+    "lien": "https://books.toscrape.com/catalogue/our-band-could-be-your-life-scenes-from-the-american-indie-underground-1981-1991_985/index.html",
+    "note": 3.0
+  }
 ]
