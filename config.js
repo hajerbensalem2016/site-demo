@@ -16,8 +16,8 @@ window.DEMO_CONFIG = {
   webhookScraping:       "TODO_WEBHOOK_SCRAPING",       // body { cible } -> { ok, message, resultats? }
 
   /* --- Agent vocal (Vapi) : clé PUBLIQUE uniquement --- */
-  vapiPublicKey:   "TODO_VAPI_PUBLIC_KEY",
-  vapiAssistantId: "TODO_VAPI_ASSISTANT_ID",
+  vapiPublicKey:   "e92ae97f-b5dd-487b-a489-66fc1215df9b",
+  vapiAssistantId: "87dc6a84-ebca-4c27-8b55-2eb5f8cf6b83",
 
   /* --- Vidéos Loom de 60 s (URL d'embed : https://www.loom.com/embed/XXXX) --- */
   loom: {
