@@ -71,6 +71,46 @@ var EMAILS = {
   }
 };
 
+/* Accusé de réception FIXE pour la page Contact (le message du visiteur n'y est jamais recopié). */
+var CONFIRMATIONS = {
+  fr: {
+    sujet: 'Votre message est bien reçu — Hajer, Automatisation & IA',
+    texte: [
+      'Bonjour,',
+      '',
+      'Merci pour votre message : il m\'est bien parvenu. Je l\'étudie et je vous réponds par écrit rapidement, avec une proposition claire et un devis fixe.',
+      '',
+      'Si vous voulez ajouter une précision (outils utilisés, volumes, délais), répondez simplement à cet email.',
+      '',
+      'En attendant, vous pouvez tester mes démos : ' + SITE,
+      '',
+      'Hajer',
+      'Automatisation & IA',
+      '',
+      '—',
+      'Vous recevez cet email parce que cette adresse a été saisie dans le formulaire de contact de ' + SITE + '. Si ce n\'est pas vous, ignorez-le.'
+    ].join('\n')
+  },
+  en: {
+    sujet: 'Your message has been received — Hajer, Automation & AI',
+    texte: [
+      'Hello,',
+      '',
+      'Thank you for your message: I have received it. I will review it and reply in writing shortly, with a clear proposal and a fixed price.',
+      '',
+      'If you would like to add details (tools you use, volumes, deadlines), just reply to this email.',
+      '',
+      'Meanwhile, feel free to try my demos: ' + SITE,
+      '',
+      'Hajer',
+      'Automation & AI',
+      '',
+      '—',
+      'You are receiving this email because this address was entered in the contact form on ' + SITE + '. If this was not you, please ignore it.'
+    ].join('\n')
+  }
+};
+
 function propre(v, max) {
   var s = String(v || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max);
   return /^[=+\-@]/.test(s) ? '\'' + s : s; /* empêche l'injection de formules dans la feuille */
@@ -86,40 +126,49 @@ function doPost(e) {
   try {
     var d = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     var lang = d.lang === 'en' ? 'en' : 'fr';
+    var source = d.source === 'contact' ? 'contact' : 'demo';
     var email = String(d.email || '').trim().toLowerCase().slice(0, 120);
-    if (!/^[^\s@,;<>]+@[^\s@,;<>]+\.[a-z]{2,}$/i.test(email)) return reponse({ ok: false, error: 'invalid_input' });
+    var telephone = String(d.telephone || '').replace(/[^+()\d\s.-]/g, '').trim().slice(0, 25);
+    if (email && !/^[^\s@,;<>]+@[^\s@,;<>]+\.[a-z]{2,}$/i.test(email)) return reponse({ ok: false, error: 'invalid_input' });
+    if (!email && (source === 'demo' || !telephone)) return reponse({ ok: false, error: 'invalid_input' });
     var nom = propre(d.nom, 80), entreprise = propre(d.entreprise, 80), besoin = propre(d.besoin, 600);
 
     var props = PropertiesService.getScriptProperties();
     var cache = CacheService.getScriptCache();
     var jour = Utilities.formatDate(new Date(), 'Europe/Paris', 'yyyy-MM-dd');
     var compteur = Number(props.getProperty('envois_' + jour) || 0);
-    var cle = 'deja_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email));
 
     var statut;
-    if (cache.get(cle)) statut = 'déjà envoyé récemment (non renvoyé)';
-    else if (compteur >= MAX_PAR_JOUR) statut = 'plafond du jour atteint (non envoyé)';
+    if (!email) statut = 'pas d\'email (à rappeler par téléphone)';
     else {
-      MailApp.sendEmail({ to: email, subject: EMAILS[lang].sujet, body: EMAILS[lang].texte, name: 'Hajer — Automatisation & IA' });
-      cache.put(cle, '1', 21600);
-      props.setProperty('envois_' + jour, String(compteur + 1));
-      statut = 'email de présentation envoyé';
+      var cle = 'deja_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email));
+      if (cache.get(cle)) statut = 'déjà envoyé récemment (non renvoyé)';
+      else if (compteur >= MAX_PAR_JOUR) statut = 'plafond du jour atteint (non envoyé)';
+      else {
+        var modele = (source === 'contact' ? CONFIRMATIONS : EMAILS)[lang];
+        MailApp.sendEmail({ to: email, subject: modele.sujet, body: modele.texte, name: 'Hajer — Automatisation & IA' });
+        cache.put(cle, '1', 21600);
+        props.setProperty('envois_' + jour, String(compteur + 1));
+        statut = 'email envoyé';
+      }
     }
 
     var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
     var feuille = ss.getSheetByName('Leads') || ss.insertSheet('Leads');
-    if (feuille.getLastRow() === 0) feuille.appendRow(['Date', 'Nom', 'Email', 'Entreprise', 'Besoin', 'Langue', 'Statut']);
-    feuille.appendRow([new Date(), nom, email, entreprise, besoin, lang, statut]);
+    if (feuille.getLastRow() === 0) feuille.appendRow(['Date', 'Source', 'Nom', 'Email', 'Téléphone', 'Entreprise', 'Besoin', 'Langue', 'Statut']);
+    feuille.appendRow([new Date(), source === 'contact' ? 'Page Contact' : 'Démo automatisation', nom, email, propre(telephone, 25), entreprise, besoin, lang, statut]);
 
     var moi = Session.getEffectiveUser().getEmail();
-    MailApp.sendEmail({
+    var notif = {
       to: moi,
-      subject: '[Démo site] Nouveau contact : ' + (nom || email),
-      body: 'Nom : ' + nom + '\nEmail : ' + email + '\nEntreprise : ' + entreprise + '\nBesoin :\n' + besoin + '\n\nLangue : ' + lang + '\nStatut : ' + statut + '\nFeuille : ' + ss.getUrl(),
-      replyTo: email
-    });
+      subject: (source === 'contact' ? '[Site] Nouveau message de ' : '[Démo site] Nouveau contact : ') + (nom || email || telephone),
+      body: 'Source : ' + (source === 'contact' ? 'page Contact' : 'démo automatisation') + '\nNom : ' + nom + '\nEmail : ' + (email || '—') + '\nTéléphone : ' + (telephone || '—') +
+        '\nEntreprise : ' + entreprise + '\nBesoin :\n' + besoin + '\n\nLangue : ' + lang + '\nStatut : ' + statut + '\nFeuille : ' + ss.getUrl()
+    };
+    if (email) notif.replyTo = email;
+    MailApp.sendEmail(notif);
 
-    return reponse({ ok: true, envoye: statut === 'email de présentation envoyé', statut: statut });
+    return reponse({ ok: true, envoye: statut === 'email envoyé', statut: statut });
   } catch (err) {
     return reponse({ ok: false, error: 'internal', detail: String(err).slice(0, 200) });
   } finally {

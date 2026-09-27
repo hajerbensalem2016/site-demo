@@ -1,7 +1,8 @@
 'use strict';
 /* ============================================================
    POST /api/automatisation — démo « Automatisation de workflow »
-   Requête  : { lang: "fr"|"en", nom, email, entreprise?, besoin? }
+   Requête  : { lang: "fr"|"en", source?: "demo"|"contact", nom, email?, telephone?, entreprise?, besoin? }
+              (démo : email obligatoire ; page Contact : email OU téléphone, besoin obligatoire)
    Réponse  : { ok: true, envoye: boolean, message }
 
    Valide le formulaire puis le transmet au Google Apps Script de Hajer
@@ -23,11 +24,16 @@ function texte(v, max, obligatoire) {
 }
 
 module.exports = createHandler('automatisation', async function ({ body, lang }) {
+  const source = body.source === 'contact' ? 'contact' : 'demo';
   const nom = texte(body.nom, 80, true);
-  const email = texte(body.email, 120, true).toLowerCase();
-  if (!/^[^\s@,;<>]+@[^\s@,;<>]+\.[a-z]{2,}$/i.test(email)) throw new InputError('invalid_input');
+  const email = texte(body.email, 120, false).toLowerCase();
+  const telephone = texte(body.telephone, 25, false);
+  if (email && !/^[^\s@,;<>]+@[^\s@,;<>]+\.[a-z]{2,}$/i.test(email)) throw new InputError('invalid_input');
+  if (telephone && !/^[+()\d\s.-]{8,25}$/.test(telephone)) throw new InputError('invalid_input');
+  /* démo : email obligatoire (c'est lui qui reçoit l'email) ; contact : email OU téléphone */
+  if (!email && (source === 'demo' || !telephone)) throw new InputError('invalid_input');
   const entreprise = texte(body.entreprise, 80, false);
-  const besoin = texte(body.besoin, 600, false);
+  const besoin = texte(body.besoin, 600, source === 'contact');
 
   const url = process.env.APPS_SCRIPT_URL;
   if (!url || !/^https:\/\/script\.google\.com\//.test(url)) throw new LlmError('no_provider', 'APPS_SCRIPT_URL absente');
@@ -39,7 +45,7 @@ module.exports = createHandler('automatisation', async function ({ body, lang })
     const r = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, /* text/plain : pas de pré-requête côté Google */
-      body: JSON.stringify({ lang: lang, nom: nom, email: email, entreprise: entreprise, besoin: besoin }),
+      body: JSON.stringify({ source: source, lang: lang, nom: nom, email: email, telephone: telephone, entreprise: entreprise, besoin: besoin }),
       redirect: 'follow',
       signal: ctrl.signal
     });
@@ -54,6 +60,9 @@ module.exports = createHandler('automatisation', async function ({ body, lang })
     throw new LlmError('all_failed', 'Apps Script : ' + JSON.stringify(data).slice(0, 200));
   }
 
+  if (source === 'contact') {
+    return { ok: true, envoye: !!data.envoye, message: lang === 'fr' ? 'Message envoyé à Hajer.' : 'Message sent to Hajer.' };
+  }
   const message = data.envoye
     ? (lang === 'fr' ? 'Email de présentation envoyé à ' + email + ' : vérifiez votre boîte (et les spams).' : 'Presentation email sent to ' + email + ': check your inbox (and spam folder).')
     : (lang === 'fr' ? 'Demande enregistrée. Un email a déjà été envoyé récemment à cette adresse : pas de renvoi, pour éviter le spam.' : 'Request saved. An email was already sent to this address recently: not resent, to avoid spam.');

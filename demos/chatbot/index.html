@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chatbot de site web · Hajer — Automatisation & IA</title>
-  <meta name="description" content="Testez un chatbot IA qui répond aux clients 24h/24, qualifie les visiteurs et propose un rendez-vous. Démo interactive gratuite.">
+  <meta name="description" content="Testez un chatbot IA qui répond aux clients 24h/24, qualifie les visiteurs et recueille leur demande. Démo interactive gratuite.">
   <link rel="stylesheet" href="../../style.css">
   <script src="../../config.js"></script>
 </head>
@@ -70,31 +70,31 @@
     window.PAGE_I18N = {
       fr: {
         p_title: 'Chatbot de site web',
-        p_benefit: 'Répond 24h/24, environ 8 heures gagnées par semaine',
-        p_lead: 'Un assistant intégré à votre site, WhatsApp ou Instagram qui répond aux questions fréquentes, qualifie les visiteurs et propose un rendez-vous. Ici, il joue le rôle d\'assistant d\'une agence d\'automatisation.',
+        p_benefit: 'Répond à vos visiteurs 24h/24',
+        p_lead: 'Un assistant intégré à votre site, WhatsApp ou Instagram qui répond aux questions fréquentes, qualifie les visiteurs et recueille leur demande. Ici, il joue le rôle d\'assistant d\'une agence d\'automatisation.',
         p_hint: 'Posez-lui une question comme un visiteur le ferait (5 messages gratuits par jour).',
         p_bot_name: 'Assistant — Agence Automatisation',
-        p_q1: 'Quels services proposez-vous ?', p_q2: 'Combien ça coûte ?', p_q3: 'Je veux un rendez-vous',
+        p_q1: 'Quels services proposez-vous ?', p_q2: 'Combien ça coûte ?', p_q3: 'Comment vous contacter ?',
         p_placeholder: 'Écrivez votre message…',
         p_send: 'Envoyer',
-        p_welcome: 'Bonjour ! Je suis l\'assistant de l\'agence. Je peux vous présenter nos services, donner une idée de tarif ou vous proposer un rendez-vous. Que puis-je faire pour vous ?',
+        p_welcome: 'Bonjour ! Je suis l\'assistant de l\'agence. Je peux vous présenter nos services, donner une idée de tarif ou vous expliquer comment nous transmettre votre besoin. Que puis-je faire pour vous ?',
         s1t: 'Le visiteur écrit', s1d: 'Le widget (site web, WhatsApp, Messenger ou Instagram) envoie le message à un workflow n8n.',
         s2t: 'L\'IA répond avec vos données', s2d: 'Claude répond à partir de votre FAQ, de vos tarifs et de vos horaires, dans votre ton, en français ou en anglais.',
-        s3t: 'Le lead est capturé', s3d: 'Nom, email et besoin sont enregistrés dans votre CRM ; un rendez-vous peut être pris via Calendly.'
+        s3t: 'Le lead est capturé', s3d: 'Nom, email et besoin sont enregistrés dans votre CRM ; vous êtes prévenu par email et répondez quand vous voulez.'
       },
       en: {
         p_title: 'Website chatbot',
-        p_benefit: 'Answers 24/7, about 8 hours saved per week',
-        p_lead: 'An assistant embedded in your website, WhatsApp or Instagram that answers frequent questions, qualifies visitors and offers a meeting. Here it plays the assistant of an automation agency.',
+        p_benefit: 'Answers your visitors 24/7',
+        p_lead: 'An assistant embedded in your website, WhatsApp or Instagram that answers frequent questions, qualifies visitors and collects their request. Here it plays the assistant of an automation agency.',
         p_hint: 'Ask it a question as a visitor would (5 free messages per day).',
         p_bot_name: 'Assistant — Automation Agency',
-        p_q1: 'What services do you offer?', p_q2: 'How much does it cost?', p_q3: 'I want a meeting',
+        p_q1: 'What services do you offer?', p_q2: 'How much does it cost?', p_q3: 'How can I contact you?',
         p_placeholder: 'Type your message…',
         p_send: 'Send',
-        p_welcome: 'Hi! I am the agency assistant. I can present our services, give a price range or offer you a meeting. What can I do for you?',
+        p_welcome: 'Hi! I am the agency assistant. I can present our services, give a price range or explain how to send us your need. What can I do for you?',
         s1t: 'The visitor writes', s1d: 'The widget (website, WhatsApp, Messenger or Instagram) sends the message to an n8n workflow.',
         s2t: 'The AI answers with your data', s2d: 'Claude answers from your FAQ, prices and opening hours, in your tone, in French or English.',
-        s3t: 'The lead is captured', s3d: 'Name, email and need are saved in your CRM; a meeting can be booked through Calendly.'
+        s3t: 'The lead is captured', s3d: 'Name, email and need are saved in your CRM; you are notified by email and reply whenever you like.'
       }
     };
   </script>
@@ -108,7 +108,8 @@
       function addMsg(role, text) {
         var div = document.createElement('div');
         div.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
-        div.textContent = text;
+        if (role === 'user') div.textContent = text;
+        else div.innerHTML = D.escapeHtml(text).replace(/https?:\/\/[^\s<]+[^\s<.,;:!?)]/g, function (u) { return '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>'; });
         body.appendChild(div);
         body.scrollTop = body.scrollHeight;
         return div;
@@ -126,14 +127,14 @@
           ? 'Nous construisons : des agents IA (tri et réponse aux emails), des automatisations n8n / Make / Zapier entre vos outils, des chatbots (site, WhatsApp, Instagram), des agents vocaux qui répondent au téléphone, du scraping Python et des CRM Notion / Airtable / HubSpot. Quel sujet vous intéresse ?'
           : 'We build: AI agents (email triage and replies), n8n / Make / Zapier automations between your tools, chatbots (website, WhatsApp, Instagram), voice agents that answer the phone, Python scraping and Notion / Airtable / HubSpot CRMs. Which topic interests you?';
         if (/prix|tarif|co[uû]t|combien|price|cost|how much|budget/.test(q)) return fr
-          ? 'Chaque projet a un devis fixe, établi après un appel gratuit de 15 minutes. Ordre de grandeur : une automatisation simple à partir de 150 €, un chatbot à partir de 400 €, un agent vocal à partir de 700 €. Voulez-vous que je vous propose un créneau ?'
-          : 'Every project gets a fixed quote after a free 15-minute call. Rough range: a simple automation from $150, a chatbot from $400, a voice agent from $700. Would you like me to suggest a time slot?';
-        if (/rendez|rdv|meeting|appel|call|book|créneau|slot|disponib/.test(q)) return fr
-          ? 'Avec plaisir. Les prochains créneaux disponibles sont jeudi 14 h et vendredi 10 h (appel de 15 minutes, gratuit). Indiquez-moi votre email et le créneau qui vous convient, et je vous envoie l\'invitation.'
-          : 'With pleasure. The next available slots are Thursday 2 pm and Friday 10 am (free 15-minute call). Give me your email and the slot that suits you and I will send the invite.';
+          ? 'Chaque projet a un devis fixe et écrit, établi à partir de la description de votre besoin. Ordre de grandeur : une automatisation simple à partir de 150 €, un chatbot à partir de 400 €, un agent vocal à partir de 700 €. Décrivez votre besoin ici : https://site-demo-hbs16.vercel.app/contact'
+          : 'Every project gets a fixed written quote, based on the description of your need. Rough range: a simple automation from $150, a chatbot from $400, a voice agent from $700. Describe your need here: https://site-demo-hbs16.vercel.app/contact';
+        if (/rendez|rdv|meeting|appel|call|book|créneau|slot|disponib|contact|joindre|reach/.test(q)) return fr
+          ? 'Le plus simple : décrivez votre besoin en quelques lignes dans ce formulaire, https://site-demo-hbs16.vercel.app/contact . Hajer vous répond par écrit avec une proposition et un devis fixe, et un échange est fixé ensuite seulement si c\'est utile.'
+          : 'The easiest way: describe your need in a few lines in this form, https://site-demo-hbs16.vercel.app/contact . Hajer replies in writing with a proposal and a fixed quote, and a call is scheduled afterwards only if useful.';
         if (/@/.test(q)) return fr
-          ? 'Merci ! J\'ai bien noté votre email. Vous recevrez l\'invitation dans quelques minutes, avec un lien pour la déplacer si besoin. À très vite !'
-          : 'Thank you! I have noted your email. You will receive the invite in a few minutes, with a link to reschedule if needed. Talk soon!';
+          ? 'Merci ! Pour que votre demande arrive bien à Hajer, remplissez ce formulaire avec votre email et votre besoin : https://site-demo-hbs16.vercel.app/contact . Vous recevrez une réponse écrite.'
+          : 'Thank you! To make sure your request reaches Hajer, fill in this form with your email and your need: https://site-demo-hbs16.vercel.app/contact . You will get a written reply.';
         if (/délai|delay|combien de temps|how long|timeline|quand/.test(q)) return fr
           ? 'Une automatisation simple est livrée en 2 à 5 jours, un chatbot en 1 à 2 semaines, un agent vocal en 2 à 3 semaines. Chaque livraison inclut une vidéo explicative et 14 jours de support.'
           : 'A simple automation ships in 2 to 5 days, a chatbot in 1 to 2 weeks, a voice agent in 2 to 3 weeks. Every delivery includes a Loom walkthrough and 14 days of support.';
@@ -141,10 +142,10 @@
           ? 'Oui, nous travaillons avec n8n, Make, Zapier, HubSpot, GoHighLevel, Notion, Airtable, Google Sheets, Slack, Shopify, Stripe, WhatsApp Business API, Vapi et les API Claude / OpenAI. Quel outil utilisez-vous aujourd\'hui ?'
           : 'Yes, we work with n8n, Make, Zapier, HubSpot, GoHighLevel, Notion, Airtable, Google Sheets, Slack, Shopify, Stripe, WhatsApp Business API, Vapi and the Claude / OpenAI APIs. Which tool do you use today?';
         if (/merci|thank/.test(q)) return fr ? 'Avec plaisir ! N\'hésitez pas si vous avez d\'autres questions.' : 'You are welcome! Feel free to ask if you have other questions.';
-        if (/bonjour|salut|hello|hi\b|hey/.test(q)) return fr ? 'Bonjour ! Comment puis-je vous aider : services, tarifs ou rendez-vous ?' : 'Hello! How can I help: services, pricing or a meeting?';
+        if (/bonjour|salut|hello|hi\b|hey/.test(q)) return fr ? 'Bonjour ! Comment puis-je vous aider : services, tarifs ou contact ?' : 'Hello! How can I help: services, pricing or contact?';
         return fr
-          ? 'Bonne question. Pour vous répondre précisément, le plus simple est un appel gratuit de 15 minutes avec Hajer. Voulez-vous un créneau, ou préférez-vous décrire votre besoin ici ?'
-          : 'Good question. To answer precisely, the easiest is a free 15-minute call with Hajer. Would you like a slot, or would you rather describe your need here?';
+          ? 'Bonne question. Pour vous répondre précisément, décrivez votre besoin en quelques lignes dans ce formulaire : https://site-demo-hbs16.vercel.app/contact . Hajer vous répondra par écrit.'
+          : 'Good question. To answer precisely, describe your need in a few lines in this form: https://site-demo-hbs16.vercel.app/contact . Hajer will reply in writing.';
       }
 
       function ask(text) {

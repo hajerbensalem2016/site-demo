@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Décrivez votre besoin en quelques lignes : Hajer vous répond par écrit avec une proposition et un devis fixe.">
+  <link rel="stylesheet" href="../style.css">
+  <script src="../config.js"></script>
+</head>
+<body data-root="../" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../" data-i18n="back_home"></a>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card">
+      <form id="form" novalidate>
+        <div class="row row-2">
+          <div class="field"><label for="nom" data-i18n="f_nom"></label><input type="text" id="nom" required maxlength="80" autocomplete="name"></div>
+          <div class="field"><label for="entreprise" data-i18n="f_entreprise"></label><input type="text" id="entreprise" maxlength="80" autocomplete="organization"></div>
+        </div>
+        <p class="muted small" style="margin:4px 0 8px" data-i18n="p_reach"></p>
+        <div class="row row-2">
+          <div class="field"><label for="email" data-i18n="f_email"></label><input type="email" id="email" maxlength="120" autocomplete="email" placeholder="vous@entreprise.com"></div>
+          <div class="field"><label for="tel" data-i18n="f_tel"></label><input type="tel" id="tel" maxlength="25" autocomplete="tel" placeholder="+33 6 12 34 56 78"></div>
+        </div>
+        <div class="field"><label for="message" data-i18n="f_message"></label><textarea id="message" required maxlength="600" style="min-height:160px" data-i18n-placeholder="f_message_ph"></textarea></div>
+        <p class="muted small" id="count" style="margin:-6px 0 12px;text-align:right"></p>
+        <button type="submit" class="btn" id="send" data-i18n="p_send"></button>
+      </form>
+      <div id="status" style="margin-top:14px"></div>
+      <p class="muted small" style="margin-top:14px" data-i18n="p_privacy"></p>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Contactez-nous',
+        p_lead: 'Décrivez en quelques lignes la tâche qui vous prend du temps. Je vous réponds par écrit avec une proposition claire et un devis fixe ; on fixe un échange seulement si c\'est utile.',
+        f_nom: 'Votre nom', f_email: 'Email', f_tel: 'Téléphone', f_entreprise: 'Entreprise (optionnel)',
+        p_reach: 'Pour vous répondre : laissez votre email, votre numéro de téléphone, ou les deux.',
+        f_message: 'Votre besoin', f_message_ph: 'Ex. : nous recevons 50 demandes de devis par semaine par email, je voudrais qu\'elles soient triées et enregistrées automatiquement dans notre CRM…',
+        p_send: 'Envoyer mon message',
+        p_invalid: 'Merci d\'indiquer votre nom, votre besoin (au moins 10 caractères) et un email valide ou un numéro de téléphone.',
+        p_ok: 'Message envoyé ! Je vous réponds rapidement.',
+        p_ok_mail: ' Un email de confirmation part à votre adresse.',
+        p_fail: 'L\'envoi n\'a pas fonctionné. Réessayez dans quelques minutes.',
+        p_count: '{n} / 600 caractères',
+        p_privacy: 'Vos informations sont transmises uniquement à Hajer pour répondre à votre demande. Elles ne sont ni revendues ni utilisées pour de la publicité.',
+        how_title: 'Et ensuite ?',
+        s1t: 'Vous décrivez votre besoin', s1d: 'Quelques lignes suffisent : vos outils, ce qui se passe aujourd\'hui, ce que vous voulez automatiser.',
+        s2t: 'Je vous réponds par écrit', s2d: 'Une proposition claire : ce qui est possible, comment, en combien de temps, et un prix fixe.',
+        s3t: 'On avance si ça vous convient', s3d: 'Un échange (visio ou appel) est fixé seulement si c\'est utile. Sinon, on démarre directement.'
+      },
+      en: {
+        p_title: 'Contact us',
+        p_lead: 'Describe in a few lines the task that takes up your time. I reply in writing with a clear proposal and a fixed price; we schedule a call only if useful.',
+        f_nom: 'Your name', f_email: 'Email', f_tel: 'Phone', f_entreprise: 'Company (optional)',
+        p_reach: 'So I can reply: leave your email, your phone number, or both.',
+        f_message: 'Your need', f_message_ph: 'E.g.: we receive 50 quote requests a week by email, I would like them sorted and saved automatically in our CRM…',
+        p_send: 'Send my message',
+        p_invalid: 'Please enter your name, your need (at least 10 characters) and a valid email or a phone number.',
+        p_ok: 'Message sent! I will get back to you shortly.',
+        p_ok_mail: ' A confirmation email is on its way to your inbox.',
+        p_fail: 'Sending failed. Please try again in a few minutes.',
+        p_count: '{n} / 600 characters',
+        p_privacy: 'Your details are sent only to Hajer to answer your request. They are never sold or used for advertising.',
+        how_title: 'What happens next?',
+        s1t: 'You describe your need', s1d: 'A few lines are enough: your tools, what happens today, what you want automated.',
+        s2t: 'I reply in writing', s2d: 'A clear proposal: what is possible, how, how long, and a fixed price.',
+        s3t: 'We move forward if it suits you', s3d: 'A call or video meeting is scheduled only if useful. Otherwise we start right away.'
+      }
+    };
+  </script>
+  <script src="../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo;
+      var form = D.qs('#form'), btn = D.qs('#send'), status = D.qs('#status'), msg = D.qs('#message'), count = D.qs('#count');
+      function updateCount() { count.textContent = D.t('p_count', { n: msg.value.length }); }
+      msg.addEventListener('input', updateCount);
+      document.addEventListener('demo:lang', updateCount);
+      updateCount();
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        status.innerHTML = '';
+        var p = {
+          source: 'contact',
+          nom: D.qs('#nom').value.trim(), email: D.qs('#email').value.trim(), telephone: D.qs('#tel').value.trim(),
+          entreprise: D.qs('#entreprise').value.trim(), besoin: msg.value.trim()
+        };
+        var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(p.email), telOk = (p.telephone.match(/\d/g) || []).length >= 8;
+        if (p.email && !emailOk) emailOk = false;
+        if (p.nom.length < 2 || p.besoin.length < 10 || !(emailOk || (telOk && !p.email))) { D.errorBanner(status, D.t('p_invalid')); return; }
+        D.setBusy(btn, true);
+        D.apiPost('automatisation', p)
+          .then(function (data) {
+            if (!data || data.ok !== true) throw new Error('failed');
+            var ok = document.createElement('div'); ok.className = 'banner banner-success'; ok.textContent = D.t('p_ok') + (p.email ? D.t('p_ok_mail') : '');
+            status.appendChild(ok);
+            form.reset(); updateCount();
+          })
+          .catch(function () { D.errorBanner(status, D.t('p_fail')); })
+          .then(function () { D.setBusy(btn, false); });
+      });
+    })();
+  </script>
+</body>
+</html>

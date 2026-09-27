@@ -39,6 +39,8 @@
       site_name: 'Hajer — Automatisation & IA',
       site_tag: 'Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM',
       nav_home: 'Accueil',
+      nav_contact: 'Contactez-nous',
+      cta_contact: 'Contactez-nous',
       theme_toggle: 'Changer de thème (clair / sombre)',
       back_home: '← Retour à l\'accueil',
       test_zone: 'Testez vous-même',
@@ -49,21 +51,23 @@
       loom_todo: 'Vidéo Loom à venir — remplacer la valeur TODO_LOOM dans config.js',
       how_title: 'Comment ça marche',
       cta_title: 'Vous voulez ça pour votre entreprise ?',
-      cta_text: 'Appel gratuit de 15 minutes, cadrage clair et devis fixe avant de commencer, vidéo explicative de chaque système livré et 14 jours de support offerts.',
+      cta_text: 'Décrivez votre besoin par écrit : je vous réponds avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c\'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.',
       cta_upwork: 'Me contacter sur Upwork',
       cta_malt: 'Me contacter sur Malt',
       cta_todo: 'Lien à configurer dans config.js (TODO_UPWORK / TODO_MALT)',
       btn_run: 'Lancer le test',
       loading: 'Traitement en cours…',
       error_generic: 'Une erreur est survenue. Réessayez dans un instant.',
-      footer_text: '© {year} Hajer — Site de démonstration. Les données saisies ne sont pas conservées.',
-      footer_free: 'Hébergé gratuitement sur Vercel · HTML, CSS et JavaScript purs',
+      footer_text: '© {year} Hajer — Automatisation & IA. Démos à tester librement.',
+      footer_free: 'Le formulaire de contact transmet vos informations à Hajer uniquement. Dans les autres démos, le texte saisi est envoyé au service d\'IA pour produire la réponse, puis n\'est pas conservé sur ce site : n\'y mettez pas de données sensibles.',
       yes: 'Oui', no: 'Non'
     },
     en: {
       site_name: 'Hajer — Automation & AI',
       site_tag: 'AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM',
       nav_home: 'Home',
+      nav_contact: 'Contact us',
+      cta_contact: 'Contact us',
       theme_toggle: 'Toggle theme (light / dark)',
       back_home: '← Back to home',
       test_zone: 'Try it yourself',
@@ -74,15 +78,15 @@
       loom_todo: 'Loom video coming soon — replace the TODO_LOOM value in config.js',
       how_title: 'How it works',
       cta_title: 'Want this for your business?',
-      cta_text: 'Free 15-minute call, clear scope and fixed price before starting, Loom walkthrough of every system delivered and 14 days of free support.',
+      cta_text: 'Describe your need in writing: I reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.',
       cta_upwork: 'Hire me on Upwork',
       cta_malt: 'Hire me on Malt',
       cta_todo: 'Link to configure in config.js (TODO_UPWORK / TODO_MALT)',
       btn_run: 'Run the test',
       loading: 'Processing…',
       error_generic: 'Something went wrong. Please try again in a moment.',
-      footer_text: '© {year} Hajer — Demo website. Nothing you type is stored.',
-      footer_free: 'Hosted for free on Vercel · plain HTML, CSS and JavaScript',
+      footer_text: '© {year} Hajer — Automation & AI. Demos free to try.',
+      footer_free: 'The contact form sends your details to Hajer only. In the other demos, the text you type is sent to the AI service to produce the answer and is not stored on this site: do not enter sensitive data.',
       yes: 'Yes', no: 'No'
     }
   };
@@ -273,6 +277,7 @@
       '<div class="container header-inner">' +
       '  <a class="brand" href="' + root() + '"><span class="brand-dot"></span><span data-i18n="site_name"></span></a>' +
       '  <div class="header-actions">' +
+      '    <a class="btn btn-sm nav-contact" href="' + root() + 'contact" data-i18n="nav_contact"></a>' +
       '    <div class="lang-switch" role="group" aria-label="Langue / Language">' +
       '      <button type="button" data-lang="fr" aria-pressed="false">FR</button>' +
       '      <button type="button" data-lang="en" aria-pressed="false">EN</button>' +
@@ -298,17 +303,27 @@
         f.src = url; f.setAttribute('allowfullscreen', ''); f.setAttribute('loading', 'lazy'); f.title = 'Loom';
         box.appendChild(f);
       } else {
-        /* TODO_LOOM : remplacer dans config.js -> loom.<clé> */
-        box.innerHTML = '<iframe src="about:blank" title="TODO_LOOM" hidden></iframe><div class="video-placeholder">' + ICON_VIDEO + '<span data-i18n="loom_todo"></span><code>config.js → loom.' + escapeHtml(key) + '</code></div>';
+        /* TODO_LOOM (config.js -> loom.<clé>) : la section vidéo reste masquée tant qu'aucune vidéo n'est fournie */
+        var section = box.closest('section');
+        if (section) section.hidden = true;
       }
     });
   }
   function mountCta() {
+    /* Bouton principal : page Contact (message envoyé à Hajer par email) */
+    qsa('[data-cta] .btns').forEach(function (btns) {
+      if (qs('[data-cta-contact]', btns)) return;
+      var a = document.createElement('a');
+      a.className = 'btn'; a.href = root() + 'contact';
+      a.setAttribute('data-cta-contact', ''); a.setAttribute('data-i18n', 'cta_contact');
+      btns.insertBefore(a, btns.firstChild);
+    });
+    /* Upwork / Malt : affichés seulement quand l'URL du profil est renseignée dans config.js */
     var pairs = [['[data-cta-upwork]', CFG.upwork], ['[data-cta-malt]', CFG.malt]];
     pairs.forEach(function (p) {
       qsa(p[0]).forEach(function (a) {
-        if (isTodo(p[1])) { a.setAttribute('href', '#'); a.setAttribute('data-i18n-title', 'cta_todo'); a.setAttribute('aria-disabled', 'true'); a.addEventListener('click', function (e) { e.preventDefault(); alert(t('cta_todo')); }); }
-        else { a.setAttribute('href', p[1]); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); }
+        if (isTodo(p[1])) { a.hidden = true; }
+        else { a.classList.remove('btn'); a.className = 'btn btn-outline'; a.setAttribute('href', p[1]); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); }
       });
     });
   }

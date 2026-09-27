@@ -7,6 +7,33 @@
   <meta name="description" content="Trois chiffres suffisent : l'IA rédige votre rapport d'activité, prêt à exporter en PDF. Démo interactive gratuite.">
   <link rel="stylesheet" href="../../style.css">
   <script src="../../config.js"></script>
+  <style>
+    /* Couleurs des graphiques (validées daltonisme + contraste, clair et sombre) */
+    :root { --series-1: #2a78d6; --series-2: #eb6834; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-1: #3987e5; --series-2: #d95926; } }
+    :root[data-theme="dark"] { --series-1: #3987e5; --series-2: #d95926; }
+    .adv-toggle { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; cursor: pointer; }
+    .adv-toggle input { width: 18px; height: 18px; accent-color: var(--primary); }
+    .adv-zone { border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 14px; margin: 8px 0 14px; min-width: 0; }
+    .adv-zone .row { margin-bottom: 12px; }
+    .charts { display: grid; gap: 14px; grid-template-columns: 1fr; margin: 16px 0; }
+    @media (min-width: 760px) { .charts.two { grid-template-columns: 1fr 1fr; } }
+    .chart { background: var(--bg-soft); border-radius: var(--radius-sm); padding: 14px; min-width: 0; }
+    .chart h3 { margin: 0 0 2px; font-size: .95rem; }
+    .chart .sub { margin: 0 0 8px; font-size: .8rem; color: var(--text-muted); }
+    .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .chart .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .8rem; color: var(--text-muted); margin-top: 6px; }
+    .chart .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+    .chart .legend i.dash { height: 0; border-top: 2px dashed var(--text-muted); border-radius: 0; vertical-align: 3px; }
+    .chart .axis { stroke: var(--border); stroke-width: 1; }
+    .chart .grid { stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 4; }
+    .chart text { fill: var(--text-muted); font-size: 11px; font-family: var(--font); }
+    .chart text.val { fill: var(--text); font-weight: 600; }
+    .chart .hit:hover + .mark, .chart .mark:hover { opacity: .8; }
+    .chart .kpi-evo { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .chart .kpi-evo span { font-size: .78rem; padding: 3px 8px; border-radius: 999px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); }
+    @media print { .charts { break-inside: avoid; } .chart { background: none; border: 1px solid #ccc; } }
+  </style>
 </head>
 <body data-root="../../" data-demo="rapport" data-title-key="p_title">
   <header id="site-header"></header>
@@ -27,10 +54,33 @@
             <div class="field"><label for="depenses" data-i18n="f_dep"></label><input type="number" id="depenses" min="0" step="1" value="31500" required></div>
             <div class="field"><label for="clients" data-i18n="f_cli"></label><input type="number" id="clients" min="0" step="1" value="37" required></div>
           </div>
+          <label class="adv-toggle"><input type="checkbox" id="adv"> <b data-i18n="p_adv"></b> <span class="muted small" data-i18n="p_adv_sub"></span></label>
+          <fieldset id="adv-zone" class="adv-zone" hidden>
+            <p class="muted small" style="margin:0 0 10px" data-i18n="p_adv_hint"></p>
+            <div class="row row-3">
+              <div class="field"><label for="p-ca" data-i18n="f_pca"></label><input type="number" id="p-ca" min="0" step="1" value="44100"></div>
+              <div class="field"><label for="p-dep" data-i18n="f_pdep"></label><input type="number" id="p-dep" min="0" step="1" value="30200"></div>
+              <div class="field"><label for="p-cli" data-i18n="f_pcli"></label><input type="number" id="p-cli" min="0" step="1" value="34"></div>
+            </div>
+            <div class="row row-2">
+              <div class="field"><label for="objectif" data-i18n="f_obj"></label><input type="number" id="objectif" min="0" step="1" value="50000"></div>
+              <div class="field"><label for="secteur" data-i18n="f_sect"></label>
+                <select id="secteur">
+                  <option value="" data-i18n="sect_none"></option>
+                  <option value="ecommerce" data-i18n="sect_ecommerce"></option>
+                  <option value="services" data-i18n="sect_services"></option>
+                  <option value="restauration" data-i18n="sect_restauration"></option>
+                  <option value="artisanat" data-i18n="sect_artisanat"></option>
+                  <option value="autre" data-i18n="sect_autre"></option>
+                </select></div>
+            </div>
+            <div class="field"><label for="histo" data-i18n="f_histo"></label><input type="text" id="histo" value="39800; 41200; 40500; 43000" inputmode="decimal" data-i18n-placeholder="f_histo_ph"></div>
+          </fieldset>
           <button type="submit" class="btn" id="run" data-run data-i18n="p_run"></button>
         </form>
         <div class="quota-msg" data-quota-msg></div>
       </div>
+      <div class="charts" id="charts" hidden></div>
       <div class="result" id="result"></div>
       <div class="md-tools no-print" id="tools" hidden>
         <button type="button" class="btn btn-ghost btn-sm" id="dl" data-i18n="p_download"></button>
@@ -71,29 +121,51 @@
     window.PAGE_I18N = {
       fr: {
         p_title: 'Rapport d\'activité automatique',
-        p_benefit: 'Environ 3 heures gagnées par semaine',
-        p_lead: 'Chaque lundi, n8n lit vos chiffres dans Google Sheets, Stripe ou votre CRM, l\'IA rédige un rapport clair avec recommandations, et le PDF part par email et sur Slack. Ici, entrez trois chiffres pour voir le résultat.',
+        p_benefit: 'Votre rapport prêt chaque lundi, sans saisie',
+        p_lead: 'Chaque semaine ou chaque mois, le système lit vos chiffres dans Google Sheets, Stripe ou votre CRM, l\'IA rédige un rapport clair avec graphiques et recommandations, et le PDF part par email. Ici, entrez trois chiffres pour voir le résultat.',
         p_hint: 'Chiffres du mois (fictifs bienvenus) :',
+        p_adv: 'Mode avancé', p_adv_sub: '— comparaison, objectif, tendance, secteur',
+        p_adv_hint: 'Ajoutez le mois précédent, un objectif et l\'historique : le rapport compare, mesure l\'écart à l\'objectif et trace la tendance. Tous les champs sont optionnels.',
+        f_pca: 'CA du mois précédent (€)', f_pdep: 'Dépenses du mois précédent (€)', f_pcli: 'Clients du mois précédent',
+        f_obj: 'Objectif de CA du mois (€)', f_sect: 'Secteur',
+        sect_none: '— Choisir —', sect_ecommerce: 'E-commerce', sect_services: 'Services aux entreprises', sect_restauration: 'Restauration', sect_artisanat: 'Artisanat / BTP', sect_autre: 'Autre',
+        f_histo: 'CA des mois précédents, du plus ancien au plus récent (€, séparés par ;)', f_histo_ph: '39800; 41200; 40500; 43000',
+        p_histo_bad: 'Historique : entrez jusqu\'à 11 nombres séparés par des points-virgules.',
+        c_bars_t: 'Chiffre d\'affaires, dépenses et marge', c_bars_s: 'En euros', c_cur: 'Ce mois', c_prev: 'Mois précédent',
+        c_ca: 'CA', c_dep: 'Dépenses', c_marge: 'Marge',
+        c_line_t: 'Évolution du chiffre d\'affaires', c_line_s: 'Par mois, en euros', c_obj: 'Objectif', c_now: 'Ce mois', c_m: 'M-{n}',
+        c_evo: '{k} {v} vs mois précédent', c_reach: 'Objectif atteint à {v}',
         f_ca: 'Chiffre d\'affaires (€)', f_dep: 'Dépenses (€)', f_cli: 'Nombre de clients',
         p_run: 'Générer mon rapport',
         p_invalid: 'Merci d\'entrer trois nombres positifs.',
         p_download: 'Télécharger (.md)', p_print: 'Imprimer / enregistrer en PDF',
         s1t: 'Collecte des chiffres', s1d: 'n8n lit automatiquement Google Sheets, Stripe, Shopify, HubSpot ou votre base de données chaque semaine ou chaque mois.',
-        s2t: 'Rédaction par l\'IA', s2d: 'Claude analyse les indicateurs, compare avec la période précédente et rédige un rapport avec 3 recommandations concrètes.',
-        s3t: 'Envoi automatique', s3d: 'Le rapport est converti en PDF puis envoyé par email à la direction et posté sur Slack, sans intervention.'
+        s2t: 'Calcul puis rédaction', s2d: 'Le programme calcule les indicateurs (marge, évolutions, objectif, tendance) sans erreur possible ; l\'IA rédige l\'analyse et 3 recommandations concrètes.',
+        s3t: 'Envoi automatique', s3d: 'Le rapport et ses graphiques sont convertis en PDF puis envoyés par email à la direction (et sur Slack si vous l\'utilisez), sans intervention.'
       },
       en: {
         p_title: 'Automatic activity report',
-        p_benefit: 'About 3 hours saved per week',
-        p_lead: 'Every Monday, n8n reads your numbers from Google Sheets, Stripe or your CRM, the AI writes a clear report with recommendations, and the PDF goes out by email and Slack. Here, enter three numbers to see the result.',
+        p_benefit: 'Your report ready every Monday, no data entry',
+        p_lead: 'Every week or month, the system reads your numbers from Google Sheets, Stripe or your CRM, the AI writes a clear report with charts and recommendations, and the PDF goes out by email. Here, enter three numbers to see the result.',
         p_hint: 'This month\'s numbers (fake ones welcome):',
+        p_adv: 'Advanced mode', p_adv_sub: '— comparison, target, trend, sector',
+        p_adv_hint: 'Add last month, a target and the history: the report compares, measures the gap to target and plots the trend. All fields are optional.',
+        f_pca: 'Last month revenue (€)', f_pdep: 'Last month expenses (€)', f_pcli: 'Last month customers',
+        f_obj: 'Monthly revenue target (€)', f_sect: 'Sector',
+        sect_none: '— Choose —', sect_ecommerce: 'E-commerce', sect_services: 'Business services', sect_restauration: 'Food & hospitality', sect_artisanat: 'Trades / construction', sect_autre: 'Other',
+        f_histo: 'Revenue of previous months, oldest to newest (€, separated by ;)', f_histo_ph: '39800; 41200; 40500; 43000',
+        p_histo_bad: 'History: enter up to 11 numbers separated by semicolons.',
+        c_bars_t: 'Revenue, expenses and margin', c_bars_s: 'In euros', c_cur: 'This month', c_prev: 'Last month',
+        c_ca: 'Revenue', c_dep: 'Expenses', c_marge: 'Margin',
+        c_line_t: 'Revenue trend', c_line_s: 'Per month, in euros', c_obj: 'Target', c_now: 'This month', c_m: 'M-{n}',
+        c_evo: '{k} {v} vs last month', c_reach: 'Target reached at {v}',
         f_ca: 'Revenue (€)', f_dep: 'Expenses (€)', f_cli: 'Number of customers',
         p_run: 'Generate my report',
         p_invalid: 'Please enter three positive numbers.',
         p_download: 'Download (.md)', p_print: 'Print / save as PDF',
         s1t: 'Data collection', s1d: 'n8n automatically reads Google Sheets, Stripe, Shopify, HubSpot or your database every week or month.',
-        s2t: 'AI writing', s2d: 'Claude analyses the KPIs, compares with the previous period and writes a report with 3 concrete recommendations.',
-        s3t: 'Automatic delivery', s3d: 'The report is converted to PDF then emailed to management and posted on Slack, hands-free.'
+        s2t: 'Compute, then write', s2d: 'The program computes the KPIs (margin, changes, target, trend) with no room for error; the AI writes the analysis and 3 concrete recommendations.',
+        s3t: 'Automatic delivery', s3d: 'The report and its charts are converted to PDF and emailed to management (and posted on Slack if you use it), hands-free.'
       }
     };
   </script>
@@ -142,7 +214,7 @@
           reco.map(function (r, i) { return (i + 1) + '. ' + r; }).join('\n'),
           '',
           '## Prochaine étape',
-          'Ce rapport peut être généré et envoyé automatiquement chaque semaine (Google Sheets → n8n → IA → PDF → email + Slack). Temps gagné estimé : **3 heures par semaine**.'
+          'Ce rapport peut être généré et envoyé automatiquement chaque semaine ou chaque mois (Google Sheets → n8n → IA → PDF → email), sans aucune saisie.'
         ].join('\n');
         return [
           '# Activity report — ' + date,
@@ -165,7 +237,7 @@
           reco.map(function (r, i) { return (i + 1) + '. ' + r; }).join('\n'),
           '',
           '## Next step',
-          'This report can be generated and sent automatically every week (Google Sheets → n8n → AI → PDF → email + Slack). Estimated time saved: **3 hours per week**.'
+          'This report can be generated and sent automatically every week or month (Google Sheets → n8n → AI → PDF → email), with no manual entry.'
         ].join('\n');
       }
 
@@ -176,19 +248,171 @@
         tools.removeAttribute('hidden');
       }
 
+      /* ---------- mode avancé ---------- */
+      var adv = D.qs('#adv'), advZone = D.qs('#adv-zone'), charts = D.qs('#charts');
+      adv.addEventListener('change', function () { advZone.hidden = !adv.checked; });
+
+      function optNum(id) { var v = D.qs(id).value.trim(); if (v === '') return null; var n = parseFloat(v); return n >= 0 ? n : NaN; }
+      function readAdvanced() {
+        if (!adv.checked) return null;
+        var prec = { ca: optNum('#p-ca'), depenses: optNum('#p-dep'), clients: optNum('#p-cli') };
+        var objectif = optNum('#objectif');
+        var raw = D.qs('#histo').value.trim();
+        var histo = raw ? raw.split(/[;\n]+/).map(function (s) { return parseFloat(s.replace(/\s/g, '').replace(',', '.')); }) : [];
+        if (histo.length > 11 || histo.some(function (n) { return !(n >= 0); })) return { error: D.t('p_histo_bad') };
+        if ([prec.ca, prec.depenses, prec.clients, objectif].some(function (n) { return n !== null && isNaN(n); })) return { error: D.t('p_invalid') };
+        var out = {};
+        if (prec.ca !== null || prec.depenses !== null || prec.clients !== null) out.precedent = prec;
+        if (objectif !== null) out.objectif = objectif;
+        if (histo.length) out.historique = histo;
+        if (D.qs('#secteur').value) out.secteur = D.qs('#secteur').value;
+        return out;
+      }
+
+      /* ---------- graphiques (SVG, calculés dans le navigateur à partir des mêmes chiffres) ---------- */
+      var NS = 'http://www.w3.org/2000/svg';
+      function loc() { return D.getLang() === 'fr' ? 'fr-FR' : 'en-GB'; }
+      function money(n) { return new Intl.NumberFormat(loc(), { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n); }
+      function short(n) { return new Intl.NumberFormat(loc(), { notation: 'compact', maximumFractionDigits: 1 }).format(n) + ' €'; }
+      function pctSigned(n) { var s = (Math.round(n * 10) / 10).toLocaleString(loc()) + ' %'; return (n > 0 ? '+' : '') + s; }
+      function niceScale(min, max, ticks) {
+        var span = (max - min) || Math.abs(max) || 1, raw = span / ticks, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+        var step = [1, 2, 2.5, 5, 10].map(function (m) { return m * mag; }).find(function (s) { return s >= raw; });
+        return { min: Math.floor(min / step) * step, max: Math.ceil(max / step) * step, step: step };
+      }
+      function el(tag, attrs, text) {
+        var e = document.createElementNS(NS, tag);
+        Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+        if (text !== undefined) e.textContent = text;
+        return e;
+      }
+      /* barre à coins arrondis côté valeur (4 px), ancrée à la ligne de base */
+      function barPath(x, w, y0, y1) {
+        var r = Math.min(4, w / 2, Math.abs(y1 - y0)), up = y1 < y0;
+        if (up) return 'M' + x + ',' + y0 + 'V' + (y1 + r) + 'Q' + x + ',' + y1 + ' ' + (x + r) + ',' + y1 + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y1 + ' ' + (x + w) + ',' + (y1 + r) + 'V' + y0 + 'Z';
+        return 'M' + x + ',' + y0 + 'V' + (y1 - r) + 'Q' + x + ',' + y1 + ' ' + (x + r) + ',' + y1 + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y1 + ' ' + (x + w) + ',' + (y1 - r) + 'V' + y0 + 'Z';
+      }
+      function card(title, sub) {
+        var c = document.createElement('div'); c.className = 'chart';
+        c.innerHTML = '<h3>' + D.escapeHtml(title) + '</h3><p class="sub">' + D.escapeHtml(sub) + '</p>';
+        return c;
+      }
+      function legend(items) {
+        var l = document.createElement('div'); l.className = 'legend';
+        l.innerHTML = items.map(function (it) { return '<span><i class="' + (it.dash ? 'dash' : '') + '" style="' + (it.dash ? '' : 'background:' + it.color) + '"></i>' + D.escapeHtml(it.label) + '</span>'; }).join('');
+        return l;
+      }
+
+      function barsChart(cur, prev) {
+        var cats = [['c_ca', 'ca'], ['c_dep', 'depenses'], ['c_marge', 'marge']];
+        var series = [{ label: D.t('c_cur'), color: 'var(--series-1)', data: cur }];
+        if (prev) series.unshift({ label: D.t('c_prev'), color: 'var(--series-2)', data: prev });
+        var vals = []; series.forEach(function (s) { cats.forEach(function (c) { vals.push(s.data[c[1]]); }); });
+        var sc = niceScale(Math.min(0, Math.min.apply(null, vals)), Math.max.apply(null, vals) * 1.08, 4);
+        var W = 520, H = 250, L = 58, R = 8, T = 22, B = 28, pw = W - L - R, ph = H - T - B;
+        var y = function (v) { return T + ph - (v - sc.min) / (sc.max - sc.min) * ph; };
+        var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': D.t('c_bars_t') });
+        for (var v = sc.min; v <= sc.max + 1e-9; v += sc.step) {
+          svg.appendChild(el('line', { class: v === 0 ? 'axis' : 'grid', x1: L, x2: W - R, y1: y(v), y2: y(v) }));
+          svg.appendChild(el('text', { x: L - 6, y: y(v) + 4, 'text-anchor': 'end' }, short(v)));
+        }
+        var gw = pw / cats.length, bw = Math.min(46, (gw - 28) / series.length - 2);
+        cats.forEach(function (c, ci) {
+          var total = series.length * bw + (series.length - 1) * 2, x0 = L + ci * gw + (gw - total) / 2;
+          series.forEach(function (s, si) {
+            var val = s.data[c[1]], x = x0 + si * (bw + 2), g = el('g');
+            g.appendChild(el('title', {}, s.label + ' — ' + D.t(c[0]) + ' : ' + money(val)));
+            g.appendChild(el('path', { class: 'mark', d: barPath(x, bw, y(0), y(val)), fill: s.color }));
+            svg.appendChild(g);
+            if (si === series.length - 1) svg.appendChild(el('text', { class: 'val', x: x + bw / 2, y: val >= 0 ? y(val) - 6 : y(val) + 14, 'text-anchor': 'middle' }, short(val)));
+          });
+          svg.appendChild(el('text', { x: L + ci * gw + gw / 2, y: H - 8, 'text-anchor': 'middle' }, D.t(c[0])));
+        });
+        var c = card(D.t('c_bars_t'), D.t('c_bars_s'));
+        c.appendChild(svg);
+        if (series.length > 1) c.appendChild(legend(series.slice().reverse()));
+        return c;
+      }
+
+      function lineChart(serie, objectif) {
+        var n = serie.length, vals = serie.concat(objectif ? [objectif] : []);
+        var sc = niceScale(Math.min.apply(null, vals) * 0.95, Math.max.apply(null, vals) * 1.05, 4);
+        var W = 520, H = 250, L = 58, R = 64, T = 22, B = 28, pw = W - L - R, ph = H - T - B;
+        var x = function (i) { return n === 1 ? L + pw / 2 : L + i * pw / (n - 1); };
+        var y = function (v) { return T + ph - (v - sc.min) / (sc.max - sc.min) * ph; };
+        var label = function (i) { return i === n - 1 ? D.t('c_now') : D.t('c_m', { n: n - 1 - i }); };
+        var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': D.t('c_line_t') });
+        for (var v = sc.min; v <= sc.max + 1e-9; v += sc.step) {
+          svg.appendChild(el('line', { class: 'grid', x1: L, x2: W - R, y1: y(v), y2: y(v) }));
+          svg.appendChild(el('text', { x: L - 6, y: y(v) + 4, 'text-anchor': 'end' }, short(v)));
+        }
+        if (objectif) {
+          svg.appendChild(el('line', { x1: L, x2: W - R, y1: y(objectif), y2: y(objectif), stroke: 'var(--text-muted)', 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }));
+          svg.appendChild(el('text', { x: W - R + 6, y: y(objectif) + 4 }, D.t('c_obj')));
+        }
+        svg.appendChild(el('polyline', { points: serie.map(function (v, i) { return x(i) + ',' + y(v); }).join(' '), fill: 'none', stroke: 'var(--series-1)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+        serie.forEach(function (v, i) {
+          var g = el('g');
+          g.appendChild(el('title', {}, label(i) + ' : ' + money(v)));
+          g.appendChild(el('circle', { cx: x(i), cy: y(v), r: 12, fill: 'transparent' }));
+          g.appendChild(el('circle', { class: 'mark', cx: x(i), cy: y(v), r: 4.5, fill: 'var(--series-1)', stroke: 'var(--bg-soft)', 'stroke-width': 2 }));
+          svg.appendChild(g);
+          var step = Math.ceil(n / 6);
+          if (i === n - 1 || (n - 1 - i) % step === 0) svg.appendChild(el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }, label(i)));
+        });
+        svg.appendChild(el('text', { class: 'val', x: x(n - 1), y: y(serie[n - 1]) - 10, 'text-anchor': 'middle' }, short(serie[n - 1])));
+        var c = card(D.t('c_line_t'), D.t('c_line_s'));
+        c.appendChild(svg);
+        if (objectif) c.appendChild(legend([{ label: D.t('c_ca'), color: 'var(--series-1)' }, { label: D.t('c_obj'), dash: true }]));
+        return c;
+      }
+
+      function kpi(ca, dep, cli) { return { ca: ca, depenses: dep, clients: cli, marge: ca - dep, panier: cli > 0 ? ca / cli : 0 }; }
+      function renderCharts(ca, dep, cli, av) {
+        charts.innerHTML = '';
+        var cur = kpi(ca, dep, cli), prev = null;
+        if (av && av.precedent && av.precedent.ca !== null && av.precedent.depenses !== null) prev = kpi(av.precedent.ca, av.precedent.depenses, av.precedent.clients || 0);
+        var bars = barsChart(cur, prev);
+        var chips = [];
+        if (prev) {
+          [['c_ca', 'ca'], ['c_dep', 'depenses'], ['c_marge', 'marge']].forEach(function (c) {
+            if (prev[c[1]] > 0) chips.push(D.t('c_evo', { k: D.t(c[0]), v: pctSigned((cur[c[1]] - prev[c[1]]) / prev[c[1]] * 100) }));
+          });
+        }
+        if (av && av.objectif > 0) chips.push(D.t('c_reach', { v: (Math.round(ca / av.objectif * 1000) / 10).toLocaleString(loc()) + ' %' }));
+        if (chips.length) {
+          var k = document.createElement('div'); k.className = 'kpi-evo';
+          k.innerHTML = chips.map(function (s) { return '<span>' + D.escapeHtml(s) + '</span>'; }).join('');
+          bars.appendChild(k);
+        }
+        charts.appendChild(bars);
+        var serie = [];
+        if (av) {
+          serie = (av.historique || []).slice();
+          if (!serie.length && av.precedent && av.precedent.ca !== null) serie = [av.precedent.ca];
+          if (serie.length) serie.push(ca);
+        }
+        if (serie.length >= 2) charts.appendChild(lineChart(serie, av.objectif > 0 ? av.objectif : null));
+        charts.classList.toggle('two', charts.children.length > 1);
+        charts.hidden = false;
+      }
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var ca = num('#ca'), dep = num('#depenses'), cli = num('#clients');
-        result.innerHTML = ''; tools.setAttribute('hidden', '');
+        result.innerHTML = ''; tools.setAttribute('hidden', ''); charts.hidden = true; charts.innerHTML = '';
         if (!(ca >= 0) || !(dep >= 0) || !(cli >= 0)) { D.errorBanner(result, D.t('p_invalid')); return; }
+        var av = readAdvanced();
+        if (av && av.error) { D.errorBanner(result, av.error); return; }
         if (!D.consumeQuota(SLUG)) return;
         D.setBusy(btn, true);
-        D.apiPost('rapport', { ca: ca, depenses: dep, clients: cli })
+        D.apiPost('rapport', Object.assign({ ca: ca, depenses: dep, clients: cli }, av || {}))
           .then(function (data) {
             if (!data || typeof data.rapport_markdown !== 'string') throw new Error('bad payload');
+            renderCharts(ca, dep, cli, av);
             render(data.rapport_markdown, false);
           })
-          .catch(function () { return D.sleep(900).then(function () { render(simulate(ca, dep, cli), true); }); })
+          .catch(function () { return D.sleep(900).then(function () { renderCharts(ca, dep, cli, av); render(simulate(ca, dep, cli), true); }); })
           .then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); });
       });
 
