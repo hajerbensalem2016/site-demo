@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo de facture → tableau · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Envoyez la photo d'une facture ou d'un ticket : l'IA lit le document et remplit un tableau (fournisseur, date, lignes, TVA, total). Démo gratuite.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+  <style>
+    .drop { border: 2px dashed var(--border); border-radius: var(--radius); padding: 22px; text-align: center; cursor: pointer; background: var(--bg-soft); }
+    .drop.over { border-color: var(--primary); }
+    .drop input { display: none; }
+    .preview { display: grid; gap: 14px; grid-template-columns: 1fr; margin-top: 14px; }
+    @media (min-width: 760px) { .preview.has-result { grid-template-columns: 260px 1fr; } }
+    .preview img { width: 100%; max-height: 360px; object-fit: contain; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; }
+    .fields { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: 12px; }
+    .check { display: inline-flex; gap: 6px; align-items: center; font-size: .85rem; padding: 4px 10px; border-radius: 999px; margin-top: 10px; }
+    .check.ok { background: var(--success-soft); color: var(--success); }
+    .check.ko { background: var(--warn-soft); color: var(--warn); }
+    table.inv td.num, table.inv th.num { text-align: right; white-space: nowrap; }
+    table.inv tfoot td { font-weight: 700; }
+  </style>
+</head>
+<body data-root="../../" data-demo="facture" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept="image/jpeg,image/png,image/webp">
+        <strong data-i18n="p_drop"></strong><br><span class="muted small" data-i18n="p_drop_sub"></span>
+      </label>
+      <div class="examples" style="margin-top:10px">
+        <button type="button" class="chip" id="sample" data-i18n="p_sample"></button>
+      </div>
+      <p class="muted small" data-i18n="p_privacy"></p>
+      <button type="button" class="btn" id="run" data-run data-i18n="p_run" disabled></button>
+      <div class="quota-msg" data-quota-msg></div>
+      <div class="preview" id="preview" hidden>
+        <div><img id="img" alt=""></div>
+        <div id="result"></div>
+      </div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="facture"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Photo de facture → tableau',
+        p_benefit: 'Plus aucune facture recopiée à la main',
+        p_lead: 'Vos factures et tickets arrivent par email, en photo ou en PDF : l\'IA les lit, en extrait le fournisseur, la date, chaque ligne, la TVA et le total, vérifie que les montants sont cohérents et range tout dans votre tableau ou votre logiciel de comptabilité.',
+        p_drop: 'Choisissez ou déposez la photo d\'une facture ou d\'un ticket',
+        p_drop_sub: 'JPEG, PNG ou WebP — sur téléphone, vous pouvez prendre la photo directement',
+        p_sample: 'Pas de facture sous la main ? Essayer avec un exemple',
+        p_privacy: 'N\'envoyez pas de document confidentiel : l\'image est lue par l\'IA puis n\'est pas conservée.',
+        p_run: 'Lire la facture',
+        p_bad_file: 'Ce fichier n\'est pas une image lisible (JPEG, PNG ou WebP).',
+        p_error: 'La lecture a échoué. Réessayez dans une minute avec une photo nette et bien éclairée.',
+        p_unreadable: 'L\'IA n\'a pas reconnu de facture ni de ticket sur cette image. Essayez une photo plus nette, prise bien à plat.',
+        f_type: 'Type', f_fournisseur: 'Fournisseur', f_date: 'Date', f_numero: 'N°',
+        t_facture: 'Facture', t_ticket: 'Ticket de caisse', t_devis: 'Devis', t_autre: 'Autre document',
+        c_designation: 'Désignation', c_qte: 'Qté', c_pu: 'Prix unit.', c_montant: 'Montant',
+        r_ht: 'Total HT', r_tva: 'TVA', r_ttc: 'Total TTC',
+        k_ok: '✓ Contrôle automatique : la somme des lignes correspond au total',
+        k_ko: '⚠ Contrôle automatique : écart de {e} entre la somme des lignes et le total — à vérifier',
+        p_csv: 'Télécharger pour Excel (.csv)',
+        p_next: 'Chez vous, c\'est automatique : chaque facture reçue par email ou déposée dans un dossier est lue, vérifiée et ajoutée à votre tableau ou à votre logiciel de comptabilité, sans rien recopier.',
+        s1t: 'La facture arrive', s1d: 'Pièce jointe d\'un email, photo envoyée sur WhatsApp, fichier déposé dans Google Drive ou Dropbox : le workflow se déclenche tout seul.',
+        s2t: 'L\'IA lit et vérifie', s2d: 'Fournisseur, date, numéro, lignes, TVA et total sont extraits ; le programme vérifie que les montants sont cohérents et signale les anomalies.',
+        s3t: 'Tout est rangé', s3d: 'Une ligne par facture dans Google Sheets, Excel, Airtable ou votre logiciel de comptabilité, avec le fichier d\'origine classé.'
+      },
+      en: {
+        p_title: 'Invoice photo → spreadsheet',
+        p_benefit: 'No more invoices typed in by hand',
+        p_lead: 'Your invoices and receipts arrive by email, as photos or PDFs: the AI reads them, extracts the supplier, date, every line, VAT and total, checks that the amounts add up and files everything in your spreadsheet or accounting software.',
+        p_drop: 'Choose or drop a photo of an invoice or receipt',
+        p_drop_sub: 'JPEG, PNG or WebP — on a phone, you can take the photo directly',
+        p_sample: 'No invoice at hand? Try with an example',
+        p_privacy: 'Do not send confidential documents: the image is read by the AI and then not stored.',
+        p_run: 'Read the invoice',
+        p_bad_file: 'This file is not a readable image (JPEG, PNG or WebP).',
+        p_error: 'Reading failed. Please try again in a minute with a sharp, well-lit photo.',
+        p_unreadable: 'The AI did not recognise an invoice or receipt in this image. Try a sharper photo, taken flat.',
+        f_type: 'Type', f_fournisseur: 'Supplier', f_date: 'Date', f_numero: 'No.',
+        t_facture: 'Invoice', t_ticket: 'Receipt', t_devis: 'Quote', t_autre: 'Other document',
+        c_designation: 'Description', c_qte: 'Qty', c_pu: 'Unit price', c_montant: 'Amount',
+        r_ht: 'Total excl. VAT', r_tva: 'VAT', r_ttc: 'Total incl. VAT',
+        k_ok: '✓ Automatic check: the sum of the lines matches the total',
+        k_ko: '⚠ Automatic check: {e} gap between the sum of the lines and the total — to review',
+        p_csv: 'Download for Excel (.csv)',
+        p_next: 'In your business, it is automatic: every invoice received by email or dropped in a folder is read, checked and added to your spreadsheet or accounting software, with nothing to retype.',
+        s1t: 'The invoice arrives', s1d: 'Email attachment, photo sent on WhatsApp, file dropped in Google Drive or Dropbox: the workflow starts on its own.',
+        s2t: 'The AI reads and checks', s2d: 'Supplier, date, number, lines, VAT and total are extracted; the program checks that the amounts add up and flags anomalies.',
+        s3t: 'Everything is filed', s3d: 'One row per invoice in Google Sheets, Excel, Airtable or your accounting software, with the original file stored.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'facture';
+      var drop = D.qs('#drop'), file = D.qs('#file'), btn = D.qs('#run'), preview = D.qs('#preview'), img = D.qs('#img'), result = D.qs('#result');
+      var imageData = null, lastDoc = null;
+
+      function loc() { return D.getLang() === 'fr' ? 'fr-FR' : 'en-GB'; }
+      function money(n, dev) {
+        if (n === null || n === undefined) return '—';
+        try { return new Intl.NumberFormat(loc(), { style: 'currency', currency: dev || 'EUR', currencyDisplay: 'narrowSymbol' }).format(n); }
+        catch (e) { return n.toLocaleString(loc(), { minimumFractionDigits: 2 }) + (dev ? ' ' + dev : ''); }
+      }
+
+      /* Redimensionne (1600 px max) et convertit en JPEG pour un envoi léger */
+      function loadImage(src) {
+        return new Promise(function (resolve, reject) {
+          var im = new Image();
+          im.onload = function () {
+            var s = Math.min(1, 1600 / Math.max(im.width, im.height));
+            var c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
+            var g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+            resolve(c.toDataURL('image/jpeg', 0.85));
+          };
+          im.onerror = reject;
+          im.src = src;
+        });
+      }
+      function setImage(dataUrl) {
+        imageData = dataUrl; img.src = dataUrl; preview.hidden = false; preview.classList.remove('has-result'); result.innerHTML = '';
+        btn.disabled = false;
+      }
+      function handleFile(f) {
+        if (!f || !/^image\/(jpeg|png|webp)$/.test(f.type)) { preview.hidden = false; result.innerHTML = ''; D.errorBanner(result, D.t('p_bad_file')); return; }
+        var r = new FileReader();
+        r.onload = function () { loadImage(r.result).then(setImage).catch(function () { D.errorBanner(result, D.t('p_bad_file')); }); };
+        r.readAsDataURL(f);
+      }
+      file.addEventListener('change', function () { handleFile(file.files[0]); });
+      ['dragover', 'dragenter'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+      ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function () { drop.classList.remove('over'); }); });
+      drop.addEventListener('drop', function (e) { e.preventDefault(); handleFile(e.dataTransfer.files[0]); });
+
+      /* Exemple fictif dessiné dans le navigateur (aucune vraie facture) */
+      D.qs('#sample').addEventListener('click', function () {
+        var fr = D.getLang() === 'fr';
+        var c = document.createElement('canvas'); c.width = 900; c.height = 700;
+        var g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 900, 700); g.fillStyle = '#111';
+        g.font = 'bold 30px Arial'; g.fillText(fr ? 'ATELIER MARTIN SARL' : 'MARTIN STUDIO LTD', 50, 70);
+        g.font = '24px Arial'; g.fillText(fr ? '8 quai de la Citadelle, 59140 Dunkerque' : '8 Harbour Street, Bristol BS1 4RN', 50, 110);
+        g.fillText((fr ? 'FACTURE N° ' : 'INVOICE No. ') + 'F-2026-0147', 560, 70); g.fillText((fr ? 'Date : ' : 'Date: ') + '15/09/2026', 560, 110);
+        g.font = 'bold 24px Arial';
+        [[fr ? 'Désignation' : 'Description', 50], [fr ? 'Qté' : 'Qty', 500], [fr ? 'P.U. HT' : 'Unit price', 590], [fr ? 'Total HT' : 'Total', 760]].forEach(function (h) { g.fillText(h[0], h[1], 200); });
+        g.font = '24px Arial';
+        var rows = fr ? [['Création logo', 1, 350], ['Cartes de visite (x500)', 2, 45.5], ['Flyers A5 (x1000)', 1, 129]] : [['Logo design', 1, 350], ['Business cards (x500)', 2, 45.5], ['A5 flyers (x1000)', 1, 129]];
+        var f2 = function (n) { return fr ? n.toFixed(2).replace('.', ',') + ' €' : '£' + n.toFixed(2); };
+        rows.forEach(function (r, i) { var y = 260 + i * 50; g.fillText(r[0], 50, y); g.fillText(String(r[1]), 510, y); g.fillText(f2(r[2]), 590, y); g.fillText(f2(r[1] * r[2]), 760, y); });
+        g.fillRect(50, 430, 800, 2);
+        g.fillText((fr ? 'Total HT : ' : 'Subtotal: ') + f2(570), 560, 480);
+        g.fillText((fr ? 'TVA 20 % : ' : 'VAT 20%: ') + f2(114), 560, 525);
+        g.font = 'bold 26px Arial'; g.fillText((fr ? 'Total TTC : ' : 'Total: ') + f2(684), 560, 575);
+        setImage(c.toDataURL('image/jpeg', 0.9));
+      });
+
+      function typeLabel(t) { return D.t('t_' + (t || 'autre')); }
+      function render(res) {
+        var d = res.document, dev = d.devise;
+        lastDoc = d;
+        preview.classList.add('has-result');
+        if (!d.lisible) { result.innerHTML = ''; D.errorBanner(result, D.t('p_unreadable')); return; }
+        var kv = function (k, v) { return '<div class="kv"><div class="k">' + D.escapeHtml(D.t(k)) + '</div><div class="v">' + D.escapeHtml(v || '—') + '</div></div>'; };
+        var date = d.date ? new Date(d.date + 'T12:00:00').toLocaleDateString(loc()) : null;
+        var rows = d.lignes.map(function (l) {
+          return '<tr><td>' + D.escapeHtml(l.designation) + '</td><td class="num">' + (l.quantite === null ? '—' : l.quantite.toLocaleString(loc())) + '</td><td class="num">' + money(l.prix_unitaire, dev) + '</td><td class="num">' + money(l.montant, dev) + '</td></tr>';
+        }).join('');
+        var foot = [['r_ht', d.total_ht], ['r_tva', d.tva], ['r_ttc', d.total_ttc]].filter(function (x) { return x[1] !== null; })
+          .map(function (x) { return '<tr><td colspan="3">' + D.escapeHtml(D.t(x[0])) + '</td><td class="num">' + money(x[1], dev) + '</td></tr>'; }).join('');
+        var k = res.controle, check = '';
+        if (k && k.coherent === true) check = '<span class="check ok">' + D.escapeHtml(D.t('k_ok')) + '</span>';
+        else if (k && k.coherent === false) check = '<span class="check ko">' + D.escapeHtml(D.t('k_ko', { e: money(Math.abs(k.ecart), dev) })) + '</span>';
+        result.innerHTML =
+          '<div class="fields">' + kv('f_type', typeLabel(d.type_document)) + kv('f_fournisseur', d.fournisseur) + kv('f_date', date) + kv('f_numero', d.numero) + '</div>' +
+          '<div class="table-wrap"><table class="inv"><thead><tr><th>' + D.escapeHtml(D.t('c_designation')) + '</th><th class="num">' + D.escapeHtml(D.t('c_qte')) + '</th><th class="num">' + D.escapeHtml(D.t('c_pu')) + '</th><th class="num">' + D.escapeHtml(D.t('c_montant')) + '</th></tr></thead>' +
+          '<tbody>' + (rows || '<tr><td colspan="4" class="muted">—</td></tr>') + '</tbody><tfoot>' + foot + '</tfoot></table></div>' +
+          check +
+          '<div class="md-tools"><button type="button" class="btn btn-ghost btn-sm" id="csv">' + D.escapeHtml(D.t('p_csv')) + '</button></div>' +
+          '<div class="banner banner-success" style="margin-top:12px">' + D.escapeHtml(D.t('p_next')) + '</div>';
+        D.qs('#csv').addEventListener('click', downloadCsv);
+      }
+
+      function downloadCsv() {
+        if (!lastDoc) return;
+        var sep = ';', q = function (v) { v = v === null || v === undefined ? '' : String(v); return '"' + v.replace(/"/g, '""') + '"'; };
+        var n = function (v) { return v === null || v === undefined ? '' : String(v).replace('.', ','); };
+        var d = lastDoc, lines = [['Fournisseur', 'Date', 'Numero', 'Designation', 'Quantite', 'Prix unitaire', 'Montant', 'Devise'].join(sep)];
+        d.lignes.forEach(function (l) { lines.push([q(d.fournisseur), q(d.date), q(d.numero), q(l.designation), n(l.quantite), n(l.prix_unitaire), n(l.montant), q(d.devise)].join(sep)); });
+        lines.push(['', '', '', q('Total HT'), '', '', n(d.total_ht), ''].join(sep));
+        lines.push(['', '', '', q('TVA'), '', '', n(d.tva), ''].join(sep));
+        lines.push(['', '', '', q('Total TTC'), '', '', n(d.total_ttc), ''].join(sep));
+        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'facture.csv'; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      }
+
+      btn.addEventListener('click', function () {
+        if (!imageData) return;
+        result.innerHTML = '';
+        if (!D.consumeQuota(SLUG)) return;
+        D.setBusy(btn, true);
+        D.postJson(D.qs('body').getAttribute('data-root') + 'api/facture', { lang: D.getLang(), image: imageData }, 40000)
+          .then(function (res) { if (!res || !res.document) throw new Error('bad payload'); render(res); })
+          .catch(function () { preview.classList.add('has-result'); D.errorBanner(result, D.t('p_error')); })
+          .then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); });
+      });
+    })();
+  </script>
+</body>
+</html>

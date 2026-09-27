@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rapport de veille automatique · Hajer — Automatisation & IA</title>
+  <meta name="description" content="Choisissez un sujet : voici le rapport de veille que vous recevriez chaque matin, avec les chiffres du jour et les actualités résumées par l'IA.">
+  <link rel="stylesheet" href="../../style.css">
+  <script src="../../config.js"></script>
+  <style>
+    .topics { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 12px; }
+    .topics .chip[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+    .mail { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-top: 16px; background: var(--bg-elev); }
+    .mail-head { background: var(--bg-soft); padding: 12px 14px; font-size: .85rem; color: var(--text-muted); display: grid; gap: 3px; }
+    .mail-head b { color: var(--text); font-weight: 600; }
+    .mail-body { padding: 14px; }
+    .tiles { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: 14px; }
+    .tile { background: var(--bg-soft); border-radius: var(--radius-sm); padding: 10px 12px; }
+    .tile .k { font-size: .75rem; color: var(--text-muted); }
+    .tile .v { font-size: 1.15rem; font-weight: 700; margin-top: 2px; }
+    .tile .d { font-size: .8rem; margin-top: 2px; color: var(--text-muted); }
+    .tile .d.up { color: var(--success); } .tile .d.down { color: var(--danger); }
+    .links { margin: 12px 0 0; padding-left: 18px; font-size: .9rem; }
+    .links li { margin: 4px 0; }
+    .links .src { color: var(--text-muted); font-size: .8rem; }
+  </style>
+</head>
+<body data-root="../../" data-demo="veille" data-title-key="p_title">
+  <header id="site-header"></header>
+
+  <main class="container demo-head">
+    <a class="back" href="../../" data-i18n="back_home"></a>
+    <span class="benefit" data-i18n="p_benefit"></span>
+    <h1 data-i18n="p_title"></h1>
+    <p class="lead" data-i18n="p_lead"></p>
+
+    <section class="card test-zone">
+      <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
+      <p class="muted small" data-i18n="p_hint"></p>
+      <div class="topics" role="group" data-i18n-aria="p_topic">
+        <button type="button" class="chip" data-sujet="crypto" data-i18n="t_crypto" aria-pressed="true"></button>
+        <button type="button" class="chip" data-sujet="change" data-i18n="t_change" aria-pressed="false"></button>
+        <button type="button" class="chip" data-sujet="ia" data-i18n="t_ia" aria-pressed="false"></button>
+        <button type="button" class="chip" data-sujet="immobilier" data-i18n="t_immo" aria-pressed="false"></button>
+        <button type="button" class="chip" data-sujet="motcle" data-i18n="t_motcle" aria-pressed="false"></button>
+      </div>
+      <div class="row row-2">
+        <div class="field" id="motcle-field" hidden><label for="motcle" data-i18n="f_motcle"></label><input type="text" id="motcle" maxlength="40" data-i18n-placeholder="f_motcle_ph"></div>
+        <div class="field"><label for="freq" data-i18n="f_freq"></label>
+          <select id="freq">
+            <option value="jour" data-i18n="freq_jour"></option>
+            <option value="semaine" data-i18n="freq_semaine"></option>
+          </select></div>
+      </div>
+      <button type="button" class="btn" id="run" data-run data-i18n="p_run"></button>
+      <div class="quota-msg" data-quota-msg></div>
+      <div id="result"></div>
+      <div class="quota" data-quota></div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="loom_title"></h2>
+      <div class="video" data-loom="veille"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="how_title"></h2>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="s1t"></h3><p data-i18n="s1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="s2t"></h3><p data-i18n="s2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="s3t"></h3><p data-i18n="s3d"></p></div></li>
+      </ol>
+    </section>
+
+    <section class="cta" data-cta>
+      <h2 data-i18n="cta_title"></h2>
+      <p data-i18n="cta_text"></p>
+      <div class="btns">
+        <a class="btn" data-cta-upwork data-i18n="cta_upwork"></a>
+        <a class="btn btn-outline" data-cta-malt data-i18n="cta_malt"></a>
+      </div>
+    </section>
+
+    <p style="margin-top:24px"><a class="back" href="../../" data-i18n="back_home"></a></p>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script>
+    window.PAGE_I18N = {
+      fr: {
+        p_title: 'Rapport de veille automatique',
+        p_benefit: 'Votre veille dans votre boîte mail, chaque matin',
+        p_lead: 'Chaque jour à 8 h (ou chaque lundi), un robot collecte les chiffres et les actualités de votre sujet, l\'IA les résume en quelques lignes et vous recevez le rapport par email, WhatsApp ou Slack. Ici, choisissez un sujet : le rapport est généré en direct avec les vraies données du jour.',
+        p_hint: 'Choisissez un sujet (ou un mot-clé, par exemple le nom d\'un concurrent) :',
+        p_topic: 'Sujet',
+        t_crypto: 'Crypto-monnaies', t_change: 'Euro et taux de change', t_ia: 'Intelligence artificielle', t_immo: 'Immobilier', t_motcle: 'Mon mot-clé',
+        f_motcle: 'Votre mot-clé', f_motcle_ph: 'Renault, inflation, Airbus…',
+        f_freq: 'Fréquence d\'envoi', freq_jour: 'Chaque jour à 8 h', freq_semaine: 'Chaque lundi à 8 h',
+        p_run: 'Générer le rapport de ce matin',
+        p_need_kw: 'Entrez un mot-clé (2 à 40 caractères).',
+        p_error: 'Le rapport n\'a pas pu être généré. Réessayez dans une minute.',
+        m_from: 'De', m_to: 'À', m_subject: 'Objet', m_when: 'Envoi',
+        m_from_v: 'Veille automatique', m_to_v: 'vous@votre-entreprise.fr',
+        m_subject_v: 'Votre veille « {s} » du {d}',
+        m_when_jour: 'chaque jour à 8 h (exemple généré maintenant)', m_when_semaine: 'chaque lundi à 8 h (exemple généré maintenant)',
+        m_links: 'Articles cités', m_sources: 'Sources : {s}. Données lues en direct au moment de votre demande.',
+        m_ecb: 'Taux BCE du {d}', m_24h: '{v} sur 24 h',
+        s1t: 'Collecte automatique', s1d: 'Chaque matin, un workflow (n8n ou script Python planifié) lit vos sources : flux d\'actualités, cours, sites de concurrents, votre CRM ou vos tableaux.',
+        s2t: 'Tri et résumé par l\'IA', s2d: 'Le programme garde ce qui concerne votre sujet ; l\'IA résume en quelques lignes, sans rien inventer, avec les liens vers les sources.',
+        s3t: 'Livraison à l\'heure choisie', s3d: 'Le rapport arrive par email, WhatsApp, Slack ou Teams, chaque jour ou chaque semaine, pour vous ou toute votre équipe.'
+      },
+      en: {
+        p_title: 'Automatic monitoring report',
+        p_benefit: 'Your monitoring in your inbox, every morning',
+        p_lead: 'Every day at 8 am (or every Monday), a bot collects the figures and news on your topic, the AI summarises them in a few lines and you receive the report by email, WhatsApp or Slack. Here, pick a topic: the report is generated live with today\'s real data.',
+        p_hint: 'Pick a topic (or a keyword, e.g. a competitor\'s name):',
+        p_topic: 'Topic',
+        t_crypto: 'Cryptocurrencies', t_change: 'Euro and exchange rates', t_ia: 'Artificial intelligence', t_immo: 'Real estate', t_motcle: 'My keyword',
+        f_motcle: 'Your keyword', f_motcle_ph: 'Tesla, inflation, Airbus…',
+        f_freq: 'Delivery frequency', freq_jour: 'Every day at 8 am', freq_semaine: 'Every Monday at 8 am',
+        p_run: 'Generate this morning\'s report',
+        p_need_kw: 'Enter a keyword (2 to 40 characters).',
+        p_error: 'The report could not be generated. Please try again in a minute.',
+        m_from: 'From', m_to: 'To', m_subject: 'Subject', m_when: 'Sent',
+        m_from_v: 'Automatic monitoring', m_to_v: 'you@your-company.com',
+        m_subject_v: 'Your "{s}" briefing for {d}',
+        m_when_jour: 'every day at 8 am (example generated now)', m_when_semaine: 'every Monday at 8 am (example generated now)',
+        m_links: 'Articles cited', m_sources: 'Sources: {s}. Data read live when you asked.',
+        m_ecb: 'ECB rate of {d}', m_24h: '{v} over 24 h',
+        s1t: 'Automatic collection', s1d: 'Every morning, a workflow (n8n or a scheduled Python script) reads your sources: news feeds, prices, competitors\' websites, your CRM or spreadsheets.',
+        s2t: 'AI sorting and summary', s2d: 'The program keeps what matters to your topic; the AI summarises it in a few lines, inventing nothing, with links to the sources.',
+        s3t: 'Delivered on schedule', s3d: 'The report arrives by email, WhatsApp, Slack or Teams, daily or weekly, for you or your whole team.'
+      }
+    };
+  </script>
+  <script src="../../app.js"></script>
+  <script>
+    (function () {
+      var D = window.Demo, SLUG = 'veille';
+      var btn = D.qs('#run'), result = D.qs('#result'), kwField = D.qs('#motcle-field'), kw = D.qs('#motcle');
+      var sujet = 'crypto';
+
+      D.qsa('[data-sujet]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          sujet = b.getAttribute('data-sujet');
+          D.qsa('[data-sujet]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+          kwField.hidden = sujet !== 'motcle';
+          if (sujet === 'motcle') kw.focus();
+        });
+      });
+
+      function loc() { return D.getLang() === 'fr' ? 'fr-FR' : 'en-GB'; }
+      function val(c) {
+        if (c.unite === 'EUR') return new Intl.NumberFormat(loc(), { style: 'currency', currency: 'EUR', maximumFractionDigits: c.valeur >= 100 ? 0 : 2 }).format(c.valeur);
+        return new Intl.NumberFormat(loc(), { maximumFractionDigits: 4 }).format(c.valeur) + ' ' + c.unite;
+      }
+      function pct(v) { return (v > 0 ? '+' : '') + (Math.round(v * 100) / 100).toLocaleString(loc()) + ' %'; }
+
+      function render(data, label) {
+        var d = new Date(data.genere_le || Date.now()).toLocaleDateString(loc(), { day: 'numeric', month: 'long', year: 'numeric' });
+        var tiles = (data.chiffres || []).map(function (c) {
+          var sub = c.variation !== null && c.variation !== undefined
+            ? '<div class="d ' + (c.variation >= 0 ? 'up' : 'down') + '">' + (c.variation >= 0 ? '▲ ' : '▼ ') + D.escapeHtml(D.t('m_24h', { v: pct(c.variation) })) + '</div>'
+            : (c.date ? '<div class="d">' + D.escapeHtml(D.t('m_ecb', { d: c.date })) + '</div>' : '');
+          return '<div class="tile"><div class="k">' + D.escapeHtml(c.nom || c.libelle) + '</div><div class="v">' + D.escapeHtml(val(c)) + '</div>' + sub + '</div>';
+        }).join('');
+        var links = (data.articles || []).map(function (a) {
+          return '<li><a href="' + D.escapeHtml(a.lien) + '" target="_blank" rel="noopener nofollow">' + D.escapeHtml(a.titre) + '</a> <span class="src">— ' + D.escapeHtml(a.source) + '</span></li>';
+        }).join('');
+        result.innerHTML =
+          '<div class="mail">' +
+            '<div class="mail-head">' +
+              '<div><b>' + D.escapeHtml(D.t('m_from')) + ' :</b> ' + D.escapeHtml(D.t('m_from_v')) + '</div>' +
+              '<div><b>' + D.escapeHtml(D.t('m_to')) + ' :</b> ' + D.escapeHtml(D.t('m_to_v')) + '</div>' +
+              '<div><b>' + D.escapeHtml(D.t('m_subject')) + ' :</b> ' + D.escapeHtml(D.t('m_subject_v', { s: label, d: d })) + '</div>' +
+              '<div><b>' + D.escapeHtml(D.t('m_when')) + ' :</b> ' + D.escapeHtml(D.t(D.qs('#freq').value === 'semaine' ? 'm_when_semaine' : 'm_when_jour')) + '</div>' +
+            '</div>' +
+            '<div class="mail-body">' +
+              (tiles ? '<div class="tiles">' + tiles + '</div>' : '') +
+              '<div class="md">' + D.md2html(data.rapport_markdown) + '</div>' +
+              (links ? '<h3 style="margin:14px 0 4px;font-size:1rem">' + D.escapeHtml(D.t('m_links')) + '</h3><ol class="links">' + links + '</ol>' : '') +
+              '<p class="muted small" style="margin-top:12px">' + D.escapeHtml(D.t('m_sources', { s: (data.sources || []).join(' · ') })) + '</p>' +
+            '</div>' +
+          '</div>';
+      }
+
+      btn.addEventListener('click', function () {
+        result.innerHTML = '';
+        var motcle = kw.value.trim();
+        if (sujet === 'motcle' && (motcle.length < 2 || motcle.length > 40)) { D.errorBanner(result, D.t('p_need_kw')); return; }
+        if (!D.consumeQuota(SLUG)) return;
+        var label = sujet === 'motcle' ? motcle : D.qs('[data-sujet="' + sujet + '"]').textContent;
+        D.setBusy(btn, true);
+        D.apiPost('veille', { sujet: sujet, motcle: motcle })
+          .then(function (data) {
+            if (!data || typeof data.rapport_markdown !== 'string') throw new Error('bad payload');
+            render(data, label);
+          })
+          .catch(function () { D.errorBanner(result, D.t('p_error')); })
+          .then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); });
+      });
+    })();
+  </script>
+</body>
+</html>

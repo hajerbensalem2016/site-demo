@@ -3,22 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Démos interactives · Hajer — Automatisation & IA</title>
-  <meta name="description" content="Testez vous-même 7 automatisations et agents IA (email, chatbot, agent vocal, scraping, CRM, rapport) avant de me contacter. n8n, Make, Zapier, Claude, Python.">
+  <title>Hajer — Automatisation, IA et développement</title>
+  <meta name="description" content="Freelance : automatisation (n8n, Make, Zapier), agents IA et chatbots, sites vitrines, sites dynamiques et applications mobiles. 9 démos réelles à tester gratuitement.">
   <link rel="stylesheet" href="style.css">
   <script src="config.js"></script>
+  <style>
+    .hero h1 { max-width: 26ch; }
+    .pillars { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 28px; }
+    .pillar { display: block; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; color: inherit; transition: border-color .15s, transform .15s; }
+    .pillar:hover { border-color: var(--primary); transform: translateY(-2px); text-decoration: none; }
+    .pillar .ic { display: inline-flex; width: 46px; height: 46px; align-items: center; justify-content: center; border-radius: 12px; background: var(--primary-soft); color: var(--primary); }
+    .pillar h3 { margin: 12px 0 4px; font-size: 1.1rem; }
+    .pillar p { margin: 0; color: var(--text-muted); font-size: .95rem; }
+    .services { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .service { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
+    .service h3 { margin: 6px 0 4px; font-size: 1rem; }
+    .service p { margin: 0; color: var(--text-muted); font-size: .9rem; }
+    .tag-cat { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .03em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+  </style>
 </head>
 <body data-root="./" data-title-key="home_title">
   <header id="site-header"></header>
 
   <main>
     <section class="container hero">
-      <span class="eyebrow" data-i18n="site_tag"></span>
+      <span class="eyebrow" data-i18n="home_eyebrow"></span>
       <h1 data-i18n="home_h1"></h1>
       <p class="lead" data-i18n="home_lead"></p>
       <div class="btns">
         <a class="btn" href="#demos" data-i18n="home_cta_demos"></a>
-        <a class="btn btn-outline" href="#contact" data-i18n="home_cta_contact"></a>
+        <a class="btn btn-outline" href="contact" data-i18n="cta_contact"></a>
+      </div>
+      <div class="pillars">
+        <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.6M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3.6M20 19v-4h-4"/></svg></span><h3 data-i18n="p1_t"></h3><p data-i18n="p1_d"></p></a>
+        <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><h3 data-i18n="p2_t"></h3><p data-i18n="p2_d"></p></a>
+        <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M1.5 17h16"/><rect x="17.5" y="8" width="5" height="12" rx="1.2"/><path d="M19.5 18h1"/></svg></span><h3 data-i18n="p3_t"></h3><p data-i18n="p3_d"></p></a>
+      </div>
+    </section>
+
+    <section class="container" id="services">
+      <h2 data-i18n="home_services_title"></h2>
+      <p class="muted" data-i18n="home_services_sub"></p>
+      <div class="services">
+        <div class="service"><span class="tag-cat" data-i18n="sv1_c"></span><h3 data-i18n="sv1_t"></h3><p data-i18n="sv1_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv2_c"></span><h3 data-i18n="sv2_t"></h3><p data-i18n="sv2_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv3_c"></span><h3 data-i18n="sv3_t"></h3><p data-i18n="sv3_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv4_c"></span><h3 data-i18n="sv4_t"></h3><p data-i18n="sv4_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv5_c"></span><h3 data-i18n="sv5_t"></h3><p data-i18n="sv5_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv6_c"></span><h3 data-i18n="sv6_t"></h3><p data-i18n="sv6_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv7_c"></span><h3 data-i18n="sv7_t"></h3><p data-i18n="sv7_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv8_c"></span><h3 data-i18n="sv8_t"></h3><p data-i18n="sv8_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv9_c"></span><h3 data-i18n="sv9_t"></h3><p data-i18n="sv9_d"></p></div>
+        <div class="service"><span class="tag-cat" data-i18n="sv10_c"></span><h3 data-i18n="sv10_t"></h3><p data-i18n="sv10_d"></p></div>
       </div>
     </section>
 
@@ -33,6 +69,8 @@
         <a class="card demo-card" href="demos/scraping/"><span class="num">05</span><h3 data-i18n="c5_t"></h3><p data-i18n="c5_d"></p><span class="go" data-i18n="home_try"></span></a>
         <a class="card demo-card" href="demos/crm-notion/"><span class="num">06</span><h3 data-i18n="c6_t"></h3><p data-i18n="c6_d"></p><span class="go" data-i18n="home_try"></span></a>
         <a class="card demo-card" href="demos/rapport/"><span class="num">07</span><h3 data-i18n="c7_t"></h3><p data-i18n="c7_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/facture/"><span class="num">08 · <span data-i18n="home_new"></span></span><h3 data-i18n="c8_t"></h3><p data-i18n="c8_d"></p><span class="go" data-i18n="home_try"></span></a>
+        <a class="card demo-card" href="demos/veille/"><span class="num">09 · <span data-i18n="home_new"></span></span><h3 data-i18n="c9_t"></h3><p data-i18n="c9_d"></p><span class="go" data-i18n="home_try"></span></a>
       </div>
     </section>
 
@@ -67,57 +105,165 @@
 
   <script>
     window.PAGE_I18N = {
-      fr: {
-        home_title: 'Démos interactives',
-        home_h1: 'Testez mes automatisations avant de me contacter.',
-        home_lead: 'Je conçois des automatisations et des agents IA qui font gagner plusieurs heures par semaine aux entreprises en supprimant les tâches répétitives. Chaque démo ci-dessous est réelle : essayez-la avec vos propres textes, gratuitement.',
-        home_cta_demos: 'Voir les 7 démos',
-        home_cta_contact: 'Me contacter',
-        home_demos_title: '7 démos à tester en 2 minutes',
-        home_demos_sub: '5 tests gratuits par démo et par jour. Aucune inscription, aucune donnée conservée.',
-        home_try: 'Tester →',
-        c1_t: 'Agent email IA', c1_d: 'Collez un email : il est classé, priorisé, résumé et une réponse est rédigée.',
-        c2_t: 'Automatisation de workflow', c2_d: 'Un formulaire → une ligne dans Google Sheets → un email de bienvenue → une alerte Slack. En 3 secondes, sans intervention.',
-        c3_t: 'Chatbot de site web', c3_d: 'Un assistant qui répond aux questions 24h/24, qualifie les visiteurs et recueille leurs demandes.',
-        c4_t: 'Agent vocal IA', c4_d: 'Un standard téléphonique qui décroche, qualifie l\'appel et prend rendez-vous. Écoutez un appel réel.',
-        c5_t: 'Scraping & veille de prix', c5_d: 'Les prix de vos concurrents collectés chaque matin dans un tableau filtrable.',
-        c6_t: 'CRM Notion / Airtable', c6_d: 'Chaque lead entrant est scoré, rangé dans le bon pipeline et suivi automatiquement.',
-        c7_t: 'Rapport automatique', c7_d: 'Trois chiffres → un rapport d\'activité rédigé, prêt à envoyer en PDF.',
-        home_method_title: 'Ma méthode',
-        m1_t: 'Votre besoin, par écrit', m1_d: 'Décrivez votre tâche en quelques lignes (formulaire ou email) : je vous réponds par écrit, et on fixe un échange seulement si c\'est utile.',
-        m2_t: 'Devis fixe avant de commencer', m2_d: 'Cadrage clair, prix fixé, aucune surprise.',
-        m3_t: 'Vidéo explicative + documentation', m3_d: 'Chaque système livré avec une vidéo Loom et une documentation pour que votre équipe soit autonome.',
-        m4_t: '14 jours de support gratuit', m4_d: 'Après la livraison, je reste disponible pour ajuster et corriger.',
-        home_tools_title: 'Outils que je maîtrise',
-        home_tools_list: 'n8n · Make · Zapier · Claude API · OpenAI API · Python (Playwright, BeautifulSoup) · Vapi · Retell AI · ElevenLabs · Twilio · Voiceflow · Botpress · ManyChat · WhatsApp Business API · HubSpot · GoHighLevel · Pipedrive · Notion · Airtable · Google Sheets · Slack · Shopify · Stripe · Power Automate',
-        home_contact_title: 'Quelle tâche vous prend le plus de temps ?',
-        home_contact_text: 'Dites-le-moi : je vous dirai franchement si elle peut être automatisée, comment, et à quel prix.'
+      "fr": {
+        "home_title": "Automatisation, IA et développement",
+        "home_eyebrow": "Freelance · Automatisation · IA · Sites et applications",
+        "home_h1": "J'automatise vos tâches, j'ajoute l'IA à votre entreprise et je développe vos sites et applications.",
+        "home_lead": "Moins de saisie, moins d'oublis, des clients mieux suivis. Chaque démo ci-dessous est réelle : testez-la gratuitement, puis décrivez-moi votre besoin par écrit pour recevoir une proposition et un devis fixe.",
+        "home_cta_demos": "Tester les démos",
+        "p1_t": "Automatisation",
+        "p1_d": "Vos outils reliés entre eux, les tâches répétitives faites toutes seules.",
+        "p2_t": "Intelligence artificielle",
+        "p2_d": "Agents, chatbots et assistants vocaux qui lisent, trient et répondent.",
+        "p3_t": "Développement",
+        "p3_d": "Sites vitrines, sites dynamiques avec back-end et applications mobiles.",
+        "home_services_title": "Ce que je peux faire pour vous",
+        "home_services_sub": "Chaque projet commence par votre besoin écrit, et un devis fixe avant de démarrer.",
+        "sv1_c": "Automatisation",
+        "sv1_t": "Workflows n8n, Make, Zapier",
+        "sv1_d": "Formulaires, emails, tableaux, CRM, factures : vos outils se parlent et la saisie disparaît.",
+        "sv2_c": "IA",
+        "sv2_t": "Agents IA et chatbots",
+        "sv2_d": "Tri et réponse aux emails, assistant sur votre site ou WhatsApp, réponses à partir de vos documents.",
+        "sv3_c": "IA",
+        "sv3_t": "Agents vocaux",
+        "sv3_d": "Un standard téléphonique IA qui décroche, répond aux questions et prend rendez-vous.",
+        "sv4_c": "Automatisation",
+        "sv4_t": "Rapports et veille programmés",
+        "sv4_d": "Chaque jour ou chaque semaine : vos chiffres, vos concurrents ou l'actualité de votre secteur, résumés et envoyés par email.",
+        "sv5_c": "IA",
+        "sv5_t": "Documents et photos lus par l'IA",
+        "sv5_d": "Factures, tickets, bons de commande : les informations sont extraites, vérifiées et rangées.",
+        "sv6_c": "Données",
+        "sv6_t": "Collecte de données (scraping)",
+        "sv6_d": "Prix, annonces ou fiches produits collectés automatiquement dans un tableau.",
+        "sv7_c": "Automatisation",
+        "sv7_t": "CRM et suivi des prospects",
+        "sv7_d": "Notion, Airtable, HubSpot : chaque contact est enregistré, noté et relancé.",
+        "sv8_c": "Développement",
+        "sv8_t": "Sites vitrines",
+        "sv8_d": "Un site clair et rapide pour présenter votre activité, adapté au téléphone et bien référencé.",
+        "sv9_c": "Développement",
+        "sv9_t": "Sites dynamiques avec back-end",
+        "sv9_d": "Espace client, réservation, formulaires, base de données, tableau de bord d'administration.",
+        "sv10_c": "Développement",
+        "sv10_t": "Applications mobiles",
+        "sv10_d": "Applications Android et iOS reliées à vos données et à vos automatisations.",
+        "home_demos_title": "9 démos à tester vous-même",
+        "home_demos_sub": "5 tests gratuits par démo et par jour, sans inscription.",
+        "home_new": "Nouveau",
+        "home_try": "Tester →",
+        "c1_t": "Agent email IA",
+        "c1_d": "Collez un email : il est classé, priorisé, résumé et une réponse est rédigée.",
+        "c2_t": "Formulaire automatique",
+        "c2_d": "Un formulaire rempli : une ligne dans Google Sheets et un email envoyé tout seul.",
+        "c3_t": "Chatbot de site web",
+        "c3_d": "Un assistant qui répond aux questions 24h/24, qualifie les visiteurs et recueille leurs demandes.",
+        "c4_t": "Agent vocal IA",
+        "c4_d": "Parlez à une réceptionniste IA depuis votre navigateur.",
+        "c5_t": "Scraping en direct",
+        "c5_d": "Collez l'adresse d'une page : les produits et les prix sont extraits en direct.",
+        "c6_t": "CRM Notion / Airtable",
+        "c6_d": "Chaque lead entrant est noté, rangé dans le bon pipeline et suivi.",
+        "c7_t": "Rapport avec graphiques",
+        "c7_d": "Vos chiffres du mois : un rapport rédigé, comparé, avec graphiques, prêt en PDF.",
+        "c8_t": "Photo de facture → tableau",
+        "c8_d": "Envoyez la photo d'une facture : l'IA remplit le tableau et vérifie les montants.",
+        "c9_t": "Veille chaque matin",
+        "c9_d": "Choisissez un sujet : voici le rapport que vous recevriez chaque jour, avec les vraies données.",
+        "home_method_title": "Ma méthode",
+        "m1_t": "Votre besoin, par écrit",
+        "m1_d": "Décrivez votre tâche en quelques lignes (formulaire ou email) : je vous réponds par écrit, et on fixe un échange seulement si c'est utile.",
+        "m2_t": "Devis fixe avant de commencer",
+        "m2_d": "Cadrage clair, prix fixé, aucune surprise.",
+        "m3_t": "Vidéo explicative + documentation",
+        "m3_d": "Chaque système livré avec une vidéo et une documentation pour que votre équipe soit autonome.",
+        "m4_t": "14 jours de support gratuit",
+        "m4_d": "Après la livraison, je reste disponible pour ajuster et corriger.",
+        "home_tools_title": "Outils et technologies",
+        "home_tools_list": "n8n · Make · Zapier · API Claude, OpenAI, Groq · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
+        "home_contact_title": "Quelle tâche vous prend le plus de temps ?",
+        "home_contact_text": "Décrivez-la en quelques lignes : je vous dirai franchement si elle peut être automatisée ou développée, comment, et à quel prix."
       },
-      en: {
-        home_title: 'Interactive demos',
-        home_h1: 'Try my automations before you hire me.',
-        home_lead: 'I build automation systems and AI agents that save businesses hours every week by removing repetitive manual work. Every demo below is real: try it with your own text, for free.',
-        home_cta_demos: 'See the 7 demos',
-        home_cta_contact: 'Contact me',
-        home_demos_title: '7 demos to try in 2 minutes',
-        home_demos_sub: '5 free tests per demo per day. No sign-up, nothing stored.',
-        home_try: 'Try it →',
-        c1_t: 'AI email agent', c1_d: 'Paste an email: it gets classified, prioritised, summarised and a reply is drafted.',
-        c2_t: 'Workflow automation', c2_d: 'A form → a row in Google Sheets → a welcome email → a Slack alert. In 3 seconds, hands-free.',
-        c3_t: 'Website chatbot', c3_d: 'An assistant that answers questions 24/7, qualifies visitors and collects their requests.',
-        c4_t: 'AI voice agent', c4_d: 'A phone receptionist that picks up, qualifies the call and books appointments. Listen to a real call.',
-        c5_t: 'Scraping & price monitoring', c5_d: 'Your competitors\' prices collected every morning into a filterable table.',
-        c6_t: 'Notion / Airtable CRM', c6_d: 'Every incoming lead is scored, placed in the right pipeline and followed up automatically.',
-        c7_t: 'Automatic report', c7_d: 'Three numbers → a written activity report, ready to send as PDF.',
-        home_method_title: 'How I work',
-        m1_t: 'Your need, in writing', m1_d: 'Describe your task in a few lines (form or email): I reply in writing, and we schedule a call only if it is useful.',
-        m2_t: 'Fixed price before starting', m2_d: 'Clear scope, fixed quote, no surprises.',
-        m3_t: 'Loom walkthrough + documentation', m3_d: 'Every system ships with a Loom video and documentation so your team can maintain it without me.',
-        m4_t: '14 days of free support', m4_d: 'After delivery, I stay available to adjust and fix.',
-        home_tools_title: 'Tools I work with',
-        home_tools_list: 'n8n · Make · Zapier · Claude API · OpenAI API · Python (Playwright, BeautifulSoup) · Vapi · Retell AI · ElevenLabs · Twilio · Voiceflow · Botpress · ManyChat · WhatsApp Business API · HubSpot · GoHighLevel · Pipedrive · Notion · Airtable · Google Sheets · Slack · Shopify · Stripe · Power Automate',
-        home_contact_title: 'Which task takes you the most time?',
-        home_contact_text: 'Tell me: I will tell you honestly whether it can be automated, how, and what it will cost.'
+      "en": {
+        "home_title": "Automation, AI and development",
+        "home_eyebrow": "Freelance · Automation · AI · Websites and apps",
+        "home_h1": "I automate your tasks, bring AI into your business and build your websites and apps.",
+        "home_lead": "Less data entry, fewer things forgotten, better follow-up with your customers. Every demo below is real: try it for free, then describe your need in writing to get a proposal and a fixed quote.",
+        "home_cta_demos": "Try the demos",
+        "p1_t": "Automation",
+        "p1_d": "Your tools connected, repetitive tasks done on their own.",
+        "p2_t": "Artificial intelligence",
+        "p2_d": "Agents, chatbots and voice assistants that read, sort and reply.",
+        "p3_t": "Development",
+        "p3_d": "Showcase websites, dynamic websites with a back end, and mobile apps.",
+        "home_services_title": "What I can do for you",
+        "home_services_sub": "Every project starts with your need in writing, and a fixed quote before we begin.",
+        "sv1_c": "Automation",
+        "sv1_t": "n8n, Make, Zapier workflows",
+        "sv1_d": "Forms, emails, spreadsheets, CRM, invoices: your tools talk to each other and data entry disappears.",
+        "sv2_c": "AI",
+        "sv2_t": "AI agents and chatbots",
+        "sv2_d": "Email triage and replies, an assistant on your website or WhatsApp, answers from your own documents.",
+        "sv3_c": "AI",
+        "sv3_t": "Voice agents",
+        "sv3_d": "An AI phone receptionist that picks up, answers questions and books appointments.",
+        "sv4_c": "Automation",
+        "sv4_t": "Scheduled reports and monitoring",
+        "sv4_d": "Daily or weekly: your figures, your competitors or your industry news, summarised and emailed.",
+        "sv5_c": "AI",
+        "sv5_t": "Documents and photos read by AI",
+        "sv5_d": "Invoices, receipts, purchase orders: data is extracted, checked and filed.",
+        "sv6_c": "Data",
+        "sv6_t": "Data collection (scraping)",
+        "sv6_d": "Prices, listings or product pages collected automatically into a spreadsheet.",
+        "sv7_c": "Automation",
+        "sv7_t": "CRM and lead follow-up",
+        "sv7_d": "Notion, Airtable, HubSpot: every contact is saved, scored and followed up.",
+        "sv8_c": "Development",
+        "sv8_t": "Showcase websites",
+        "sv8_d": "A clear, fast website to present your business, mobile-friendly and search-optimised.",
+        "sv9_c": "Development",
+        "sv9_t": "Dynamic websites with a back end",
+        "sv9_d": "Customer area, booking, forms, database, admin dashboard.",
+        "sv10_c": "Development",
+        "sv10_t": "Mobile apps",
+        "sv10_d": "Android and iOS apps connected to your data and automations.",
+        "home_demos_title": "9 demos to try yourself",
+        "home_demos_sub": "5 free tests per demo per day, no sign-up.",
+        "home_new": "New",
+        "home_try": "Try it →",
+        "c1_t": "AI email agent",
+        "c1_d": "Paste an email: it gets classified, prioritised, summarised and a reply is drafted.",
+        "c2_t": "Automatic form",
+        "c2_d": "A submitted form: a row in Google Sheets and an email sent on its own.",
+        "c3_t": "Website chatbot",
+        "c3_d": "An assistant that answers questions 24/7, qualifies visitors and collects their requests.",
+        "c4_t": "AI voice agent",
+        "c4_d": "Talk to an AI receptionist from your browser.",
+        "c5_t": "Live scraping",
+        "c5_d": "Paste a page address: products and prices are extracted live.",
+        "c6_t": "Notion / Airtable CRM",
+        "c6_d": "Every incoming lead is scored, placed in the right pipeline and followed up.",
+        "c7_t": "Report with charts",
+        "c7_d": "Your monthly figures: a written, compared report with charts, ready as PDF.",
+        "c8_t": "Invoice photo → spreadsheet",
+        "c8_d": "Send a photo of an invoice: the AI fills in the table and checks the amounts.",
+        "c9_t": "Morning briefing",
+        "c9_d": "Pick a topic: here is the report you would receive every day, with real data.",
+        "home_method_title": "How I work",
+        "m1_t": "Your need, in writing",
+        "m1_d": "Describe your task in a few lines (form or email): I reply in writing, and we schedule a call only if it is useful.",
+        "m2_t": "Fixed price before starting",
+        "m2_d": "Clear scope, fixed quote, no surprises.",
+        "m3_t": "Video walkthrough + documentation",
+        "m3_d": "Every system ships with a video and documentation so your team can maintain it.",
+        "m4_t": "14 days of free support",
+        "m4_d": "After delivery, I stay available to adjust and fix.",
+        "home_tools_title": "Tools and technologies",
+        "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
+        "home_contact_title": "Which task takes you the most time?",
+        "home_contact_text": "Describe it in a few lines: I will tell you honestly whether it can be automated or built, how, and what it will cost."
       }
     };
   </script>
