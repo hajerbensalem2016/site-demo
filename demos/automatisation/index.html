@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Automatisation de workflow · Hajer — Automatisation & IA</title>
-  <meta name="description" content="Remplissez un formulaire : une ligne est ajoutée dans Google Sheets, un email de bienvenue part et Slack est prévenu. Démo n8n interactive.">
+  <meta name="description" content="Remplissez un formulaire : une ligne est ajoutée dans Google Sheets et un email part automatiquement. Démo interactive réelle.">
   <link rel="stylesheet" href="../../style.css">
   <script src="../../config.js"></script>
 </head>
@@ -32,6 +32,20 @@
       <div class="quota-msg" data-quota-msg></div>
       <div class="result" id="result"></div>
       <div class="quota" data-quota></div>
+    </section>
+
+    <!-- Aperçu de l'email fixe envoyé au visiteur -->
+    <section class="card">
+      <h2 data-i18n="mail_title"></h2>
+      <p class="muted small" data-i18n="mail_note"></p>
+      <div class="kv wide">
+        <div class="k" data-i18n="mail_subject_label"></div>
+        <div class="v"><b id="mail-subject"></b></div>
+      </div>
+      <div class="kv wide" style="margin-top:10px">
+        <div class="k" data-i18n="mail_body_label"></div>
+        <div class="v pre" id="mail-body"></div>
+      </div>
     </section>
 
     <section class="card" data-embed="sheetEmbed" hidden>
@@ -70,19 +84,24 @@
     window.PAGE_I18N = {
       fr: {
         p_title: 'Automatisation de workflow',
-        p_benefit: 'Environ 4 heures gagnées par semaine',
-        p_lead: 'Un formulaire rempli déclenche toute la chaîne : ligne ajoutée dans Google Sheets, email de bienvenue envoyé, équipe prévenue sur Slack. Zéro saisie manuelle, zéro oubli.',
-        p_hint: 'Remplissez ce mini formulaire de contact (données fictives bienvenues) et regardez le workflow n8n s\'exécuter.',
+        p_benefit: 'Zéro saisie manuelle, zéro oubli',
+        p_lead: 'Un formulaire rempli déclenche toute la chaîne : ligne ajoutée dans Google Sheets, email envoyé automatiquement, équipe prévenue. Zéro saisie manuelle, zéro oubli.',
+        p_hint: 'Remplissez ce formulaire avec votre vraie adresse email : le workflow s\'exécute pour de vrai et vous recevez l\'email ci-dessous dans quelques secondes.',
+        mail_title: 'L\'email que vous allez recevoir',
+        mail_note: 'Remarque : pour votre sécurité et pour éviter tout usage abusif (spam), l\'email envoyé est toujours le même texte, présenté ci-dessous. Ce que vous écrivez dans le formulaire n\'est jamais recopié dans l\'email : il est seulement transmis à Hajer.',
+        mail_subject_label: 'Objet', mail_body_label: 'Message',
+        mail_subject: 'Votre démo d\'automatisation vient de fonctionner — Hajer, Automatisation & IA',
+        mail_body: 'Bonjour,\n\nCet email vient d\'être envoyé automatiquement : vous avez rempli le formulaire de ma démo, et le workflow a enregistré votre demande puis déclenché cet envoi, sans aucune intervention humaine.\n\nC\'est exactement ce que je peux mettre en place pour votre entreprise :\n- des agents IA qui trient vos emails et préparent les réponses ;\n- des automatisations entre vos outils (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) avec n8n, Make ou Zapier ;\n- des chatbots pour votre site et des agents vocaux qui répondent au téléphone ;\n- la collecte de données et la veille de prix automatiques ;\n- des rapports d\'activité générés et envoyés tout seuls.\n\nTestez toutes mes démos : https://site-demo-hbs16.vercel.app\n\nVous avez une tâche répétitive qui vous prend du temps ? Répondez simplement à cet email en la décrivant en quelques lignes : je vous réponds par écrit avec une proposition claire et un prix fixe.\n\nHajer\nAutomatisation & IA',
         f_nom: 'Nom', f_nom_ph: 'Marie Dupont',
         f_email: 'Email',
         f_entreprise: 'Entreprise', f_entreprise_ph: 'Dupont & Fils',
         f_besoin: 'Votre besoin', f_besoin_ph: 'Ex. : automatiser l\'envoi de nos devis',
         p_run: 'Envoyer et lancer le workflow',
         p_invalid: 'Merci de renseigner au moins un nom et un email valide.',
-        t1: 'Formulaire reçu', t1d: 'Le webhook n8n reçoit les données en JSON.',
+        t1: 'Formulaire reçu', t1d: 'Le workflow reçoit les données et les vérifie.',
         t2: 'Ligne ajoutée dans Google Sheets', t2d: 'Nom, email, entreprise, besoin, date.',
-        t3: 'Email de bienvenue envoyé', t3d: 'Envoyé à {email} via Gmail.',
-        t4: 'Équipe prévenue sur Slack', t4d: 'Message dans #leads avec le résumé du besoin.',
+        t3: 'Email de présentation envoyé', t3d: 'Envoyé à {email} via Gmail.',
+        t4: 'Hajer prévenue', t4d: 'Elle reçoit votre demande complète par email.',
         p_done: 'Workflow terminé en {ms} ms.',
         col_date: 'Date', col_nom: 'Nom', col_email: 'Email', col_entreprise: 'Entreprise', col_besoin: 'Besoin',
         s1t: 'Un déclencheur', s1d: 'Formulaire web, Typeform, Tally, Shopify, Stripe, Calendly… n\'importe quel événement démarre le workflow.',
@@ -91,19 +110,24 @@
       },
       en: {
         p_title: 'Workflow automation',
-        p_benefit: 'About 4 hours saved per week',
-        p_lead: 'One submitted form triggers the whole chain: row added to Google Sheets, welcome email sent, team notified on Slack. Zero manual entry, zero oversight.',
-        p_hint: 'Fill in this mini contact form (fake data welcome) and watch the n8n workflow run.',
+        p_benefit: 'Zero manual entry, nothing forgotten',
+        p_lead: 'One submitted form triggers the whole chain: row added to Google Sheets, email sent automatically, team notified. Zero manual entry, nothing forgotten.',
+        p_hint: 'Fill in this form with your real email address: the workflow runs for real and you receive the email below within seconds.',
+        mail_title: 'The email you will receive',
+        mail_note: 'Note: for your safety and to prevent abuse (spam), the email sent is always the same text, shown below. What you type in the form is never copied into the email: it is only passed on to Hajer.',
+        mail_subject_label: 'Subject', mail_body_label: 'Message',
+        mail_subject: 'Your automation demo just worked — Hajer, Automation & AI',
+        mail_body: 'Hello,\n\nThis email was sent automatically: you filled in the form on my demo, and the workflow saved your request and triggered this email, with no human involved.\n\nThis is exactly what I can set up for your business:\n- AI agents that sort your emails and draft the replies;\n- automations between your tools (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) with n8n, Make or Zapier;\n- website chatbots and voice agents that answer the phone;\n- automatic data collection and price monitoring;\n- activity reports generated and sent on their own.\n\nTry all my demos: https://site-demo-hbs16.vercel.app\n\nDo you have a repetitive task that takes up your time? Just reply to this email and describe it in a few lines: I will answer in writing with a clear proposal and a fixed price.\n\nHajer\nAutomation & AI',
         f_nom: 'Name', f_nom_ph: 'Mary Smith',
         f_email: 'Email',
         f_entreprise: 'Company', f_entreprise_ph: 'Smith & Co',
         f_besoin: 'Your need', f_besoin_ph: 'E.g.: automate sending our quotes',
         p_run: 'Submit and run the workflow',
         p_invalid: 'Please provide at least a name and a valid email.',
-        t1: 'Form received', t1d: 'The n8n webhook receives the data as JSON.',
+        t1: 'Form received', t1d: 'The workflow receives and checks the data.',
         t2: 'Row added to Google Sheets', t2d: 'Name, email, company, need, date.',
-        t3: 'Welcome email sent', t3d: 'Sent to {email} via Gmail.',
-        t4: 'Team notified on Slack', t4d: 'Message in #leads with a summary of the need.',
+        t3: 'Presentation email sent', t3d: 'Sent to {email} via Gmail.',
+        t4: 'Hajer notified', t4d: 'She receives your full request by email.',
         p_done: 'Workflow completed in {ms} ms.',
         col_date: 'Date', col_nom: 'Name', col_email: 'Email', col_entreprise: 'Company', col_besoin: 'Need',
         s1t: 'A trigger', s1d: 'Web form, Typeform, Tally, Shopify, Stripe, Calendly… any event starts the workflow.',
@@ -152,6 +176,13 @@
           });
       }
 
+      function renderMail() {
+        D.qs('#mail-subject').textContent = D.t('mail_subject');
+        D.qs('#mail-body').textContent = D.t('mail_body');
+      }
+      renderMail();
+      document.addEventListener('demo:lang', renderMail);
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var p = payload();
@@ -159,13 +190,11 @@
         if (!valid(p)) { D.errorBanner(result, D.t('p_invalid')); return; }
         if (!D.consumeQuota(SLUG)) return;
         D.setBusy(btn, true);
-        var url = D.CFG.webhookAutomatisation;
-        var run = D.isTodo(url)
-          ? animate(p, '', true)
-          : D.postJson(url, p).then(function (data) {
-              if (!data || data.ok !== true) throw new Error('webhook failed');
-              return animate(p, data.message || '', false);
-            }).catch(function () { return animate(p, '', true); });
+        /* Workflow réel : /api/automatisation (Google Sheets + Gmail via Apps Script) ; simulation si indisponible */
+        var run = D.apiPost('automatisation', p).then(function (data) {
+          if (!data || data.ok !== true) throw new Error('workflow failed');
+          return animate(p, data.message || '', false);
+        }).catch(function () { return animate(p, '', true); });
         run.then(function () { D.setBusy(btn, false); D.renderQuota(SLUG); form.reset(); });
       });
     })();
