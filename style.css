@@ -166,7 +166,7 @@ section { margin-top: 32px; }
 .section-title { display: flex; align-items: center; gap: 10px; }
 
 /* ---------- home ---------- */
-.hero { padding: 56px 0 24px; }
+.hero { padding-top: 56px; padding-bottom: 24px; }
 .hero .eyebrow { display: inline-block; font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 14px; }
 .hero h1 { max-width: 20ch; }
 .hero .btns { margin-top: 20px; }
