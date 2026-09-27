@@ -96,7 +96,7 @@
         p_limits: 'Une seule page par test, robots.txt respecté. Les grandes plateformes qui bloquent ou interdisent les robots (Amazon, Temu, Shein…) sont refusées : pour elles, un vrai projet passe par leur API officielle.',
         p_need_url: 'Collez d\'abord l\'adresse d\'une page (https://…).',
         p_error: 'La collecte a échoué. Réessayez dans un instant.',
-        p_source: 'Collecte en direct : {source} · {date}',
+        p_source: 'collecte en direct sur {source}',
         f_search: 'Rechercher', f_search_ph: 'casque, enceinte…',
         f_note: 'Note min.', f_prix: 'Prix max. (€)',
         col_titre: 'Produit / source', col_prix: 'Prix', col_note: 'Note', col_lien: 'Lien',
@@ -120,7 +120,7 @@
         p_limits: 'One page per test, robots.txt respected. Big platforms that block or forbid bots (Amazon, Temu, Shein…) are refused: real projects use their official API instead.',
         p_need_url: 'Paste a page address first (https://…).',
         p_error: 'Collection failed. Please try again in a moment.',
-        p_source: 'Live collection: {source} · {date}',
+        p_source: 'live collection from {source}',
         f_search: 'Search', f_search_ph: 'headphones, speaker…',
         f_note: 'Min. rating', f_prix: 'Max. price (€)',
         col_titre: 'Product / source', col_prix: 'Price', col_note: 'Rating', col_lien: 'Link',
@@ -153,7 +153,7 @@
       var liveSource = null;
       function fmtPrice(p, devise) {
         var loc = D.getLang() === 'fr' ? 'fr-FR' : 'en-GB';
-        try { return new Intl.NumberFormat(loc, { style: 'currency', currency: devise || 'EUR' }).format(p); }
+        try { return new Intl.NumberFormat(loc, { style: 'currency', currency: devise || 'EUR', currencyDisplay: 'narrowSymbol' }).format(p); }
         catch (e) { return new Intl.NumberFormat(loc, { minimumFractionDigits: 2 }).format(p) + (devise ? ' ' + devise : ''); }
       }
       function fmtNote(n) { return n === null || n === undefined || n === '' || isNaN(Number(n)) ? '—' : Number(n).toFixed(1) + ' / 5'; }
