@@ -124,6 +124,10 @@ class SessionPolie(requests.Session):
         kwargs.setdefault("timeout", TIMEOUT)
         rep = super().get(url, **kwargs)
         rep.raise_for_status()
+        # Sans charset dans l'en-tête, requests suppose ISO-8859-1 : les apostrophes UTF-8
+        # deviennent « â ». On se fie alors au contenu (UTF-8 dans l'immense majorité des cas).
+        if "charset" not in rep.headers.get("Content-Type", "").lower():
+            rep.encoding = rep.apparent_encoding or "utf-8"
         return rep
 
 

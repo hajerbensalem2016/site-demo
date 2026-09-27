@@ -98,7 +98,7 @@ def test_extraire_livres_format_page(html_page1):
     lignes = scrape_prix.extraire_livres(html_page1, scrape_prix.SOURCE_URL)
     assert len(lignes) == 4
     premier = lignes[0]
-    assert set(premier) == {"titre", "prix", "lien", "note"}
+    assert set(premier) == {"titre", "prix", "devise", "lien", "note"}
     assert premier["titre"] == "A Light in the Attic — Books to Scrape"
     assert premier["prix"] == 51.77 and isinstance(premier["prix"], float)
     assert premier["note"] == 3.0 and isinstance(premier["note"], float)
@@ -148,7 +148,7 @@ def test_scrape_prix_main_ecrit_json_compatible_site(tmp_path, monkeypatch, sess
     data = json.loads(sortie.read_text(encoding="utf-8"))
     assert isinstance(data, list) and len(data) == 4
     for ligne in data:
-        assert set(ligne) == {"titre", "prix", "lien", "note"}
+        assert set(ligne) == {"titre", "prix", "devise", "lien", "note"}
         assert isinstance(ligne["prix"], float) and isinstance(ligne["note"], float)
     assert data[0]["prix"] == round(47.82 * 1.17, 2)
     meta = json.loads((tmp_path / "prix_meta.json").read_text(encoding="utf-8"))
@@ -270,5 +270,5 @@ def test_prix_json_du_site_reste_valide():
     data = json.loads((commun.DATA_DIR / "prix.json").read_text(encoding="utf-8"))
     assert isinstance(data, list) and data
     for ligne in data:
-        assert set(ligne) == {"titre", "prix", "lien", "note"}
+        assert set(ligne) == {"titre", "prix", "devise", "lien", "note"}
         assert isinstance(ligne["prix"], (int, float)) and 0 <= ligne["note"] <= 5

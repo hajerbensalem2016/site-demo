@@ -92,6 +92,7 @@ def extraire_livres(html: str, url_page: str, source: str = SOURCE_NOM) -> list[
             {
                 "titre": f"{titre} — {source}",
                 "prix": prix,
+                "devise": "GBP",
                 "lien": urljoin(url_page, a.get("href", "")),
                 "note": parser_note(note_el.get("class") if note_el else None),
             }
@@ -189,6 +190,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.taux != 1.0:
         for l in lignes:
             l["prix"] = round(l["prix"] * args.taux, 2)
+            l["devise"] = "EUR"
     if not lignes:
         commun.log.error("Aucune ligne collectée : le fichier existant est conservé")
         return 2
