@@ -21,9 +21,16 @@
       <h2><span data-i18n="test_zone"></span><span class="badge-live">Live</span></h2>
       <p class="muted small" data-i18n="p_hint"></p>
       <div class="toolbar">
-        <div class="field" style="flex:2 1 220px"><label for="cible" data-i18n="f_cible"></label><input type="text" id="cible" maxlength="200" data-i18n-placeholder="f_cible_ph"></div>
+        <div class="field" style="flex:2 1 220px"><label for="cible" data-i18n="f_cible"></label><input type="url" id="cible" maxlength="500" inputmode="url" data-i18n-placeholder="f_cible_ph"></div>
         <button type="button" class="btn" id="run" data-run data-i18n="p_run"></button>
       </div>
+      <div class="examples">
+        <span class="muted small" data-i18n="p_try"></span>
+        <button type="button" class="chip" data-url="https://books.toscrape.com/">books.toscrape.com</button>
+        <button type="button" class="chip" data-url="https://books.toscrape.com/catalogue/category/books/travel_2/index.html">Books · Travel</button>
+        <button type="button" class="chip" data-url="https://webscraper.io/test-sites/e-commerce/allinone/computers/laptops">webscraper.io · Laptops</button>
+      </div>
+      <p class="muted small" data-i18n="p_limits"></p>
       <div class="quota-msg" data-quota-msg></div>
       <div id="status"></div>
 
@@ -80,11 +87,16 @@
     window.PAGE_I18N = {
       fr: {
         p_title: 'Scraping & veille de prix',
-        p_benefit: 'Environ 6 heures gagnées par semaine',
+        p_benefit: 'Vos concurrents surveillés chaque jour, automatiquement',
         p_lead: 'Un script Python (Playwright / BeautifulSoup) visite chaque matin les sites de vos concurrents, extrait prix, notes et disponibilités, et remplit un tableau Google Sheets. Vous ajustez vos prix en connaissance de cause.',
-        p_hint: 'Le tableau ci-dessous est le résultat de la dernière collecte. Filtrez-le, triez-le, ou lancez une mise à jour (entrez une URL ou une ville pour cibler la collecte).',
-        f_cible: 'URL ou ville à surveiller (optionnel)', f_cible_ph: 'https://concurrent.com/casques ou « Lyon »',
-        p_run: 'Lancer une mise à jour',
+        p_hint: 'Collez l\'adresse d\'une page catalogue ou produit : le robot la visite en direct et l\'IA en extrait les produits et les prix. En attendant, le tableau montre la collecte automatique de ce matin.',
+        f_cible: 'Adresse de la page à collecter', f_cible_ph: 'https://boutique-exemple.com/categorie/casques',
+        p_run: 'Collecter cette page',
+        p_try: 'Essayez :',
+        p_limits: 'Une seule page par test, robots.txt respecté. Les grandes plateformes qui bloquent ou interdisent les robots (Amazon, Temu, Shein…) sont refusées : pour elles, un vrai projet passe par leur API officielle.',
+        p_need_url: 'Collez d\'abord l\'adresse d\'une page (https://…).',
+        p_error: 'La collecte a échoué. Réessayez dans un instant.',
+        p_source: 'Collecte en direct : {source} · {date}',
         f_search: 'Rechercher', f_search_ph: 'casque, enceinte…',
         f_note: 'Note min.', f_prix: 'Prix max. (€)',
         col_titre: 'Produit / source', col_prix: 'Prix', col_note: 'Note', col_lien: 'Lien',
@@ -99,11 +111,16 @@
       },
       en: {
         p_title: 'Scraping & price monitoring',
-        p_benefit: 'About 6 hours saved per week',
+        p_benefit: 'Your competitors monitored every day, automatically',
         p_lead: 'A Python script (Playwright / BeautifulSoup) visits your competitors\' sites every morning, extracts prices, ratings and availability, and fills a Google Sheet. You adjust your prices with full visibility.',
-        p_hint: 'The table below is the result of the last run. Filter it, sort it, or launch an update (enter a URL or a city to target the crawl).',
-        f_cible: 'URL or city to monitor (optional)', f_cible_ph: 'https://competitor.com/headphones or "Lyon"',
-        p_run: 'Run an update',
+        p_hint: 'Paste the address of a catalogue or product page: the bot visits it live and the AI extracts the products and prices. Meanwhile, the table shows this morning\'s automatic run.',
+        f_cible: 'Address of the page to collect', f_cible_ph: 'https://example-shop.com/category/headphones',
+        p_run: 'Collect this page',
+        p_try: 'Try:',
+        p_limits: 'One page per test, robots.txt respected. Big platforms that block or forbid bots (Amazon, Temu, Shein…) are refused: real projects use their official API instead.',
+        p_need_url: 'Paste a page address first (https://…).',
+        p_error: 'Collection failed. Please try again in a moment.',
+        p_source: 'Live collection: {source} · {date}',
         f_search: 'Search', f_search_ph: 'headphones, speaker…',
         f_note: 'Min. rating', f_prix: 'Max. price (€)',
         col_titre: 'Product / source', col_prix: 'Price', col_note: 'Rating', col_lien: 'Link',
@@ -133,7 +150,13 @@
         { titre: 'Montre connectée Sport — Boutique A', prix: 189.00, lien: 'https://exemple-boutique-a.test/montre-sport', note: 4.5 }
       ];
 
-      function fmtPrice(p) { return new Intl.NumberFormat(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB', { style: 'currency', currency: 'EUR' }).format(p); }
+      var liveSource = null;
+      function fmtPrice(p, devise) {
+        var loc = D.getLang() === 'fr' ? 'fr-FR' : 'en-GB';
+        try { return new Intl.NumberFormat(loc, { style: 'currency', currency: devise || 'EUR' }).format(p); }
+        catch (e) { return new Intl.NumberFormat(loc, { minimumFractionDigits: 2 }).format(p) + (devise ? ' ' + devise : ''); }
+      }
+      function fmtNote(n) { return n === null || n === undefined || n === '' || isNaN(Number(n)) ? '—' : Number(n).toFixed(1) + ' / 5'; }
       function productKey(t) { return String(t).split(' — ')[0].trim().toLowerCase(); }
 
       function render() {
@@ -151,10 +174,11 @@
         });
         tbody.innerHTML = list.map(function (r) {
           var isBest = best[productKey(r.titre)] === r.prix;
-          return '<tr' + (isBest ? ' class="best"' : '') + '><td>' + D.escapeHtml(r.titre) + '</td><td class="num">' + fmtPrice(Number(r.prix) || 0) + '</td><td class="num">' + (Number(r.note) || 0).toFixed(1) + ' / 5</td>' +
+          return '<tr' + (isBest ? ' class="best"' : '') + '><td>' + D.escapeHtml(r.titre) + '</td><td class="num">' + fmtPrice(Number(r.prix) || 0, r.devise) + '</td><td class="num">' + fmtNote(r.note) + '</td>' +
             '<td><a href="' + D.escapeHtml(r.lien) + '" target="_blank" rel="noopener nofollow">' + D.escapeHtml(D.t('col_open')) + ' ↗</a></td></tr>';
         }).join('') || '<tr><td colspan="4" class="muted">—</td></tr>';
-        meta.textContent = D.t('p_meta', { n: list.length, total: rows.length, date: lastUpdate.toLocaleString(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB') });
+        var date = lastUpdate.toLocaleString(D.getLang() === 'fr' ? 'fr-FR' : 'en-GB');
+        meta.textContent = D.t('p_meta', { n: list.length, total: rows.length, date: date }) + (liveSource ? ' · ' + D.t('p_source', { source: liveSource, date: date }) : '');
       }
 
       ['#q', '#note-min', '#prix-max'].forEach(function (s) { D.qs(s).addEventListener('input', render); });
@@ -173,37 +197,45 @@
         .then(function (data) { if (!Array.isArray(data)) throw new Error('bad json'); rows = data; render(); })
         .catch(function () { rows = FALLBACK; render(); D.errorBanner(status, D.t('p_load_error')); });
 
-      /* Mise à jour : webhook n8n si configuré, sinon simulation locale */
-      function simulateUpdate() {
-        rows = rows.map(function (r) {
-          var delta = (Math.random() - 0.5) * 0.08; /* ±4 % */
-          return Object.assign({}, r, { prix: Math.round(Number(r.prix) * (1 + delta) * 100) / 100 });
-        });
-        lastUpdate = new Date();
-        render();
+      /* Collecte en direct : POST /api/scraping { url } -> { ok, source, resultats, message } */
+      D.qsa('[data-url]').forEach(function (b) {
+        b.addEventListener('click', function () { D.qs('#cible').value = b.getAttribute('data-url'); D.qs('#cible').focus(); });
+      });
+      function banner(cls, text) {
+        var div = document.createElement('div'); div.className = 'banner ' + cls; div.textContent = text;
+        status.appendChild(div);
       }
       btn.addEventListener('click', function () {
         status.innerHTML = '';
+        var cible = D.qs('#cible').value.trim();
+        if (!/^https?:\/\/\S+\.\S+/i.test(cible)) { D.errorBanner(status, D.t('p_need_url')); return; }
         if (!D.consumeQuota(SLUG)) return;
         D.setBusy(btn, true);
         var info = document.createElement('div'); info.className = 'banner banner-success'; info.innerHTML = '<span class="spinner"></span> ' + D.escapeHtml(D.t('p_updating'));
         status.appendChild(info);
-        var cible = D.qs('#cible').value.trim();
-        var url = D.CFG.webhookScraping;
-        var run = D.isTodo(url)
-          ? D.sleep(1600).then(function () { simulateUpdate(); status.innerHTML = ''; D.offlineBanner(status); return rows.length; })
-          : D.postJson(url, { cible: cible }, 60000).then(function (data) {
-              if (!data || data.ok !== true) throw new Error('webhook failed');
-              if (Array.isArray(data.resultats) && data.resultats.length) rows = data.resultats;
-              lastUpdate = new Date(); render(); status.innerHTML = '';
-              if (data.message) { var m = document.createElement('div'); m.className = 'banner banner-success'; m.textContent = data.message; status.appendChild(m); }
-              return rows.length;
-            }).catch(function () { simulateUpdate(); status.innerHTML = ''; D.offlineBanner(status); return rows.length; });
-        run.then(function (n) {
-          var ok = document.createElement('div'); ok.className = 'banner banner-success'; ok.textContent = D.t('p_updated', { n: n });
-          status.appendChild(ok);
-          D.setBusy(btn, false); D.renderQuota(SLUG);
-        });
+        var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 50000) : null;
+        fetch('../../api/scraping', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ lang: D.getLang(), url: cible }),
+          signal: ctrl ? ctrl.signal : undefined
+        })
+          .then(function (res) { return res.json().catch(function () { return {}; }).then(function (data) { return { ok: res.ok, data: data }; }); })
+          .then(function (r) {
+            status.innerHTML = '';
+            if (!r.ok || !r.data || r.data.ok !== true) { D.errorBanner(status, (r.data && r.data.message) || D.t('p_error')); return; }
+            if (Array.isArray(r.data.resultats) && r.data.resultats.length) {
+              rows = r.data.resultats; liveSource = r.data.source || null; lastUpdate = new Date();
+              D.qs('#q').value = ''; D.qs('#note-min').value = '0'; D.qs('#prix-max').value = '';
+              render();
+              banner('banner-success', r.data.message || D.t('p_updated', { n: rows.length }));
+            } else {
+              banner('banner-offline', r.data.message || D.t('p_error'));
+            }
+          })
+          .catch(function () { status.innerHTML = ''; D.errorBanner(status, D.t('p_error')); })
+          .then(function () { if (timer) clearTimeout(timer); D.setBusy(btn, false); D.renderQuota(SLUG); });
       });
     })();
   </script>

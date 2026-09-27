@@ -235,6 +235,18 @@ Réponse `200` attendue :
 
 ### 5. Démo scraping
 
+**Collecte en direct : `POST /api/scraping`** (fonction Vercel, sans n8n)
+
+Requête : `{ "lang": "fr", "url": "https://books.toscrape.com/" }`
+
+Réponse `200` : `{ "ok": true, "source": "books.toscrape.com", "url": "…", "methode": "json-ld" | "ia", "resultats": [ { "titre", "prix", "devise", "note", "lien" } ], "message": "…" }`
+
+- Une seule page téléchargée (1,5 Mo, 8 s max), robots.txt respecté, redirections re-vérifiées.
+- Refusé (400) : adresses internes/privées, ports autres que 80/443 (`forbidden_host`), URL invalide (`invalid_url`), robots.txt (`robots_disallowed`), sites anti-bot et grandes plateformes dont les CGU interdisent la collecte : Amazon, Temu, Shein, eBay, Leboncoin… (`site_blocked`), page injoignable (`fetch_failed`), non-HTML (`not_html`).
+- Extraction : JSON-LD schema.org si la page en publie au moins 3 produits, sinon l'IA (Groq/Gemini) lit le texte de la page. Pas de prix inventé : les lignes sans prix sont écartées.
+
+**Collecte quotidienne** (tableau affiché au chargement) :
+
 - Au chargement, le front lit `data/prix.json` : tableau d'objets `{ "titre": string, "prix": number, "lien": string, "note": number }` (note sur 5). Le script Python de collecte peut réécrire ce fichier (commit + redéploiement) ou le front peut être pointé vers une autre URL.
 - Bouton « Lancer une mise à jour » : `POST window.DEMO_CONFIG.webhookScraping` avec `{ "cible": "https://… ou ville (peut être vide)" }`. Réponse attendue `{ "ok": true, "message": "…", "resultats": [ { titre, prix, lien, note }, … ] }` ; `resultats` est optionnel (s'il est présent et non vide, il remplace le tableau affiché). Délai d'attente : 60 s. Mêmes exigences CORS que ci-dessus.
 

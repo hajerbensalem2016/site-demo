@@ -23,7 +23,13 @@ const MESSAGES = {
     no_provider: 'Aucune clé API configurée côté serveur (GEMINI_API_KEY ou GROQ_API_KEY).',
     llm_unavailable: 'Le service d\'IA est momentanément indisponible (quota gratuit atteint ou panne). Réessayez dans une minute.',
     bad_model_output: 'L\'IA a renvoyé une réponse inexploitable. Réessayez.',
-    internal: 'Erreur interne. Réessayez dans un instant.'
+    internal: 'Erreur interne. Réessayez dans un instant.',
+    invalid_url: 'Adresse invalide : collez une URL complète qui commence par https://',
+    forbidden_host: 'Cette adresse n\'est pas autorisée (adresse interne ou privée).',
+    robots_disallowed: 'Ce site interdit la collecte automatique de cette page (fichier robots.txt) : nous la respectons. Essayez une autre page ou un autre site.',
+    site_blocked: 'Ce site bloque ou interdit la collecte automatique (protection anti-bot ou conditions d\'utilisation, comme Amazon, Temu, Shein…). Pour un vrai projet, on passe alors par leur API officielle ou des outils autorisés. Essayez un autre site.',
+    fetch_failed: 'Impossible de charger cette page (site injoignable, trop lent ou trop lourd). Vérifiez l\'adresse ou essayez un autre site.',
+    not_html: 'Cette adresse ne renvoie pas une page web (HTML).'
   },
   en: {
     method_not_allowed: 'Method not allowed: this route only accepts POST.',
@@ -34,7 +40,13 @@ const MESSAGES = {
     no_provider: 'No API key configured on the server (GEMINI_API_KEY or GROQ_API_KEY).',
     llm_unavailable: 'The AI service is temporarily unavailable (free quota reached or outage). Please try again in a minute.',
     bad_model_output: 'The AI returned an unusable answer. Please try again.',
-    internal: 'Internal error. Please try again in a moment.'
+    internal: 'Internal error. Please try again in a moment.',
+    invalid_url: 'Invalid address: paste a full URL starting with https://',
+    forbidden_host: 'This address is not allowed (internal or private address).',
+    robots_disallowed: 'This site forbids automated collection of this page (robots.txt), and we respect it. Try another page or site.',
+    site_blocked: 'This site blocks or forbids automated collection (anti-bot protection or terms of use, like Amazon, Temu, Shein…). Real projects then use their official API or authorised tools. Try another site.',
+    fetch_failed: 'Could not load this page (site unreachable, too slow or too heavy). Check the address or try another site.',
+    not_html: 'This address does not return a web page (HTML).'
   }
 };
 
