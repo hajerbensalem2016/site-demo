@@ -13,6 +13,9 @@
    ============================================================ */
 
 var SITE = 'https://site-demo-hbs16.vercel.app';
+/* Identifiant de la Google Sheet (dans son adresse : /spreadsheets/d/<ID>/edit).
+   Vide = la feuille à laquelle le script est rattaché (Extensions > Apps Script). */
+var SHEET_ID = '';
 var MAX_PAR_JOUR = 40;
 
 var EMAILS = {
@@ -103,7 +106,7 @@ function doPost(e) {
       statut = 'email de présentation envoyé';
     }
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
     var feuille = ss.getSheetByName('Leads') || ss.insertSheet('Leads');
     if (feuille.getLastRow() === 0) feuille.appendRow(['Date', 'Nom', 'Email', 'Entreprise', 'Besoin', 'Langue', 'Statut']);
     feuille.appendRow([new Date(), nom, email, entreprise, besoin, lang, statut]);
@@ -126,7 +129,8 @@ function doPost(e) {
 
 /* À lancer une fois à la main (bouton « Exécuter ») pour autoriser Gmail et Sheets. */
 function autoriser() {
-  SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  Logger.log('Feuille : ' + ss.getName());
   MailApp.getRemainingDailyQuota();
   Logger.log('Autorisations OK. Emails encore disponibles aujourd\'hui : ' + MailApp.getRemainingDailyQuota());
 }
