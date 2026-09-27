@@ -36,6 +36,18 @@
       <div class="quota" data-quota></div>
     </section>
 
+    <!-- 2b. Démo vs installation réelle -->
+    <section class="card">
+      <h2 data-i18n="auto_title"></h2>
+      <p data-i18n="auto_intro"></p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><h3 data-i18n="a1t"></h3><p data-i18n="a1d"></p></div></li>
+        <li><span class="n">2</span><div><h3 data-i18n="a2t"></h3><p data-i18n="a2d"></p></div></li>
+        <li><span class="n">3</span><div><h3 data-i18n="a3t"></h3><p data-i18n="a3d"></p></div></li>
+      </ol>
+      <p class="muted small" data-i18n="auto_note"></p>
+    </section>
+
     <!-- 3. Vidéo Loom -->
     <section class="card">
       <h2 data-i18n="loom_title"></h2>
@@ -84,7 +96,13 @@
         s1t: 'L\'email arrive', s1d: 'Gmail ou Outlook déclenche un workflow n8n à chaque réception.',
         s2t: 'L\'IA analyse', s2d: 'Claude classe l\'email, évalue l\'urgence, le résume et rédige une réponse dans votre ton.',
         s3t: 'Vous validez', s3d: 'La réponse est placée en brouillon ou envoyée automatiquement selon vos règles ; le reste est trié en libellés.',
-        u_high: 'Haute', u_mid: 'Moyenne', u_low: 'Basse'
+        u_high: 'Haute', u_mid: 'Moyenne', u_low: 'Basse',
+        auto_title: 'Chez vous, tout est automatique : aucun bouton à cliquer',
+        auto_intro: 'Ici, vous collez un email et cliquez pour voir ce que l\'IA sait faire. Une fois installé sur votre boîte mail, l\'agent travaille seul, en continu :',
+        a1t: 'Il surveille votre boîte', a1d: 'Toutes les quelques minutes, il récupère les nouveaux emails (Gmail ou Outlook).',
+        a2t: 'Il trie et étiquette', a2d: 'Chaque email reçoit une étiquette dans votre boîte : Urgent, SAV, Facturation, Devis, Spam…',
+        a3t: 'Il prépare les réponses', a3d: 'Une réponse est rédigée en brouillon. Vous relisez et cliquez sur « Envoyer ». L\'envoi automatique est possible pour les cas simples, si vous le souhaitez.',
+        auto_note: 'Vos emails restent dans votre boîte : rien n\'est publié, et vous gardez toujours le dernier mot avant l\'envoi.'
       },
       en: {
         p_title: 'AI email agent',
@@ -101,7 +119,13 @@
         s1t: 'The email arrives', s1d: 'Gmail or Outlook triggers an n8n workflow on every new message.',
         s2t: 'The AI analyses it', s2d: 'Claude classifies the email, rates urgency, summarises it and drafts a reply in your tone.',
         s3t: 'You approve', s3d: 'The reply is saved as a draft or sent automatically based on your rules; everything else is labelled and filed.',
-        u_high: 'High', u_mid: 'Medium', u_low: 'Low'
+        u_high: 'High', u_mid: 'Medium', u_low: 'Low',
+        auto_title: 'In your business, it is fully automatic: no button to click',
+        auto_intro: 'Here, you paste an email and click to see what the AI can do. Once installed on your mailbox, the agent works on its own, continuously:',
+        a1t: 'It watches your inbox', a1d: 'Every few minutes, it picks up new emails (Gmail or Outlook).',
+        a2t: 'It sorts and labels', a2d: 'Each email gets a label in your inbox: Urgent, Support, Billing, Quote, Spam…',
+        a3t: 'It drafts the replies', a3d: 'A reply is written as a draft. You proofread and click “Send”. Automatic sending is possible for simple cases, if you want it.',
+        auto_note: 'Your emails stay in your mailbox: nothing is published, and you always have the final say before sending.'
       }
     };
   </script>
