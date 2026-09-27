@@ -27,8 +27,8 @@
     .chart .legend i.dash { height: 0; border-top: 2px dashed var(--text-muted); border-radius: 0; vertical-align: 3px; }
     .chart .axis { stroke: var(--border); stroke-width: 1; }
     .chart .grid { stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 4; }
-    .chart text { fill: var(--text-muted); font-size: 11px; font-family: var(--font); }
-    .chart text.val { fill: var(--text); font-weight: 600; }
+    .chart text { fill: var(--text-muted); font-size: 14px; font-family: var(--font); }
+    .chart text.val { fill: var(--text); font-weight: 600; font-size: 15px; }
     .chart .hit:hover + .mark, .chart .mark:hover { opacity: .8; }
     .chart .kpi-evo { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
     .chart .kpi-evo span { font-size: .78rem; padding: 3px 8px; border-radius: 999px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); }
@@ -309,7 +309,7 @@
         if (prev) series.unshift({ label: D.t('c_prev'), color: 'var(--series-2)', data: prev });
         var vals = []; series.forEach(function (s) { cats.forEach(function (c) { vals.push(s.data[c[1]]); }); });
         var sc = niceScale(Math.min(0, Math.min.apply(null, vals)), Math.max.apply(null, vals) * 1.08, 4);
-        var W = 520, H = 250, L = 58, R = 8, T = 22, B = 28, pw = W - L - R, ph = H - T - B;
+        var W = 520, H = 260, L = 62, R = 8, T = 26, B = 30, pw = W - L - R, ph = H - T - B;
         var y = function (v) { return T + ph - (v - sc.min) / (sc.max - sc.min) * ph; };
         var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': D.t('c_bars_t') });
         for (var v = sc.min; v <= sc.max + 1e-9; v += sc.step) {
@@ -337,7 +337,7 @@
       function lineChart(serie, objectif) {
         var n = serie.length, vals = serie.concat(objectif ? [objectif] : []);
         var sc = niceScale(Math.min.apply(null, vals) * 0.95, Math.max.apply(null, vals) * 1.05, 4);
-        var W = 520, H = 250, L = 58, R = 64, T = 22, B = 28, pw = W - L - R, ph = H - T - B;
+        var W = 520, H = 260, L = 62, R = 30, T = 26, B = 30, pw = W - L - R, ph = H - T - B;
         var x = function (i) { return n === 1 ? L + pw / 2 : L + i * pw / (n - 1); };
         var y = function (v) { return T + ph - (v - sc.min) / (sc.max - sc.min) * ph; };
         var label = function (i) { return i === n - 1 ? D.t('c_now') : D.t('c_m', { n: n - 1 - i }); };
@@ -348,7 +348,7 @@
         }
         if (objectif) {
           svg.appendChild(el('line', { x1: L, x2: W - R, y1: y(objectif), y2: y(objectif), stroke: 'var(--text-muted)', 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }));
-          svg.appendChild(el('text', { x: W - R + 6, y: y(objectif) + 4 }, D.t('c_obj')));
+          svg.appendChild(el('text', { x: L + 6, y: y(objectif) - 7 }, D.t('c_obj') + ' ' + short(objectif)));
         }
         svg.appendChild(el('polyline', { points: serie.map(function (v, i) { return x(i) + ',' + y(v); }).join(' '), fill: 'none', stroke: 'var(--series-1)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
         serie.forEach(function (v, i) {
@@ -360,7 +360,8 @@
           var step = Math.ceil(n / 6);
           if (i === n - 1 || (n - 1 - i) % step === 0) svg.appendChild(el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }, label(i)));
         });
-        svg.appendChild(el('text', { class: 'val', x: x(n - 1), y: y(serie[n - 1]) - 10, 'text-anchor': 'middle' }, short(serie[n - 1])));
+        var last = y(serie[n - 1]), below = objectif && Math.abs(last - y(objectif)) < 22 && serie[n - 1] < objectif;
+        svg.appendChild(el('text', { class: 'val', x: x(n - 1), y: below ? last + 22 : last - 12, 'text-anchor': 'end' }, short(serie[n - 1])));
         var c = card(D.t('c_line_t'), D.t('c_line_s'));
         c.appendChild(svg);
         if (objectif) c.appendChild(legend([{ label: D.t('c_ca'), color: 'var(--series-1)' }, { label: D.t('c_obj'), dash: true }]));
