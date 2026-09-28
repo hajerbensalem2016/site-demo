@@ -152,6 +152,45 @@
     .scroll-cue span { width: 4px; height: 10px; border-radius: 4px; background: var(--accent); animation: descend 1.8s ease-in-out infinite; }
     @keyframes descend { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(16px); opacity: 0; } 100% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .scroll-cue span { animation: none; } }
+    /* ---- bulles (services), tuiles (démos), étapes (méthode) ---- */
+    .bubbles { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); margin-top: 18px; }
+    .bubble, .step-ic { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 22px; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .bubble:hover, .step-ic:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 55%, var(--border)); box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--primary) 60%, transparent); }
+    .bubble summary, .step-ic summary { list-style: none; cursor: pointer; display: grid; justify-items: center; text-align: center; gap: 8px; padding: 20px 12px 16px; }
+    .bubble summary::-webkit-details-marker, .step-ic summary::-webkit-details-marker { display: none; }
+    .b-ic { width: 58px; height: 58px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent)); box-shadow: 0 10px 22px -10px color-mix(in srgb, var(--primary) 80%, transparent); }
+    .b-ic svg { width: 28px; height: 28px; }
+    .b-t { font-weight: 700; font-size: .98rem; line-height: 1.25; }
+    .b-cat { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+    .bubble p, .step-ic p { margin: 0; padding: 0 16px 16px; color: var(--text-muted); font-size: .9rem; text-align: center; }
+    .bubble[open], .step-ic[open] { border-color: var(--primary); }
+    .bubble[open] .b-ic, .step-ic[open] .b-ic { transform: scale(1.06); }
+    .hint-click { margin: 0; }
+
+    .tiles-demo { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin-top: 18px; }
+    .tile-demo { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 16px; border-radius: 18px;
+      background: var(--bg-elev); border: 1px solid var(--border); color: inherit; overflow: hidden; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .tile-demo:hover { text-decoration: none; transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 55%, var(--border)); box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--primary) 60%, transparent); }
+    .td-ic { width: 46px; height: 46px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: var(--primary-soft); color: var(--primary); transition: background .2s, color .2s; }
+    .td-ic svg { width: 24px; height: 24px; }
+    .tile-demo:hover .td-ic { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; }
+    .td-t { font-weight: 700; }
+    .td-new { position: absolute; top: 8px; inset-inline-end: 10px; font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; background: var(--accent); color: #fff; padding: 2px 7px; border-radius: 999px; }
+    .td-go { color: var(--primary); font-weight: 800; transition: transform .2s; }
+    [dir="rtl"] .td-go { transform: scaleX(-1); }
+    .tile-demo:hover .td-go { transform: translateX(4px); }
+    .td-d { grid-column: 1 / -1; max-height: 0; opacity: 0; overflow: hidden; color: var(--text-muted); font-size: .88rem; transition: max-height .3s, opacity .3s; }
+    .tile-demo:hover .td-d, .tile-demo:focus-visible .td-d { max-height: 80px; opacity: 1; }
+
+    .steps-ic { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 18px; }
+    .step-ic summary { position: relative; }
+    .s-num { position: absolute; top: 10px; inset-inline-start: 14px; font-size: .8rem; font-weight: 800; color: var(--text-muted); }
+
+    .pillar.compact { display: grid; justify-items: center; text-align: center; }
+    .pillar.compact p { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .3s, opacity .3s; margin: 0; }
+    .pillar.compact:hover p, .pillar.compact:focus-visible p { max-height: 90px; opacity: 1; margin-top: 4px; }
+    @media (hover: none) { .pillar.compact p { max-height: none; opacity: 1; } }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
@@ -195,9 +234,9 @@
           <li><b>14 j</b><span data-i18n="st4"></span></li>
         </ul>
       <div class="pillars reveal">
-        <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.6M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3.6M20 19v-4h-4"/></svg></span><h3 data-i18n="p1_t"></h3><p data-i18n="p1_d"></p></a>
-        <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><h3 data-i18n="p2_t"></h3><p data-i18n="p2_d"></p></a>
-        <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M1.5 17h16"/><rect x="17.5" y="8" width="5" height="12" rx="1.2"/><path d="M19.5 18h1"/></svg></span><h3 data-i18n="p3_t"></h3><p data-i18n="p3_d"></p></a>
+        <a class="pillar compact" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.6M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3.6M20 19v-4h-4"/></svg></span><h3 data-i18n="p1_t"></h3><p data-i18n="p1_d"></p></a>
+        <a class="pillar compact" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><h3 data-i18n="p2_t"></h3><p data-i18n="p2_d"></p></a>
+        <a class="pillar compact" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M1.5 17h16"/><rect x="17.5" y="8" width="5" height="12" rx="1.2"/><path d="M19.5 18h1"/></svg></span><h3 data-i18n="p3_t"></h3><p data-i18n="p3_d"></p></a>
       </div>
       </div>
     </section>
@@ -211,44 +250,43 @@
 
     <section class="container reveal" id="services">
       <h2 data-i18n="home_services_title"></h2>
-      <p class="muted" data-i18n="home_services_sub"></p>
-      <div class="services stagger">
-        <div class="service"><span class="tag-cat" data-i18n="sv1_c"></span><h3 data-i18n="sv1_t"></h3><p data-i18n="sv1_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv2_c"></span><h3 data-i18n="sv2_t"></h3><p data-i18n="sv2_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv3_c"></span><h3 data-i18n="sv3_t"></h3><p data-i18n="sv3_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv4_c"></span><h3 data-i18n="sv4_t"></h3><p data-i18n="sv4_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv5_c"></span><h3 data-i18n="sv5_t"></h3><p data-i18n="sv5_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv6_c"></span><h3 data-i18n="sv6_t"></h3><p data-i18n="sv6_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv7_c"></span><h3 data-i18n="sv7_t"></h3><p data-i18n="sv7_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv8_c"></span><h3 data-i18n="sv8_t"></h3><p data-i18n="sv8_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv9_c"></span><h3 data-i18n="sv9_t"></h3><p data-i18n="sv9_d"></p></div>
-        <div class="service"><span class="tag-cat" data-i18n="sv10_c"></span><h3 data-i18n="sv10_t"></h3><p data-i18n="sv10_d"></p></div>
+      <p class="muted small hint-click" data-i18n="home_click"></p>
+      <div class="bubbles stagger">
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 6h9M6.3 8.2l4.4 7.6M17.7 8.2l-4.4 7.6"/></svg></span><span class="b-t" data-i18n="sv1_t"></span><span class="b-cat" data-i18n="sv1_c"></span></summary><p data-i18n="sv1_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/><circle cx="12" cy="3.5" r="1"/></svg></span><span class="b-t" data-i18n="sv2_t"></span><span class="b-cat" data-i18n="sv2_c"></span></summary><p data-i18n="sv2_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5l3 .5 1.2 4-2 1.5a11 11 0 0 0 5.8 5.8l1.5-2 4 1.2.5 3a2 2 0 0 1-2 2.2A17 17 0 0 1 4.3 5.5a2 2 0 0 1 2.2-2z"/></svg></span><span class="b-t" data-i18n="sv3_t"></span><span class="b-cat" data-i18n="sv3_c"></span></summary><p data-i18n="sv3_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 17v-3M13 17v-5M16 17v-2"/></svg></span><span class="b-t" data-i18n="sv4_t"></span><span class="b-cat" data-i18n="sv4_c"></span></summary><p data-i18n="sv4_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg></span><span class="b-t" data-i18n="sv5_t"></span><span class="b-cat" data-i18n="sv5_c"></span></summary><p data-i18n="sv5_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg></span><span class="b-t" data-i18n="sv6_t"></span><span class="b-cat" data-i18n="sv6_c"></span></summary><p data-i18n="sv6_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 11l2 2 3.5-4"/></svg></span><span class="b-t" data-i18n="sv7_t"></span><span class="b-cat" data-i18n="sv7_c"></span></summary><p data-i18n="sv7_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="b-t" data-i18n="sv8_t"></span><span class="b-cat" data-i18n="sv8_c"></span></summary><p data-i18n="sv8_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span><span class="b-t" data-i18n="sv9_t"></span><span class="b-cat" data-i18n="sv9_c"></span></summary><p data-i18n="sv9_d"></p></details>
+        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span><span class="b-t" data-i18n="sv10_t"></span><span class="b-cat" data-i18n="sv10_c"></span></summary><p data-i18n="sv10_d"></p></details>
       </div>
     </section>
 
     <section class="container reveal" id="demos">
       <h2 data-i18n="home_demos_title"></h2>
-      <p class="muted" data-i18n="home_demos_sub"></p>
-      <div class="grid stagger">
-        <a class="card demo-card" href="demos/agent-email/"><span class="num">01</span><h3 data-i18n="c1_t"></h3><p data-i18n="c1_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/automatisation/"><span class="num">02</span><h3 data-i18n="c2_t"></h3><p data-i18n="c2_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/chatbot/"><span class="num">03</span><h3 data-i18n="c3_t"></h3><p data-i18n="c3_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/agent-vocal/"><span class="num">04</span><h3 data-i18n="c4_t"></h3><p data-i18n="c4_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/scraping/"><span class="num">05</span><h3 data-i18n="c5_t"></h3><p data-i18n="c5_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/crm-notion/"><span class="num">06</span><h3 data-i18n="c6_t"></h3><p data-i18n="c6_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/rapport/"><span class="num">07</span><h3 data-i18n="c7_t"></h3><p data-i18n="c7_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/facture/"><span class="num">08 · <span data-i18n="home_new"></span></span><h3 data-i18n="c8_t"></h3><p data-i18n="c8_d"></p><span class="go" data-i18n="home_try"></span></a>
-        <a class="card demo-card" href="demos/veille/"><span class="num">09 · <span data-i18n="home_new"></span></span><h3 data-i18n="c9_t"></h3><p data-i18n="c9_d"></p><span class="go" data-i18n="home_try"></span></a>
+      <div class="tiles-demo stagger">
+        <a class="tile-demo" href="demos/agent-email/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg></span><span class="td-t" data-i18n="c1_t"></span><span class="td-d" data-i18n="c1_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/automatisation/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></span><span class="td-t" data-i18n="c2_t"></span><span class="td-d" data-i18n="c2_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/chatbot/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></svg></span><span class="td-t" data-i18n="c3_t"></span><span class="td-d" data-i18n="c3_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/agent-vocal/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5l3 .5 1.2 4-2 1.5a11 11 0 0 0 5.8 5.8l1.5-2 4 1.2.5 3a2 2 0 0 1-2 2.2A17 17 0 0 1 4.3 5.5a2 2 0 0 1 2.2-2z"/></svg></span><span class="td-t" data-i18n="c4_t"></span><span class="td-d" data-i18n="c4_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/scraping/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5M8.5 11h5M11 8.5v5"/></svg></span><span class="td-t" data-i18n="c5_t"></span><span class="td-d" data-i18n="c5_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/crm-notion/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 11l2 2 3.5-4"/></svg></span><span class="td-t" data-i18n="c6_t"></span><span class="td-d" data-i18n="c6_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/rapport/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></span><span class="td-t" data-i18n="c7_t"></span><span class="td-d" data-i18n="c7_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/facture/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="td-t" data-i18n="c8_t"></span><span class="td-new" data-i18n="home_new"></span><span class="td-d" data-i18n="c8_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+        <a class="tile-demo" href="demos/veille/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a8 8 0 0 1 16 0v4l2 3H2l2-3z"/><path d="M10 21h4"/></svg></span><span class="td-t" data-i18n="c9_t"></span><span class="td-new" data-i18n="home_new"></span><span class="td-d" data-i18n="c9_d"></span><span class="td-go" aria-hidden="true">→</span></a>
       </div>
     </section>
 
     <section class="container">
       <h2 data-i18n="home_method_title"></h2>
-      <div class="method">
-        <div class="card"><h3 data-i18n="m1_t"></h3><p data-i18n="m1_d"></p></div>
-        <div class="card"><h3 data-i18n="m2_t"></h3><p data-i18n="m2_d"></p></div>
-        <div class="card"><h3 data-i18n="m3_t"></h3><p data-i18n="m3_d"></p></div>
-        <div class="card"><h3 data-i18n="m4_t"></h3><p data-i18n="m4_d"></p></div>
+      <div class="steps-ic">
+        <details class="step-ic"><summary><span class="s-num">1</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span><span class="b-t" data-i18n="m1_t"></span></summary><p data-i18n="m1_d"></p></details>
+        <details class="step-ic"><summary><span class="s-num">2</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.5"/></svg></span><span class="b-t" data-i18n="m2_t"></span></summary><p data-i18n="m2_d"></p></details>
+        <details class="step-ic"><summary><span class="s-num">3</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><span class="b-t" data-i18n="m3_t"></span></summary><p data-i18n="m3_d"></p></details>
+        <details class="step-ic"><summary><span class="s-num">4</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"/></svg></span><span class="b-t" data-i18n="m4_t"></span></summary><p data-i18n="m4_d"></p></details>
       </div>
     </section>
 
@@ -353,7 +391,8 @@
         "home_tools_list": "n8n · Make · Zapier · API Claude, OpenAI, Groq · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Quelle tâche vous prend le plus de temps ?",
         "home_contact_text": "Décrivez-la en quelques lignes : nous vous dirons franchement si elle peut être automatisée ou développée, comment, et à quel prix.",
-        "home_scroll": "Voir la suite"
+        "home_scroll": "Voir la suite",
+        "home_click": "Cliquez sur une bulle pour voir le détail."
       },
       "en": {
         "home_h1a": "Automation and AI",
@@ -439,7 +478,8 @@
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Which task takes you the most time?",
         "home_contact_text": "Describe it in a few lines: we will tell you honestly whether it can be automated or built, how, and what it will cost.",
-        "home_scroll": "Scroll down"
+        "home_scroll": "Scroll down",
+        "home_click": "Tap a bubble to see the details."
       },
       "ar": {
         "home_h1a": "الأتمتة والذكاء الاصطناعي",
@@ -525,7 +565,8 @@
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groق APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "ما هي المهمة التي تستغرق معظم وقتك؟",
         "home_contact_text": "صفها في بضع سطور: سنخبرك بصراحة ما إذا كان يمكن أتمتتها أو بناؤها، وكيف، وما سيكلفها.",
-        "home_scroll": "تابع التصفح"
+        "home_scroll": "تابع التصفح",
+        "home_click": "انقر على أي فقاعة لعرض التفاصيل."
       },
       "de": {
         "home_h1a": "Automatisierung und KI",
@@ -611,7 +652,8 @@
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Welche Aufgabe nimmt bei Ihnen am meisten Zeit in Anspruch?",
         "home_contact_text": "Beschreiben Sie sie in wenigen Zeilen: Wir sagen Ihnen ehrlich, ob sie automatisiert oder entwickelt werden kann, wie und was sie kosten wird.",
-        "home_scroll": "Weiter nach unten"
+        "home_scroll": "Weiter nach unten",
+        "home_click": "Klicken Sie auf eine Blase, um Details zu sehen."
       },
       "es": {
         "home_h1a": "Automatización e IA",
@@ -697,7 +739,8 @@
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "¿Qué tarea le ocupa más tiempo?",
         "home_contact_text": "Descríbala en unas líneas: le diremos honestamente si puede automatizarse o desarrollarse, cómo hacerlo y cuál será su costo.",
-        "home_scroll": "Ver más"
+        "home_scroll": "Ver más",
+        "home_click": "Haga clic en una burbuja para ver el detalle."
       }
     };
   </script>
