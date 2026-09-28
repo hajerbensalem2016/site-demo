@@ -36,7 +36,7 @@
   /* ---------- i18n ---------- */
   var i18n = {
     fr: {
-      site_name: 'Hajer — Automatisation & IA',
+      site_name: 'hbsGo',
       site_tag: 'Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM',
       nav_home: 'Accueil',
       nav_contact: 'Contactez-nous',
@@ -45,25 +45,25 @@
       back_home: '← Retour à l\'accueil',
       test_zone: 'Testez vous-même',
       tests_left: 'Tests gratuits restants aujourd\'hui : {n}/{max}',
-      quota_reached: 'Vous avez utilisé vos {max} tests gratuits pour cette démo aujourd\'hui. Revenez demain, ou contactez-moi pour une démo complète sur vos propres données.',
+      quota_reached: 'Vous avez utilisé vos {max} tests gratuits pour cette démo aujourd\'hui. Revenez demain, ou contactez-nous pour une démo complète sur vos propres données.',
       offline_banner: 'Mode démo hors ligne — le backend n\'est pas encore connecté : le résultat ci-dessous est une simulation locale, mais le rendu final sera identique.',
       loom_title: 'La démo en 60 secondes',
       loom_todo: 'Vidéo Loom à venir — remplacer la valeur TODO_LOOM dans config.js',
       how_title: 'Comment ça marche',
       cta_title: 'Vous voulez ça pour votre entreprise ?',
-      cta_text: 'Décrivez votre besoin par écrit : je vous réponds avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c\'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.',
-      cta_upwork: 'Me contacter sur Upwork',
-      cta_malt: 'Me contacter sur Malt',
+      cta_text: 'Décrivez votre besoin par écrit : nous vous répondons avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c\'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.',
+      cta_upwork: 'Nous trouver sur Upwork',
+      cta_malt: 'Nous trouver sur Malt',
       cta_todo: 'Lien à configurer dans config.js (TODO_UPWORK / TODO_MALT)',
       btn_run: 'Lancer le test',
       loading: 'Traitement en cours…',
       error_generic: 'Une erreur est survenue. Réessayez dans un instant.',
-      footer_text: '© {year} Hajer — Automatisation & IA. Démos à tester librement.',
-      footer_free: 'Le formulaire de contact transmet vos informations à Hajer uniquement. Dans les autres démos, le texte saisi est envoyé au service d\'IA pour produire la réponse, puis n\'est pas conservé sur ce site : n\'y mettez pas de données sensibles.',
+      footer_text: '© {year} hbsGo',
+      footer_free: 'Automatisation · Intelligence artificielle · Sites et applications',
       yes: 'Oui', no: 'Non'
     },
     en: {
-      site_name: 'Hajer — Automation & AI',
+      site_name: 'hbsGo',
       site_tag: 'AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM',
       nav_home: 'Home',
       nav_contact: 'Contact us',
@@ -72,21 +72,21 @@
       back_home: '← Back to home',
       test_zone: 'Try it yourself',
       tests_left: 'Free tests left today: {n}/{max}',
-      quota_reached: 'You have used your {max} free tests for this demo today. Come back tomorrow, or contact me for a full demo on your own data.',
+      quota_reached: 'You have used your {max} free tests for this demo today. Come back tomorrow, or contact us for a full demo on your own data.',
       offline_banner: 'Offline demo mode — the backend is not connected yet: the result below is a local simulation, but the final output will look the same.',
       loom_title: 'The demo in 60 seconds',
       loom_todo: 'Loom video coming soon — replace the TODO_LOOM value in config.js',
       how_title: 'How it works',
       cta_title: 'Want this for your business?',
-      cta_text: 'Describe your need in writing: I reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.',
-      cta_upwork: 'Hire me on Upwork',
-      cta_malt: 'Hire me on Malt',
+      cta_text: 'Describe your need in writing: we reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.',
+      cta_upwork: 'Find us on Upwork',
+      cta_malt: 'Find us on Malt',
       cta_todo: 'Link to configure in config.js (TODO_UPWORK / TODO_MALT)',
       btn_run: 'Run the test',
       loading: 'Processing…',
       error_generic: 'Something went wrong. Please try again in a moment.',
-      footer_text: '© {year} Hajer — Automation & AI. Demos free to try.',
-      footer_free: 'The contact form sends your details to Hajer only. In the other demos, the text you type is sent to the AI service to produce the answer and is not stored on this site: do not enter sensitive data.',
+      footer_text: '© {year} hbsGo',
+      footer_free: 'Automation · Artificial intelligence · Websites and apps',
       yes: 'Yes', no: 'No'
     }
   };
@@ -310,7 +310,7 @@
     });
   }
   function mountCta() {
-    /* Bouton principal : page Contact (message envoyé à Hajer par email) */
+    /* Bouton principal : page Contact (message transmis par email) */
     qsa('[data-cta] .btns').forEach(function (btns) {
       if (qs('[data-cta-contact]', btns)) return;
       var a = document.createElement('a');

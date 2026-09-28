@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chatbot de site web · Hajer — Automatisation & IA</title>
+  <title>Chatbot de site web · hbsGo</title>
   <meta name="description" content="Testez un chatbot IA qui répond aux clients 24h/24, qualifie les visiteurs et recueille leur demande. Démo interactive gratuite.">
   <link rel="stylesheet" href="../../style.css">
   <script src="../../config.js"></script>
@@ -130,11 +130,11 @@
           ? 'Chaque projet a un devis fixe et écrit, établi à partir de la description de votre besoin. Ordre de grandeur : une automatisation simple à partir de 150 €, un chatbot à partir de 400 €, un agent vocal à partir de 700 €. Décrivez votre besoin ici : https://site-demo-hbs16.vercel.app/contact'
           : 'Every project gets a fixed written quote, based on the description of your need. Rough range: a simple automation from $150, a chatbot from $400, a voice agent from $700. Describe your need here: https://site-demo-hbs16.vercel.app/contact';
         if (/rendez|rdv|meeting|appel|call|book|créneau|slot|disponib|contact|joindre|reach/.test(q)) return fr
-          ? 'Le plus simple : décrivez votre besoin en quelques lignes dans ce formulaire, https://site-demo-hbs16.vercel.app/contact . Hajer vous répond par écrit avec une proposition et un devis fixe, et un échange est fixé ensuite seulement si c\'est utile.'
-          : 'The easiest way: describe your need in a few lines in this form, https://site-demo-hbs16.vercel.app/contact . Hajer replies in writing with a proposal and a fixed quote, and a call is scheduled afterwards only if useful.';
+          ? 'Le plus simple : décrivez votre besoin en quelques lignes dans ce formulaire, https://site-demo-hbs16.vercel.app/contact . nous vous répondons par écrit avec une proposition et un devis fixe, et un échange est fixé ensuite seulement si c\'est utile.'
+          : 'The easiest way: describe your need in a few lines in this form, https://site-demo-hbs16.vercel.app/contact . we reply in writing with a proposal and a fixed quote, and a call is scheduled afterwards only if useful.';
         if (/@/.test(q)) return fr
-          ? 'Merci ! Pour que votre demande arrive bien à Hajer, remplissez ce formulaire avec votre email et votre besoin : https://site-demo-hbs16.vercel.app/contact . Vous recevrez une réponse écrite.'
-          : 'Thank you! To make sure your request reaches Hajer, fill in this form with your email and your need: https://site-demo-hbs16.vercel.app/contact . You will get a written reply.';
+          ? 'Merci ! Pour que votre demande nous arrive bien, remplissez ce formulaire avec votre email et votre besoin : https://site-demo-hbs16.vercel.app/contact . Vous recevrez une réponse écrite.'
+          : 'Thank you! To make sure your request reaches us, fill in this form with your email and your need: https://site-demo-hbs16.vercel.app/contact . You will get a written reply.';
         if (/délai|delay|combien de temps|how long|timeline|quand/.test(q)) return fr
           ? 'Une automatisation simple est livrée en 2 à 5 jours, un chatbot en 1 à 2 semaines, un agent vocal en 2 à 3 semaines. Chaque livraison inclut une vidéo explicative et 14 jours de support.'
           : 'A simple automation ships in 2 to 5 days, a chatbot in 1 to 2 weeks, a voice agent in 2 to 3 weeks. Every delivery includes a Loom walkthrough and 14 days of support.';
@@ -144,8 +144,8 @@
         if (/merci|thank/.test(q)) return fr ? 'Avec plaisir ! N\'hésitez pas si vous avez d\'autres questions.' : 'You are welcome! Feel free to ask if you have other questions.';
         if (/bonjour|salut|hello|hi\b|hey/.test(q)) return fr ? 'Bonjour ! Comment puis-je vous aider : services, tarifs ou contact ?' : 'Hello! How can I help: services, pricing or contact?';
         return fr
-          ? 'Bonne question. Pour vous répondre précisément, décrivez votre besoin en quelques lignes dans ce formulaire : https://site-demo-hbs16.vercel.app/contact . Hajer vous répondra par écrit.'
-          : 'Good question. To answer precisely, describe your need in a few lines in this form: https://site-demo-hbs16.vercel.app/contact . Hajer will reply in writing.';
+          ? 'Bonne question. Pour vous répondre précisément, décrivez votre besoin en quelques lignes dans ce formulaire : https://site-demo-hbs16.vercel.app/contact . nous vous répondrons par écrit.'
+          : 'Good question. To answer precisely, describe your need in a few lines in this form: https://site-demo-hbs16.vercel.app/contact . we will reply in writing.';
       }
 
       function ask(text) {
