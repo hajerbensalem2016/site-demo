@@ -192,6 +192,19 @@
     .pillar.compact:hover p, .pillar.compact:focus-visible p { max-height: 90px; opacity: 1; margin-top: 4px; }
     @media (hover: none) { .pillar.compact p { max-height: none; opacity: 1; } }
     @media (max-width: 560px) { .bubbles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .bubble summary { padding: 16px 8px 12px; } .b-ic { width: 48px; height: 48px; } .b-ic svg { width: 24px; height: 24px; } .b-t { font-size: .88rem; } .b-cat { font-size: .6rem; letter-spacing: .03em; } .steps-ic { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+    /* ---- premier écran : texte compact + image animée visible tout de suite ---- */
+    .hero { padding-top: clamp(24px, 5vh, 56px); padding-bottom: 16px; }
+    .hero h1 { font-size: clamp(1.7rem, 2.2vw + .9rem, 2.9rem); line-height: 1.12; letter-spacing: -.03em; max-width: 18ch; margin-top: 12px; }
+    .hero .lead { font-size: clamp(1rem, .3vw + .95rem, 1.15rem); margin-top: 12px; max-width: 38ch; }
+    .hero .eyebrow { font-size: .66rem; padding: 5px 12px; }
+    .scroll-cue { margin-top: 20px; width: 26px; height: 42px; }
+    .visual { max-width: 380px; margin: 18px auto 0; }
+    @media (min-width: 900px) {
+      .hero-center { grid-template-columns: 1fr 1fr; align-items: center; text-align: start; justify-items: stretch; gap: 32px; }
+      .hero-text { justify-items: start; }
+      .hero h1, .hero .lead { margin-inline: 0; }
+      .visual { max-width: 520px; margin: 0; justify-self: end; width: 100%; }
+    }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
