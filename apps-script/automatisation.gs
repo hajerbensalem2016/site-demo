@@ -113,7 +113,7 @@ function feuilleLeads_() {
   var props = PropertiesService.getScriptProperties();
   var ids = [props.getProperty('SHEET_ID'), SHEET_ID].filter(function (x) { return x; });
   for (var i = 0; i < ids.length; i++) {
-    try { return SpreadsheetApp.openById(ids[i]); } catch (e) { /* feuille introuvable : on essaie la suivante */ }
+    try { var f = SpreadsheetApp.openById(ids[i]); f.getName(); return f; } catch (e) { /* feuille introuvable : on essaie la suivante */ }
   }
   try { var active = SpreadsheetApp.getActiveSpreadsheet(); if (active) return active; } catch (e) { /* script autonome */ }
   var ss = SpreadsheetApp.create('Leads site HBSGo');
