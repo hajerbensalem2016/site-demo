@@ -205,6 +205,24 @@
       .hero h1, .hero .lead { margin-inline: 0; }
       .visual { max-width: 520px; margin: 0; justify-self: end; width: 100%; }
     }
+    /* ---- illustration « usine d'automatisation » ---- */
+    .usine { max-width: 560px; }
+    .u-belt { stroke: color-mix(in srgb, var(--text) 35%, transparent); stroke-width: 2; stroke-dasharray: 10 18; fill: none; }
+    .u-roll { fill: var(--bg-elev); stroke: color-mix(in srgb, var(--text) 30%, transparent); stroke-width: 2; }
+    .u-card-bg { fill: var(--bg-elev); stroke: color-mix(in srgb, var(--primary) 50%, var(--border)); stroke-width: 1.5; }
+    .u-ic { fill: none; stroke: var(--primary); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .u-card-ok { fill: color-mix(in srgb, var(--success) 18%, var(--bg-elev)); stroke: var(--success); stroke-width: 1.5; }
+    .u-check { fill: none; stroke: var(--success); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .u-machine { filter: drop-shadow(0 18px 30px color-mix(in srgb, var(--accent) 45%, transparent)); }
+    .u-shine { fill: none; stroke: rgba(255, 255, 255, .35); stroke-width: 1.5; }
+    .u-door { fill: rgba(0, 0, 0, .28); }
+    .u-gear path, .u-gear circle { fill: rgba(255, 255, 255, .92); }
+    .u-gear.g2 path, .u-gear.g2 circle { fill: rgba(255, 255, 255, .7); }
+    .u-hole { fill: color-mix(in srgb, var(--primary) 70%, #000) !important; }
+    .u-spark { fill: #fff; }
+    .u-led { fill: #fff; } .u-led.l2 { fill: #ffd29a; }
+    .u-db-bg { fill: var(--bg-elev); stroke: var(--success); stroke-width: 2; }
+    .u-db-lines { fill: none; stroke: color-mix(in srgb, var(--success) 70%, var(--text)); stroke-width: 1.6; opacity: .7; }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
@@ -221,23 +239,36 @@
             <p class="lead" data-i18n="home_lead"></p>
             <a class="scroll-cue" href="#services" data-i18n-aria="home_scroll"><span></span></a>
           </div>
-        <div class="visual" aria-hidden="true">
-          <svg viewBox="0 0 600 460" class="visual-svg">
+        <div class="visual usine" aria-hidden="true">
+          <svg viewBox="0 0 540 330" class="visual-svg">
             <defs>
-              <radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--primary)"/></radialGradient>
-              <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--primary)"/><stop offset="1" stop-color="var(--accent)"/></linearGradient>
+              <linearGradient id="uMach" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--primary)"/><stop offset=".6" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
+              <linearGradient id="uBelt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--primary)" stop-opacity=".15"/><stop offset=".5" stop-color="var(--accent)" stop-opacity=".5"/><stop offset="1" stop-color="var(--accent-2)" stop-opacity=".15"/></linearGradient>
             </defs>
-            <ellipse class="v-orbit" cx="300" cy="230" rx="170" ry="133"/>
-            <ellipse class="v-orbit o2" cx="300" cy="230" rx="230" ry="179"/>
-            <path id="lk0" class="v-link" d="M300 230 L300 97"/><path id="lk1" class="v-link" d="M300 230 L447 164"/><path id="lk2" class="v-link" d="M300 230 L447 296"/><path id="lk3" class="v-link" d="M300 230 L300 363"/><path id="lk4" class="v-link" d="M300 230 L153 296"/><path id="lk5" class="v-link" d="M300 230 L153 164"/>
-            <circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="0.00s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#lk0"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="0.43s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#lk1"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="0.86s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#lk2"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="1.29s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#lk3"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="1.72s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#lk4"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="2.15s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#lk5"/></animateMotion></circle>
-            <g class="v-core" transform="translate(300 230)">
-              <circle class="v-wave" r="56"/><circle class="v-wave w2" r="56"/>
-              <circle r="54" fill="url(#core)" class="v-core-disc"/>
-              <g class="v-spin"><circle r="68" fill="none" stroke="url(#ring)" stroke-width="2" stroke-dasharray="6 10"/></g>
-              <path class="v-spark" d="M0 -22 L6 -6 L22 0 L6 6 L0 22 L-6 6 L-22 0 L-6 -6 Z"/>
+            <!-- tapis roulant -->
+            <rect x="10" y="238" width="520" height="14" rx="7" fill="url(#uBelt)"/>
+            <path d="M18 245 H522" class="u-belt"><animate attributeName="stroke-dashoffset" from="0" to="-28" dur=".7s" repeatCount="indefinite"/></path>
+            <circle cx="22" cy="245" r="9" class="u-roll"/><circle cx="518" cy="245" r="9" class="u-roll"/>
+            <!-- entrées : tâches à traiter -->
+            <g class="u-item" opacity="0"><g class="u-card"><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-bg"/><g class="u-ic"><rect x="-13" y="-9" width="26" height="18" rx="3"/><path d="M-13 -7 L0 2 L13 -7"/></g></g><animateTransform attributeName="transform" type="translate" values="30 214; 206 214" dur="3.6s" begin="0.0s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3.6s" begin="0.0s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g class="u-card"><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-bg"/><g class="u-ic"><path d="M-10 -13 H10 V13 L6 10 L2 13 L-2 10 L-6 13 L-10 10 Z"/><path d="M-5 -6 H5 M-5 -1 H5 M-5 4 H1"/></g></g><animateTransform attributeName="transform" type="translate" values="30 214; 206 214" dur="3.6s" begin="1.2s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3.6s" begin="1.2s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g class="u-card"><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-bg"/><g class="u-ic"><rect x="-11" y="-13" width="22" height="26" rx="3"/><path d="M-6 -6 H6 M-6 0 H6 M-6 6 H1"/></g></g><animateTransform attributeName="transform" type="translate" values="30 214; 206 214" dur="3.6s" begin="2.4s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3.6s" begin="2.4s" repeatCount="indefinite" /></g>
+            <!-- machine -->
+            <g class="u-machine">
+              <rect x="200" y="84" width="160" height="176" rx="26" fill="url(#uMach)"/>
+              <rect x="200" y="84" width="160" height="176" rx="26" class="u-shine"/>
+              <rect x="222" y="196" width="116" height="40" rx="12" class="u-door"/>
+              <g class="u-gear"><path d="M273.7 134.1 L280.8 134.4 L280.8 141.6 L273.7 141.9 M271.8 147.6 L277.4 152.0 L273.2 157.8 L267.3 153.8 M262.4 157.4 L264.3 164.3 L257.5 166.5 L255.0 159.8 M249.0 159.8 L246.5 166.5 L239.7 164.3 L241.6 157.4 M236.7 153.8 L230.8 157.8 L226.6 152.0 L232.2 147.6 M230.3 141.9 L223.2 141.6 L223.2 134.4 L230.3 134.1 M232.2 128.4 L226.6 124.0 L230.8 118.2 L236.7 122.2 M241.6 118.6 L239.7 111.7 L246.5 109.5 L249.0 116.2 M255.0 116.2 L257.5 109.5 L264.3 111.7 L262.4 118.6 M267.3 122.2 L273.2 118.2 L277.4 124.0 L271.8 128.4 " /><circle cx="252" cy="138" r="22" /><circle cx="252" cy="138" r="8.4" class="u-hole" /><animateTransform attributeName="transform" type="rotate" from="0 252 138" to="360 252 138" dur="6s" repeatCount="indefinite" /></g>
+              <g class="u-gear g2"><path d="M314.6 154.7 L321.7 154.6 L321.7 161.4 L314.6 161.3 M312.7 166.0 L317.8 171.0 L313.0 175.8 L308.0 170.7 M303.3 172.6 L303.4 179.7 L296.6 179.7 L296.7 172.6 M292.0 170.7 L287.0 175.8 L282.2 171.0 L287.3 166.0 M285.4 161.3 L278.3 161.4 L278.3 154.6 L285.4 154.7 M287.3 150.0 L282.2 145.0 L287.0 140.2 L292.0 145.3 M296.7 143.4 L296.6 136.3 L303.4 136.3 L303.3 143.4 M308.0 145.3 L313.0 140.2 L317.8 145.0 L312.7 150.0 " /><circle cx="300" cy="158" r="15" /><circle cx="300" cy="158" r="5.7" class="u-hole" /><animateTransform attributeName="transform" type="rotate" from="360 300 158" to="0 300 158" dur="4.2s" repeatCount="indefinite" /></g>
+              <path class="u-spark" d="M318 108 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z"><animate attributeName="opacity" values=".4;1;.4" dur="1.6s" repeatCount="indefinite"/></path>
+              <circle cx="230" cy="106" r="4" class="u-led"><animate attributeName="opacity" values="1;.25;1" dur="1.2s" repeatCount="indefinite"/></circle>
+              <circle cx="244" cy="106" r="4" class="u-led l2"><animate attributeName="opacity" values=".25;1;.25" dur="1.2s" repeatCount="indefinite"/></circle>
             </g>
-            <g class="v-node" style="--i:0" transform="translate(300 97)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><rect x="-15" y="-11" width="30" height="22" rx="4"/><path d="M-15 -8 L0 3 L15 -8"/></g></g><g class="v-node" style="--i:1" transform="translate(447 164)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><rect x="-14" y="-14" width="28" height="28" rx="4"/><path d="M-14 -4 H14 M-14 6 H14 M-3 -14 V14"/></g></g><g class="v-node" style="--i:2" transform="translate(447 296)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><path d="M-15 -11 h30 a3 3 0 0 1 3 3 v14 a3 3 0 0 1 -3 3 h-16 l-8 7 v-7 h-6 a3 3 0 0 1 -3 -3 v-14 a3 3 0 0 1 3 -3z"/><path d="M-7 -1 h0.01 M0 -1 h0.01 M7 -1 h0.01" stroke-width="4"/></g></g><g class="v-node" style="--i:3" transform="translate(300 363)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><path d="M-10 -14 l6 0 l3 8 l-4 3 a18 18 0 0 0 8 8 l3 -4 l8 3 l0 6 a3 3 0 0 1 -3 3 a26 26 0 0 1 -24 -24 a3 3 0 0 1 3 -3z"/></g></g><g class="v-node" style="--i:4" transform="translate(153 296)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><circle r="14"/><path d="M-14 0 H14 M0 -14 C-8 -6 -8 6 0 14 M0 -14 C8 -6 8 6 0 14"/></g></g><g class="v-node" style="--i:5" transform="translate(153 164)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><rect x="-9" y="-15" width="18" height="30" rx="4"/><path d="M-3 10 H3"/></g></g>
+            <!-- sorties : tâches terminées -->
+            <g class="u-item" opacity="0"><g><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-ok"/><path d="M-8 0 L-2 6 L9 -6" class="u-check"/></g><animateTransform attributeName="transform" type="translate" values="354 214; 470 214; 470 150" keyTimes="0;.7;1" dur="3.6s" begin="1.8s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="3.6s" begin="1.8s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-ok"/><path d="M-8 0 L-2 6 L9 -6" class="u-check"/></g><animateTransform attributeName="transform" type="translate" values="354 214; 470 214; 470 150" keyTimes="0;.7;1" dur="3.6s" begin="3.0s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="3.6s" begin="3.0s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-ok"/><path d="M-8 0 L-2 6 L9 -6" class="u-check"/></g><animateTransform attributeName="transform" type="translate" values="354 214; 470 214; 470 150" keyTimes="0;.7;1" dur="3.6s" begin="4.2s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="3.6s" begin="4.2s" repeatCount="indefinite" /></g>
+            <!-- tableau / CRM de destination -->
+            <g class="u-db" transform="translate(470 92)">
+              <rect x="-38" y="-30" width="76" height="60" rx="12" class="u-db-bg"/>
+              <path d="M-26 -14 H26 M-26 0 H26 M-26 14 H26 M-8 -26 V26" class="u-db-lines"/>
+            </g>
           </svg>
         </div>
         </div>
