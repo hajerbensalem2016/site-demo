@@ -107,6 +107,20 @@ var CONFIRMATIONS = {
   }
 };
 
+/* Feuille de destination : celle de SHEET_ID si elle est accessible, sinon une feuille créée
+   automatiquement dans le compte du propriétaire (son identifiant est mémorisé ensuite). */
+function feuilleLeads_() {
+  var props = PropertiesService.getScriptProperties();
+  var ids = [props.getProperty('SHEET_ID'), SHEET_ID].filter(function (x) { return x; });
+  for (var i = 0; i < ids.length; i++) {
+    try { return SpreadsheetApp.openById(ids[i]); } catch (e) { /* feuille introuvable : on essaie la suivante */ }
+  }
+  try { var active = SpreadsheetApp.getActiveSpreadsheet(); if (active) return active; } catch (e) { /* script autonome */ }
+  var ss = SpreadsheetApp.create('Leads site HBSGo');
+  props.setProperty('SHEET_ID', ss.getId());
+  return ss;
+}
+
 function propre(v, max) {
   var s = String(v || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max);
   return /^[=+\-@]/.test(s) ? '\'' + s : s; /* empêche l'injection de formules dans la feuille */
@@ -149,7 +163,7 @@ function doPost(e) {
       }
     }
 
-    var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+    var ss = feuilleLeads_();
     var feuille = ss.getSheetByName('Leads') || ss.insertSheet('Leads');
     if (feuille.getLastRow() === 0) feuille.appendRow(['Date', 'Source', 'Nom', 'Email', 'Téléphone', 'Entreprise', 'Besoin', 'Langue', 'Statut']);
     feuille.appendRow([new Date(), source === 'contact' ? 'Page Contact' : 'Démo automatisation', nom, email, propre(telephone, 25), entreprise, besoin, lang, statut]);
@@ -174,7 +188,7 @@ function doPost(e) {
 
 /* À lancer une fois à la main (bouton « Exécuter ») pour autoriser Gmail et Sheets. */
 function autoriser() {
-  var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  var ss = feuilleLeads_();
   Logger.log('Feuille : ' + ss.getName());
   MailApp.getRemainingDailyQuota();
   Logger.log('Autorisations OK. Emails encore disponibles aujourd\'hui : ' + MailApp.getRemainingDailyQuota());
