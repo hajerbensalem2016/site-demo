@@ -5,10 +5,10 @@
               (démo : email obligatoire ; page Contact : email OU téléphone, besoin obligatoire)
    Réponse  : { ok: true, envoye: boolean, message }
 
-   Valide le formulaire puis le transmet au Google Apps Script de Hajer
+   Valide le formulaire puis le transmet au Google Apps Script du site
    (URL secrète dans la variable d'environnement Vercel APPS_SCRIPT_URL, voir apps-script/README.md),
    qui ajoute la ligne dans Google Sheets, envoie l'email de présentation FIXE au visiteur
-   et une copie complète à Hajer.
+   et une copie complète au propriétaire du site.
    Limitation : 5 envois par heure et par IP (en plus des 5 tests / jour côté navigateur
    et des plafonds du script : 1 email par adresse toutes les 6 h, 40 par jour).
    ============================================================ */
@@ -61,7 +61,7 @@ module.exports = createHandler('automatisation', async function ({ body, lang })
   }
 
   if (source === 'contact') {
-    return { ok: true, envoye: !!data.envoye, message: lang === 'fr' ? 'Message envoyé à Hajer.' : 'Message sent to Hajer.' };
+    return { ok: true, envoye: !!data.envoye, message: lang === 'fr' ? 'Message envoyé.' : 'Message sent.' };
   }
   const message = data.envoye
     ? (lang === 'fr' ? 'Email de présentation envoyé à ' + email + ' : vérifiez votre boîte (et les spams).' : 'Presentation email sent to ' + email + ': check your inbox (and spam folder).')

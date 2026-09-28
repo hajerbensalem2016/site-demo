@@ -138,8 +138,15 @@ pre { background: var(--bg-soft); padding: 12px; border-radius: var(--radius-sm)
 .theme-btn:hover { background: var(--bg-soft); }
 
 /* ---------- footer ---------- */
-#site-footer { border-top: 1px solid var(--border); margin-top: 48px; padding: 24px 0; color: var(--text-muted); font-size: .875rem; }
-#site-footer p { margin: 0 0 4px; }
+#site-footer { border-top: 1px solid var(--border); margin-top: 72px; padding: 36px 0 20px; color: var(--text-muted); font-size: .9rem;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--primary) 6%, transparent)); }
+#site-footer p { margin: 0; }
+.footer-inner { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; justify-content: space-between; }
+.footer-brand .brand { font-size: 1.15rem; }
+.footer-brand p { margin-top: 8px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+.footer-links a { color: var(--text); font-weight: 600; }
+.footer-bottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border); font-size: .8rem; }
 
 /* ---------- buttons ---------- */
 .btn {
@@ -336,3 +343,10 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: now
   .hero { padding-top: 36px; }
   .chat { height: 420px; }
 }
+
+/* ---------- logo HBSGo ---------- */
+.brand-mark { width: 30px; height: 30px; flex: none; }
+.brand-name { font-weight: 800; letter-spacing: -.02em; font-size: 1.15rem; }
+.brand-name .go { color: var(--accent); }
+.footer-brand .brand-mark { width: 34px; height: 34px; }
+.footer-brand .brand-name { font-size: 1.3rem; }

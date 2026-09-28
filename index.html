@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hajer — Automatisation, IA et développement</title>
+  <title>HBSGo — Automatisation, IA et développement</title>
   <meta name="description" content="Freelance : automatisation (n8n, Make, Zapier), agents IA et chatbots, sites vitrines, sites dynamiques et applications mobiles. 9 démos réelles à tester gratuitement.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
   <script src="config.js"></script>
   <style>
@@ -20,31 +21,197 @@
     .service h3 { margin: 6px 0 4px; font-size: 1rem; }
     .service p { margin: 0; color: var(--text-muted); font-size: .9rem; }
     .tag-cat { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .03em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+
+    /* ---- design moderne ---- */
+    .hero-wrap { position: relative; margin-top: 0; overflow: hidden; }
+    .hero-bg { position: absolute; inset: -120px 0 0 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(600px 380px at 12% 18%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 70%),
+        radial-gradient(520px 360px at 88% 28%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+        radial-gradient(700px 300px at 50% 100%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 70%); }
+    .hero-bg::after { content: ""; position: absolute; inset: 0;
+      background-image: linear-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
+      background-size: 44px 44px; mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%); }
+    .hero-grid { display: grid; gap: 32px; align-items: center; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } }
+    .hero h1 { max-width: none; font-size: clamp(2rem, 3.2vw + 1rem, 3.3rem); line-height: 1.08; letter-spacing: -.025em; }
+    .grad { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .btn-glow { box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--primary) 70%, transparent); background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, var(--accent))); border-color: transparent; }
+    .btn-glow:hover { filter: brightness(1.08); }
+
+    .flow { position: relative; border-radius: 22px; padding: 22px 18px; background: color-mix(in srgb, var(--bg-elev) 80%, transparent);
+      border: 1px solid var(--border); box-shadow: var(--shadow); backdrop-filter: blur(8px); min-height: 400px; }
+    .flow-svg { position: absolute; inset: 22px 18px; width: calc(100% - 36px); height: calc(100% - 44px); overflow: visible; }
+    .flow-line { stroke: url(#fl); stroke-width: 2; stroke-dasharray: 5 7; fill: none; opacity: .55; }
+    .flow-dot { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent)); }
+    .flow-steps { position: relative; display: grid; gap: 30px; }
+    .fstep { display: flex; gap: 12px; align-items: center; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px;
+      animation: pulse 4s infinite; animation-delay: var(--d); }
+    .fstep b { display: block; font-size: .95rem; }
+    .fstep small { color: var(--text-muted); font-size: .8rem; }
+    .fic { flex: none; width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem;
+      background: var(--primary-soft); color: var(--primary); }
+    .fic.ai { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; }
+    .fic.ok { background: var(--success-soft); color: var(--success); }
+    @keyframes pulse { 0%, 100% { border-color: var(--border); box-shadow: none; } 8%, 18% { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); } }
+    .flow-badge { position: absolute; top: -12px; right: 16px; font-size: .72rem; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 999px;
+      background: var(--accent); color: #fff; }
+
+    .stats { list-style: none; padding: 0; margin: 34px 0 0; display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 760px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+    .stats li { background: color-mix(in srgb, var(--bg-elev) 85%, transparent); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+    .stats b { display: block; font-size: 1.5rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .stats span { color: var(--text-muted); font-size: .85rem; }
+
+    .marquee { margin-top: 40px; border-block: 1px solid var(--border); overflow: hidden; padding: 14px 0; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .marquee-track { display: flex; gap: 40px; width: max-content; animation: defile 40s linear infinite; }
+    .marquee-track span { font-weight: 700; color: var(--text-muted); white-space: nowrap; font-size: 1rem; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes defile { to { transform: translateX(-50%); } }
+
+    .pillar, .service, .demo-card { position: relative; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .pillar:hover, .service:hover, .demo-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 60%, var(--border)); box-shadow: 0 14px 34px -14px color-mix(in srgb, var(--primary) 55%, transparent); }
+    .service:hover .tag-cat { background: var(--accent); color: #fff; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .stagger > * { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+    .stagger.in > * { opacity: 1; transform: none; }
+    .stagger.in > *:nth-child(1) { transition-delay: 0.00s; }
+    .stagger.in > *:nth-child(2) { transition-delay: 0.05s; }
+    .stagger.in > *:nth-child(3) { transition-delay: 0.10s; }
+    .stagger.in > *:nth-child(4) { transition-delay: 0.15s; }
+    .stagger.in > *:nth-child(5) { transition-delay: 0.20s; }
+    .stagger.in > *:nth-child(6) { transition-delay: 0.25s; }
+    .stagger.in > *:nth-child(7) { transition-delay: 0.30s; }
+    .stagger.in > *:nth-child(8) { transition-delay: 0.35s; }
+    .stagger.in > *:nth-child(9) { transition-delay: 0.40s; }
+    .stagger.in > *:nth-child(10) { transition-delay: 0.45s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger > * { opacity: 1; transform: none; transition: none; }
+      .marquee-track, .fstep { animation: none; }
+      .flow-dot { display: none; }
+    }
+    /* ---- hero premium ---- */
+    .hero { padding-top: clamp(64px, 12vh, 140px); padding-bottom: 32px; }
+    .hero-center { display: grid; justify-items: center; text-align: center; gap: 0; }
+    .hero-text { display: grid; justify-items: center; }
+    .hero .eyebrow { background: transparent; border: 1px solid var(--border); color: var(--text-muted); letter-spacing: .12em; font-size: .72rem; padding: 6px 14px; }
+    .hero h1 { font-size: clamp(2.5rem, 5.4vw + .6rem, 5.4rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 800; max-width: 17ch; margin: 18px auto 0; }
+    .hero .lead { font-size: clamp(1.1rem, .6vw + 1rem, 1.45rem); max-width: 40ch; margin: 22px auto 0; color: var(--text-muted); }
+    .hero .btns { justify-content: center; margin-top: 34px; }
+    .hero .btn { padding: 14px 28px; font-size: 1rem; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; animation: flotte 14s ease-in-out infinite alternate; }
+    .orb.o1 { width: 520px; height: 520px; left: calc(50% - 460px); top: 40px; background: var(--primary); }
+    .orb.o2 { width: 440px; height: 440px; left: calc(50% + 20px); top: 140px; background: var(--accent); animation-delay: -7s; opacity: .42; }
+    @keyframes flotte { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 30px) scale(1.12); } }
+    .hero-bg { background: none; }
+    .hero-bg::after { mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); }
+
+    /* vitrine : l'automatisation en grand, à l'horizontale */
+    .flow { width: 100%; max-width: 1040px; margin: 64px auto 0; min-height: 0; padding: 34px 22px 26px; border-radius: 26px;
+      background: color-mix(in srgb, var(--bg-elev) 72%, transparent); box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--primary) 60%, transparent), var(--shadow); }
+    .flow-steps { gap: 14px; text-align: left; }
+    @media (min-width: 900px) { .flow-steps { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+    .fstep { flex-direction: column; align-items: flex-start; padding: 18px; min-height: 128px; }
+    .fstep b { font-size: 1rem; margin-top: 4px; }
+    .flow-rail { position: absolute; left: 40px; right: 40px; top: 50%; height: 2px; overflow: hidden; border-radius: 2px; background: var(--border); display: none; }
+    @media (min-width: 900px) { .flow-rail { display: block; } }
+    .flow-rail span { position: absolute; top: 0; left: -30%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, var(--accent), var(--primary), transparent); animation: rail 4s linear infinite; }
+    @keyframes rail { to { left: 100%; } }
+    .flow-badge { right: 50%; transform: translateX(50%); top: -13px; }
+
+    .stats { max-width: 1040px; margin: 40px auto 0; }
+    .stats li { background: transparent; border: 0; border-left: 1px solid var(--border); border-radius: 0; padding: 4px 18px; text-align: left; }
+    .stats b { font-size: clamp(1.6rem, 1.4vw + 1rem, 2.3rem); letter-spacing: -.02em; }
+    .pillars { max-width: 1040px; margin: 56px auto 0; }
+    @media (prefers-reduced-motion: reduce) { .orb, .flow-rail span { animation: none; } }
+    /* ---- illustration animée ---- */
+    .visual { width: 100%; max-width: 760px; margin: 40px auto 0; }
+    .visual-svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .v-orbit { fill: none; stroke: color-mix(in srgb, var(--text) 14%, transparent); stroke-width: 1; stroke-dasharray: 2 8; }
+    .v-orbit.o2 { stroke: color-mix(in srgb, var(--text) 8%, transparent); }
+    .v-link { fill: none; stroke: color-mix(in srgb, var(--primary) 45%, transparent); stroke-width: 1.5; }
+    .v-pulse { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent)); }
+    .v-core-disc { filter: drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 70%, transparent)); }
+    .v-spark { fill: #fff; opacity: .95; }
+    .v-wave { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; animation: onde 3.2s ease-out infinite; }
+    .v-wave.w2 { animation-delay: 1.6s; }
+    @keyframes onde { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
+    .v-spin { transform-box: fill-box; transform-origin: center; animation: tourne 18s linear infinite; }
+    @keyframes tourne { to { transform: rotate(360deg); } }
+    .v-disc { fill: var(--bg-elev); stroke: color-mix(in srgb, var(--primary) 55%, var(--border)); stroke-width: 1.5; }
+    .v-halo { fill: color-mix(in srgb, var(--primary) 16%, transparent); opacity: 0; animation: halo 4s ease-in-out infinite; animation-delay: calc(var(--i) * .66s); }
+    @keyframes halo { 0%, 100% { opacity: 0; } 20%, 35% { opacity: 1; } }
+    .v-ic { fill: none; stroke: var(--primary); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .v-node { animation: flotteN 6s ease-in-out infinite; animation-delay: calc(var(--i) * -1s); }
+    @keyframes flotteN { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+    #net { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .7; }
+    @media (prefers-reduced-motion: reduce) { .v-wave, .v-spin, .v-halo, .v-node { animation: none; } .v-pulse, #net { display: none; } }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
   <header id="site-header"></header>
 
   <main>
-    <section class="container hero">
-      <span class="eyebrow" data-i18n="home_eyebrow"></span>
-      <h1 data-i18n="home_h1"></h1>
-      <p class="lead" data-i18n="home_lead"></p>
-      <div class="btns">
-        <a class="btn" href="#demos" data-i18n="home_cta_demos"></a>
-        <a class="btn btn-outline" href="contact" data-i18n="cta_contact"></a>
-      </div>
-      <div class="pillars">
+    <section class="hero-wrap">
+      <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><canvas id="net"></canvas></div>
+      <div class="container hero">
+        <div class="hero-center">
+          <div class="hero-text reveal">
+            <span class="eyebrow" data-i18n="home_eyebrow"></span>
+            <h1><span data-i18n="home_h1a"></span> <span class="grad" data-i18n="home_h1b"></span></h1>
+            <p class="lead" data-i18n="home_lead"></p>
+            <div class="btns">
+              <a class="btn btn-glow" href="#demos" data-i18n="home_cta_demos"></a>
+              <a class="btn btn-outline" href="contact" data-i18n="cta_contact"></a>
+            </div>
+          </div>
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 600 460" class="visual-svg">
+            <defs>
+              <radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--primary)"/></radialGradient>
+              <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--primary)"/><stop offset="1" stop-color="var(--accent)"/></linearGradient>
+            </defs>
+            <ellipse class="v-orbit" cx="300" cy="230" rx="170" ry="133"/>
+            <ellipse class="v-orbit o2" cx="300" cy="230" rx="230" ry="179"/>
+            <path id="lk0" class="v-link" d="M300 230 L300 97"/><path id="lk1" class="v-link" d="M300 230 L447 164"/><path id="lk2" class="v-link" d="M300 230 L447 296"/><path id="lk3" class="v-link" d="M300 230 L300 363"/><path id="lk4" class="v-link" d="M300 230 L153 296"/><path id="lk5" class="v-link" d="M300 230 L153 164"/>
+            <circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="0.00s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#lk0"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="0.43s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#lk1"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="0.86s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#lk2"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="1.29s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#lk3"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="1.72s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#lk4"/></animateMotion></circle><circle r="4" class="v-pulse"><animateMotion dur="2.6s" begin="2.15s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#lk5"/></animateMotion></circle>
+            <g class="v-core" transform="translate(300 230)">
+              <circle class="v-wave" r="56"/><circle class="v-wave w2" r="56"/>
+              <circle r="54" fill="url(#core)" class="v-core-disc"/>
+              <g class="v-spin"><circle r="68" fill="none" stroke="url(#ring)" stroke-width="2" stroke-dasharray="6 10"/></g>
+              <path class="v-spark" d="M0 -22 L6 -6 L22 0 L6 6 L0 22 L-6 6 L-22 0 L-6 -6 Z"/>
+            </g>
+            <g class="v-node" style="--i:0" transform="translate(300 97)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><rect x="-15" y="-11" width="30" height="22" rx="4"/><path d="M-15 -8 L0 3 L15 -8"/></g></g><g class="v-node" style="--i:1" transform="translate(447 164)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><rect x="-14" y="-14" width="28" height="28" rx="4"/><path d="M-14 -4 H14 M-14 6 H14 M-3 -14 V14"/></g></g><g class="v-node" style="--i:2" transform="translate(447 296)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><path d="M-15 -11 h30 a3 3 0 0 1 3 3 v14 a3 3 0 0 1 -3 3 h-16 l-8 7 v-7 h-6 a3 3 0 0 1 -3 -3 v-14 a3 3 0 0 1 3 -3z"/><path d="M-7 -1 h0.01 M0 -1 h0.01 M7 -1 h0.01" stroke-width="4"/></g></g><g class="v-node" style="--i:3" transform="translate(300 363)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><path d="M-10 -14 l6 0 l3 8 l-4 3 a18 18 0 0 0 8 8 l3 -4 l8 3 l0 6 a3 3 0 0 1 -3 3 a26 26 0 0 1 -24 -24 a3 3 0 0 1 3 -3z"/></g></g><g class="v-node" style="--i:4" transform="translate(153 296)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><circle r="14"/><path d="M-14 0 H14 M0 -14 C-8 -6 -8 6 0 14 M0 -14 C8 -6 8 6 0 14"/></g></g><g class="v-node" style="--i:5" transform="translate(153 164)"><circle class="v-halo" r="38"/><circle class="v-disc" r="30"/><g class="v-ic"><rect x="-9" y="-15" width="18" height="30" rx="4"/><path d="M-3 10 H3"/></g></g>
+          </svg>
+        </div>
+        </div>
+        <ul class="stats reveal">
+          <li><b>9</b><span data-i18n="st1"></span></li>
+          <li><b>0 €</b><span data-i18n="st2"></span></li>
+          <li><b>FR · EN</b><span data-i18n="st3"></span></li>
+          <li><b>14 j</b><span data-i18n="st4"></span></li>
+        </ul>
+      <div class="pillars reveal">
         <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.6M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3.6M20 19v-4h-4"/></svg></span><h3 data-i18n="p1_t"></h3><p data-i18n="p1_d"></p></a>
         <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><h3 data-i18n="p2_t"></h3><p data-i18n="p2_d"></p></a>
         <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M1.5 17h16"/><rect x="17.5" y="8" width="5" height="12" rx="1.2"/><path d="M19.5 18h1"/></svg></span><h3 data-i18n="p3_t"></h3><p data-i18n="p3_d"></p></a>
       </div>
+      </div>
     </section>
 
-    <section class="container" id="services">
+    <section class="marquee" aria-label="Outils">
+      <div class="marquee-track">
+        <span>n8n</span><span>Make</span><span>Zapier</span><span>Python</span><span>JavaScript</span><span>Node.js</span><span>Claude API</span><span>OpenAI</span><span>Groq</span><span>Vapi</span><span>Google Sheets</span><span>Apps Script</span><span>Notion</span><span>Airtable</span><span>HubSpot</span><span>WhatsApp API</span><span>Slack</span><span>Stripe</span><span>Shopify</span><span>Vercel</span>
+        <span aria-hidden="true">n8n</span><span aria-hidden="true">Make</span><span aria-hidden="true">Zapier</span><span aria-hidden="true">Python</span><span aria-hidden="true">JavaScript</span><span aria-hidden="true">Node.js</span><span aria-hidden="true">Claude API</span><span aria-hidden="true">OpenAI</span><span aria-hidden="true">Groq</span><span aria-hidden="true">Vapi</span><span aria-hidden="true">Google Sheets</span><span aria-hidden="true">Apps Script</span><span aria-hidden="true">Notion</span><span aria-hidden="true">Airtable</span><span aria-hidden="true">HubSpot</span><span aria-hidden="true">WhatsApp API</span><span aria-hidden="true">Slack</span><span aria-hidden="true">Stripe</span><span aria-hidden="true">Shopify</span><span aria-hidden="true">Vercel</span>
+      </div>
+    </section>
+
+    <section class="container reveal" id="services">
       <h2 data-i18n="home_services_title"></h2>
       <p class="muted" data-i18n="home_services_sub"></p>
-      <div class="services">
+      <div class="services stagger">
         <div class="service"><span class="tag-cat" data-i18n="sv1_c"></span><h3 data-i18n="sv1_t"></h3><p data-i18n="sv1_d"></p></div>
         <div class="service"><span class="tag-cat" data-i18n="sv2_c"></span><h3 data-i18n="sv2_t"></h3><p data-i18n="sv2_d"></p></div>
         <div class="service"><span class="tag-cat" data-i18n="sv3_c"></span><h3 data-i18n="sv3_t"></h3><p data-i18n="sv3_d"></p></div>
@@ -58,10 +225,10 @@
       </div>
     </section>
 
-    <section class="container" id="demos">
+    <section class="container reveal" id="demos">
       <h2 data-i18n="home_demos_title"></h2>
       <p class="muted" data-i18n="home_demos_sub"></p>
-      <div class="grid">
+      <div class="grid stagger">
         <a class="card demo-card" href="demos/agent-email/"><span class="num">01</span><h3 data-i18n="c1_t"></h3><p data-i18n="c1_d"></p><span class="go" data-i18n="home_try"></span></a>
         <a class="card demo-card" href="demos/automatisation/"><span class="num">02</span><h3 data-i18n="c2_t"></h3><p data-i18n="c2_d"></p><span class="go" data-i18n="home_try"></span></a>
         <a class="card demo-card" href="demos/chatbot/"><span class="num">03</span><h3 data-i18n="c3_t"></h3><p data-i18n="c3_d"></p><span class="go" data-i18n="home_try"></span></a>
@@ -84,10 +251,6 @@
       </div>
     </section>
 
-    <section class="container">
-      <h2 data-i18n="home_tools_title"></h2>
-      <p class="muted" data-i18n="home_tools_list"></p>
-    </section>
 
     <section class="container" id="contact">
       <div class="cta" data-cta>
@@ -106,18 +269,24 @@
   <script>
     window.PAGE_I18N = {
       "fr": {
+        "home_h1a": "Nous automatisons vos tâches, ajoutons l'IA à votre entreprise et",
+        "home_h1b": "développons vos sites et applications.",
+        "st1": "démos réelles à tester",
+        "st2": "pour tester, sans inscription",
+        "st3": "bilingue",
+        "st4": "de support après livraison",
         "home_title": "Automatisation, IA et développement",
-        "home_eyebrow": "Freelance · Automatisation · IA · Sites et applications",
-        "home_h1": "J'automatise vos tâches, j'ajoute l'IA à votre entreprise et je développe vos sites et applications.",
-        "home_lead": "Moins de saisie, moins d'oublis, des clients mieux suivis. Chaque démo ci-dessous est réelle : testez-la gratuitement, puis décrivez-moi votre besoin par écrit pour recevoir une proposition et un devis fixe.",
-        "home_cta_demos": "Tester les démos",
+        "home_eyebrow": "Automatisation · IA · Sites et applications",
+        "home_h1": "Nous automatisons vos tâches, ajoutons l'IA à votre entreprise et développons vos sites et applications.",
+        "home_lead": "Moins de saisie, moins d'oublis, des clients mieux suivis.",
+        "home_cta_demos": "Découvrir les démos",
         "p1_t": "Automatisation",
         "p1_d": "Vos outils reliés entre eux, les tâches répétitives faites toutes seules.",
         "p2_t": "Intelligence artificielle",
         "p2_d": "Agents, chatbots et assistants vocaux qui lisent, trient et répondent.",
         "p3_t": "Développement",
         "p3_d": "Sites vitrines, sites dynamiques avec back-end et applications mobiles.",
-        "home_services_title": "Ce que je peux faire pour vous",
+        "home_services_title": "Ce que nous faisons pour vous",
         "home_services_sub": "Chaque projet commence par votre besoin écrit, et un devis fixe avant de démarrer.",
         "sv1_c": "Automatisation",
         "sv1_t": "Workflows n8n, Make, Zapier",
@@ -171,33 +340,39 @@
         "c8_d": "Envoyez la photo d'une facture : l'IA remplit le tableau et vérifie les montants.",
         "c9_t": "Veille chaque matin",
         "c9_d": "Choisissez un sujet : voici le rapport que vous recevriez chaque jour, avec les vraies données.",
-        "home_method_title": "Ma méthode",
+        "home_method_title": "Notre méthode",
         "m1_t": "Votre besoin, par écrit",
-        "m1_d": "Décrivez votre tâche en quelques lignes (formulaire ou email) : je vous réponds par écrit, et on fixe un échange seulement si c'est utile.",
+        "m1_d": "Décrivez votre tâche en quelques lignes (formulaire ou email) : nous vous répondons par écrit, et un échange est fixé seulement si c'est utile.",
         "m2_t": "Devis fixe avant de commencer",
         "m2_d": "Cadrage clair, prix fixé, aucune surprise.",
         "m3_t": "Vidéo explicative + documentation",
         "m3_d": "Chaque système livré avec une vidéo et une documentation pour que votre équipe soit autonome.",
         "m4_t": "14 jours de support gratuit",
-        "m4_d": "Après la livraison, je reste disponible pour ajuster et corriger.",
+        "m4_d": "Après la livraison, nous restons disponibles pour ajuster et corriger.",
         "home_tools_title": "Outils et technologies",
         "home_tools_list": "n8n · Make · Zapier · API Claude, OpenAI, Groq · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Quelle tâche vous prend le plus de temps ?",
-        "home_contact_text": "Décrivez-la en quelques lignes : je vous dirai franchement si elle peut être automatisée ou développée, comment, et à quel prix."
+        "home_contact_text": "Décrivez-la en quelques lignes : nous vous dirons franchement si elle peut être automatisée ou développée, comment, et à quel prix."
       },
       "en": {
+        "home_h1a": "We automate your tasks, bring AI into your business and",
+        "home_h1b": "build your websites and apps.",
+        "st1": "real demos to try",
+        "st2": "to try, no sign-up",
+        "st3": "bilingual",
+        "st4": "of support after delivery",
         "home_title": "Automation, AI and development",
-        "home_eyebrow": "Freelance · Automation · AI · Websites and apps",
-        "home_h1": "I automate your tasks, bring AI into your business and build your websites and apps.",
-        "home_lead": "Less data entry, fewer things forgotten, better follow-up with your customers. Every demo below is real: try it for free, then describe your need in writing to get a proposal and a fixed quote.",
-        "home_cta_demos": "Try the demos",
+        "home_eyebrow": "Automation · AI · Websites and apps",
+        "home_h1": "We automate your tasks, bring AI into your business and build your websites and apps.",
+        "home_lead": "Less data entry, fewer things forgotten, better follow-up with your customers.",
+        "home_cta_demos": "Explore the demos",
         "p1_t": "Automation",
         "p1_d": "Your tools connected, repetitive tasks done on their own.",
         "p2_t": "Artificial intelligence",
         "p2_d": "Agents, chatbots and voice assistants that read, sort and reply.",
         "p3_t": "Development",
         "p3_d": "Showcase websites, dynamic websites with a back end, and mobile apps.",
-        "home_services_title": "What I can do for you",
+        "home_services_title": "What we do for you",
         "home_services_sub": "Every project starts with your need in writing, and a fixed quote before we begin.",
         "sv1_c": "Automation",
         "sv1_t": "n8n, Make, Zapier workflows",
@@ -253,20 +428,69 @@
         "c9_d": "Pick a topic: here is the report you would receive every day, with real data.",
         "home_method_title": "How I work",
         "m1_t": "Your need, in writing",
-        "m1_d": "Describe your task in a few lines (form or email): I reply in writing, and we schedule a call only if it is useful.",
+        "m1_d": "Describe your task in a few lines (form or email): we reply in writing, and a call is scheduled only if it is useful.",
         "m2_t": "Fixed price before starting",
         "m2_d": "Clear scope, fixed quote, no surprises.",
         "m3_t": "Video walkthrough + documentation",
         "m3_d": "Every system ships with a video and documentation so your team can maintain it.",
         "m4_t": "14 days of free support",
-        "m4_d": "After delivery, I stay available to adjust and fix.",
+        "m4_d": "After delivery, we stay available to adjust and fix.",
         "home_tools_title": "Tools and technologies",
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Which task takes you the most time?",
-        "home_contact_text": "Describe it in a few lines: I will tell you honestly whether it can be automated or built, how, and what it will cost."
+        "home_contact_text": "Describe it in a few lines: we will tell you honestly whether it can be automated or built, how, and what it will cost."
       }
     };
   </script>
   <script src="app.js"></script>
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal, .stagger');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+  <script>
+    (function () {
+      var c = document.getElementById('net');
+      if (!c || !c.getContext || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var g = c.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), W = 0, H = 0, pts = [], mouse = { x: -9999, y: -9999 }, visible = true, col = '#3552d9', col2 = '#0f9d8a';
+      function couleurs() { var cs = getComputedStyle(document.documentElement); col = cs.getPropertyValue('--primary').trim() || col; col2 = cs.getPropertyValue('--accent').trim() || col2; }
+      function taille() {
+        var r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var n = Math.round(Math.min(90, W * H / 14000));
+        pts = []; for (var i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 });
+      }
+      function frame() {
+        if (visible) {
+          g.clearRect(0, 0, W, H);
+          for (var i = 0; i < pts.length; i++) {
+            var p = pts[i]; p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+            var dx = p.x - mouse.x, dy = p.y - mouse.y, d = dx * dx + dy * dy;
+            if (d < 14000) { p.x += dx * .012; p.y += dy * .012; }
+            for (var j = i + 1; j < pts.length; j++) {
+              var q = pts[j], ex = p.x - q.x, ey = p.y - q.y, e = ex * ex + ey * ey;
+              if (e < 13000) { g.globalAlpha = (1 - e / 13000) * .5; g.strokeStyle = (i + j) % 3 ? col : col2; g.lineWidth = 1; g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(q.x, q.y); g.stroke(); }
+            }
+            g.globalAlpha = .9; g.fillStyle = i % 4 ? col : col2; g.beginPath(); g.arc(p.x, p.y, 1.8, 0, 6.283); g.fill();
+          }
+          g.globalAlpha = 1;
+        }
+        requestAnimationFrame(frame);
+      }
+      couleurs(); taille(); requestAnimationFrame(frame);
+      window.addEventListener('resize', taille);
+      document.addEventListener('demo:theme', couleurs);
+      new MutationObserver(couleurs).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      var hero = document.querySelector('.hero-wrap');
+      hero.addEventListener('pointermove', function (e) { var r = c.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+      hero.addEventListener('pointerleave', function () { mouse.x = mouse.y = -9999; });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
+    })();
+  </script>
 </body>
 </html>

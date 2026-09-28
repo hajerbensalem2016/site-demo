@@ -36,57 +36,61 @@
   /* ---------- i18n ---------- */
   var i18n = {
     fr: {
-      site_name: 'Hajer — Automatisation & IA',
+      site_name: 'HBSGo',
       site_tag: 'Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM',
       nav_home: 'Accueil',
       nav_contact: 'Contactez-nous',
+      footer_services: 'Services',
+      footer_demos: 'Démos',
       cta_contact: 'Contactez-nous',
       theme_toggle: 'Changer de thème (clair / sombre)',
       back_home: '← Retour à l\'accueil',
       test_zone: 'Testez vous-même',
       tests_left: 'Tests gratuits restants aujourd\'hui : {n}/{max}',
-      quota_reached: 'Vous avez utilisé vos {max} tests gratuits pour cette démo aujourd\'hui. Revenez demain, ou contactez-moi pour une démo complète sur vos propres données.',
+      quota_reached: 'Vous avez utilisé vos {max} tests gratuits pour cette démo aujourd\'hui. Revenez demain, ou contactez-nous pour une démo complète sur vos propres données.',
       offline_banner: 'Mode démo hors ligne — le backend n\'est pas encore connecté : le résultat ci-dessous est une simulation locale, mais le rendu final sera identique.',
       loom_title: 'La démo en 60 secondes',
       loom_todo: 'Vidéo Loom à venir — remplacer la valeur TODO_LOOM dans config.js',
       how_title: 'Comment ça marche',
       cta_title: 'Vous voulez ça pour votre entreprise ?',
-      cta_text: 'Décrivez votre besoin par écrit : je vous réponds avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c\'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.',
-      cta_upwork: 'Me contacter sur Upwork',
-      cta_malt: 'Me contacter sur Malt',
+      cta_text: 'Décrivez votre besoin par écrit : nous vous répondons avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c\'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.',
+      cta_upwork: 'Nous trouver sur Upwork',
+      cta_malt: 'Nous trouver sur Malt',
       cta_todo: 'Lien à configurer dans config.js (TODO_UPWORK / TODO_MALT)',
       btn_run: 'Lancer le test',
       loading: 'Traitement en cours…',
       error_generic: 'Une erreur est survenue. Réessayez dans un instant.',
-      footer_text: '© {year} Hajer — Automatisation & IA. Démos à tester librement.',
-      footer_free: 'Le formulaire de contact transmet vos informations à Hajer uniquement. Dans les autres démos, le texte saisi est envoyé au service d\'IA pour produire la réponse, puis n\'est pas conservé sur ce site : n\'y mettez pas de données sensibles.',
+      footer_text: '© {year} HBSGo',
+      footer_free: 'Automatisation · Intelligence artificielle · Sites et applications',
       yes: 'Oui', no: 'Non'
     },
     en: {
-      site_name: 'Hajer — Automation & AI',
+      site_name: 'HBSGo',
       site_tag: 'AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM',
       nav_home: 'Home',
       nav_contact: 'Contact us',
+      footer_services: 'Services',
+      footer_demos: 'Demos',
       cta_contact: 'Contact us',
       theme_toggle: 'Toggle theme (light / dark)',
       back_home: '← Back to home',
       test_zone: 'Try it yourself',
       tests_left: 'Free tests left today: {n}/{max}',
-      quota_reached: 'You have used your {max} free tests for this demo today. Come back tomorrow, or contact me for a full demo on your own data.',
+      quota_reached: 'You have used your {max} free tests for this demo today. Come back tomorrow, or contact us for a full demo on your own data.',
       offline_banner: 'Offline demo mode — the backend is not connected yet: the result below is a local simulation, but the final output will look the same.',
       loom_title: 'The demo in 60 seconds',
       loom_todo: 'Loom video coming soon — replace the TODO_LOOM value in config.js',
       how_title: 'How it works',
       cta_title: 'Want this for your business?',
-      cta_text: 'Describe your need in writing: I reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.',
-      cta_upwork: 'Hire me on Upwork',
-      cta_malt: 'Hire me on Malt',
+      cta_text: 'Describe your need in writing: we reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.',
+      cta_upwork: 'Find us on Upwork',
+      cta_malt: 'Find us on Malt',
       cta_todo: 'Link to configure in config.js (TODO_UPWORK / TODO_MALT)',
       btn_run: 'Run the test',
       loading: 'Processing…',
       error_generic: 'Something went wrong. Please try again in a moment.',
-      footer_text: '© {year} Hajer — Automation & AI. Demos free to try.',
-      footer_free: 'The contact form sends your details to Hajer only. In the other demos, the text you type is sent to the AI service to produce the answer and is not stored on this site: do not enter sensitive data.',
+      footer_text: '© {year} HBSGo',
+      footer_free: 'Automation · Artificial intelligence · Websites and apps',
       yes: 'Yes', no: 'No'
     }
   };
@@ -270,12 +274,19 @@
   }
 
   /* ---------- montage de la page ---------- */
+  /* Logo HBSGo : lettre H + flèche (même dessin que logo.svg / favicon.svg) */
+  var LOGO = '<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="hbsg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3552d9"/><stop offset="1" stop-color="#0f9d8a"/></linearGradient></defs><path d="M8 50 V14 M8 32 H30 M30 14 V50" fill="none" stroke="url(#hbsg)" stroke-width="7" stroke-linecap="round"/><path d="M40 14 L56 32 L40 50" fill="none" stroke="#0f9d8a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-name">HBS<span class="go">Go</span></span>';
+  function mountFavicon() {
+    if (document.querySelector('link[rel="icon"]')) return;
+    var l = document.createElement('link'); l.rel = 'icon'; l.type = 'image/svg+xml'; l.href = root() + 'favicon.svg';
+    document.head.appendChild(l);
+  }
   function mountHeader() {
     var header = qs('#site-header');
     if (!header) return;
     header.innerHTML =
       '<div class="container header-inner">' +
-      '  <a class="brand" href="' + root() + '"><span class="brand-dot"></span><span data-i18n="site_name"></span></a>' +
+      '  <a class="brand" href="' + root() + '">' + LOGO + '</a>' +
       '  <div class="header-actions">' +
       '    <a class="btn btn-sm nav-contact" href="' + root() + 'contact" data-i18n="nav_contact"></a>' +
       '    <div class="lang-switch" role="group" aria-label="Langue / Language">' +
@@ -291,7 +302,12 @@
   function mountFooter() {
     var footer = qs('#site-footer');
     if (!footer) return;
-    footer.innerHTML = '<div class="container"><p data-year></p><p data-i18n="footer_free"></p></div>';
+    footer.innerHTML =
+      '<div class="container footer-inner">' +
+      '  <div class="footer-brand"><a class="brand" href="' + root() + '">' + LOGO + '</a><p data-i18n="footer_free"></p></div>' +
+      '  <nav class="footer-links"><a href="' + root() + '#services" data-i18n="footer_services"></a><a href="' + root() + '#demos" data-i18n="footer_demos"></a><a href="' + root() + 'contact" data-i18n="nav_contact"></a></nav>' +
+      '</div>' +
+      '<div class="container footer-bottom"><p data-year></p></div>';
   }
   function mountLoom() {
     qsa('[data-loom]').forEach(function (box) {
@@ -310,7 +326,7 @@
     });
   }
   function mountCta() {
-    /* Bouton principal : page Contact (message envoyé à Hajer par email) */
+    /* Bouton principal : page Contact (message transmis par email) */
     qsa('[data-cta] .btns').forEach(function (btns) {
       if (qs('[data-cta-contact]', btns)) return;
       var a = document.createElement('a');
@@ -336,6 +352,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    mountFavicon();
     mountHeader();
     mountFooter();
     mountLoom();

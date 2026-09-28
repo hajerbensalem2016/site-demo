@@ -23,7 +23,7 @@ const PROMPTS = {
     '- categorie : une des valeurs suivantes : "Facturation", "Réclamation / SAV", "Demande commerciale", "Prise de rendez-vous", "Candidature", "Marketing / Spam", "Demande d\'information" (choisis la plus proche).',
     '- urgence : "haute" si le client attend une action immédiate ou exprime une gêne forte, "basse" si aucune action n\'est attendue (newsletter, spam, remerciement), "moyenne" sinon.',
     '- resume : une seule phrase en français (30 mots maximum) qui dit qui écrit, ce qu\'il veut et les détails clés (numéro de commande, date, montant).',
-    '- reponse_proposee : réponse complète en français, polie et concrète, prête à envoyer : formule d\'appel, 2 à 4 phrases qui répondent au besoin ou annoncent la prochaine étape, formule de politesse et signature (« Hajer » si l\'email lui est adressé, sinon « L\'équipe »). Sépare les paragraphes par des lignes vides. Pour un spam ou une newsletter, écris : "(Aucune réponse nécessaire — email archivé automatiquement.)".',
+    '- reponse_proposee : réponse complète en français, polie et concrète, prête à envoyer : formule d\'appel, 2 à 4 phrases qui répondent au besoin ou annoncent la prochaine étape, formule de politesse et signature « L\'équipe ». Sépare les paragraphes par des lignes vides. Pour un spam ou une newsletter, écris : "(Aucune réponse nécessaire — email archivé automatiquement.)".',
     'N\'invente pas d\'engagement précis (remboursement, montant, date ferme) qui n\'est pas déductible de l\'email : propose plutôt une vérification et un délai de réponse.'
   ],
   en: [
@@ -33,7 +33,7 @@ const PROMPTS = {
     '- categorie: one of "Billing", "Complaint / Support", "Sales inquiry", "Meeting request", "Job application", "Marketing / Spam", "Information request" (pick the closest).',
     '- urgence: "high" if the sender expects immediate action or expresses strong frustration, "low" if no action is expected (newsletter, spam, thank-you note), "medium" otherwise.',
     '- resume: one single English sentence (30 words maximum) saying who writes, what they want and the key details (order number, date, amount).',
-    '- reponse_proposee: full English reply, polite and concrete, ready to send: greeting, 2 to 4 sentences that answer the need or announce the next step, closing line and signature ("Hajer" if the email is addressed to her, otherwise "The team"). Separate paragraphs with blank lines. For spam or a newsletter write: "(No reply needed — email archived automatically.)".',
+    '- reponse_proposee: full English reply, polite and concrete, ready to send: greeting, 2 to 4 sentences that answer the need or announce the next step, closing line and signature "The team". Separate paragraphs with blank lines. For spam or a newsletter write: "(No reply needed — email archived automatically.)".',
     'Do not invent precise commitments (refund, amount, firm date) that cannot be inferred from the email: offer a check and a response deadline instead.'
   ]
 };

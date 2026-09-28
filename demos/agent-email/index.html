@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Agent email IA · Hajer — Automatisation & IA</title>
+  <title>Agent email IA · HBSGo</title>
   <meta name="description" content="Collez un email : l'agent IA le classe, évalue l'urgence, le résume et rédige une réponse. Démo interactive gratuite.">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
   <link rel="stylesheet" href="../../style.css">
   <script src="../../config.js"></script>
 </head>
@@ -139,12 +140,12 @@
         fr: [
           'Bonjour,\n\nJ\'ai commandé le casque ANC Pro il y a 10 jours (commande #48213) et je ne l\'ai toujours pas reçu. Le suivi n\'a pas bougé depuis mardi. C\'est urgent, c\'est un cadeau pour samedi. Que pouvez-vous faire ?\n\nCordialement,\nMarc Delorme',
           'Bonjour,\n\nNous sommes une agence immobilière de 12 personnes. Nous aimerions un devis pour automatiser l\'envoi de nos relances locataires et la synchronisation de nos leads avec HubSpot. Quel serait le tarif et le délai ?\n\nMerci,\nSophie Martin',
-          'Bonjour Hajer,\n\nSuite à notre échange sur Malt, seriez-vous disponible jeudi ou vendredi après-midi pour un appel de 15 minutes ? Pas d\'urgence, la semaine prochaine me va aussi.\n\nBonne journée,\nKarim'
+          'Bonjour,\n\nSuite à notre échange sur Malt, seriez-vous disponible jeudi ou vendredi après-midi pour un appel de 15 minutes ? Pas d\'urgence, la semaine prochaine me va aussi.\n\nBonne journée,\nKarim'
         ],
         en: [
           'Hi,\n\nI ordered the ANC Pro headphones 10 days ago (order #48213) and still have not received them. Tracking has not moved since Tuesday. This is urgent, it is a gift for Saturday. What can you do?\n\nRegards,\nMark Dell',
           'Hello,\n\nWe are a 12-person real-estate agency. We would like a quote to automate our tenant reminder emails and sync our leads with HubSpot. What would be the price and timeline?\n\nThanks,\nSophie Martin',
-          'Hi Hajer,\n\nFollowing our chat on Upwork, would you be available Thursday or Friday afternoon for a 15-minute call? No rush, next week works too.\n\nHave a good day,\nKarim'
+          'Hello,\n\nFollowing our chat on Upwork, would you be available Thursday or Friday afternoon for a 15-minute call? No rush, next week works too.\n\nHave a good day,\nKarim'
         ]
       };
       D.qsa('[data-example]').forEach(function (b) {
@@ -157,8 +158,8 @@
         var cat, reply, urg = fr ? 'moyenne' : 'medium';
         if (/factur|invoice|paiement|payment|rembours|refund|prélèv/.test(e)) { cat = fr ? 'Facturation' : 'Billing'; reply = fr ? 'Bonjour,\n\nMerci pour votre message. J\'ai bien pris note de votre demande concernant la facturation. Je vérifie votre dossier et reviens vers vous sous 24 h avec une réponse précise.\n\nBien cordialement,\nL\'équipe' : 'Hello,\n\nThank you for your message. I have noted your billing request. I am checking your file and will get back to you within 24 hours with a precise answer.\n\nBest regards,\nThe team'; }
         else if (/commande|order|livraison|delivery|colis|parcel|reçu|received|suivi|tracking|réclam|complain/.test(e)) { cat = fr ? 'Réclamation / SAV' : 'Complaint / Support'; reply = fr ? 'Bonjour,\n\nJe suis désolée pour ce retard et je comprends votre inquiétude. J\'ai ouvert une réclamation auprès du transporteur et je vous confirme par retour un nouveau délai de livraison. Si le colis ne peut pas arriver à temps, je vous propose un renvoi en express à nos frais.\n\nBien cordialement,\nLe service client' : 'Hello,\n\nI am sorry for this delay and I understand your concern. I have opened a claim with the carrier and will confirm a new delivery date shortly. If the parcel cannot arrive on time, I will reship it by express at our cost.\n\nBest regards,\nCustomer service'; }
-        else if (/devis|quote|tarif|price|pricing|proposal|budget|combien/.test(e)) { cat = fr ? 'Demande commerciale' : 'Sales inquiry'; reply = fr ? 'Bonjour,\n\nMerci pour votre intérêt. Votre besoin correspond tout à fait à ce que je mets en place. Pour vous envoyer un devis fixe, je vous propose un appel gratuit de 15 minutes : quel créneau vous conviendrait cette semaine ?\n\nBien cordialement,\nHajer' : 'Hello,\n\nThank you for your interest. Your need is exactly the kind of system I build. To send you a fixed quote, I suggest a free 15-minute call: which slot would suit you this week?\n\nBest regards,\nHajer'; }
-        else if (/rendez|meeting|appel|call|disponib|available|créneau|slot/.test(e)) { cat = fr ? 'Prise de rendez-vous' : 'Meeting request'; reply = fr ? 'Bonjour,\n\nAvec plaisir. Je suis disponible jeudi à 14 h ou vendredi à 15 h. Dites-moi ce qui vous arrange et je vous envoie l\'invitation.\n\nBonne journée,\nHajer' : 'Hello,\n\nWith pleasure. I am available Thursday at 2 pm or Friday at 3 pm. Let me know what suits you and I will send the invite.\n\nHave a good day,\nHajer'; }
+        else if (/devis|quote|tarif|price|pricing|proposal|budget|combien/.test(e)) { cat = fr ? 'Demande commerciale' : 'Sales inquiry'; reply = fr ? 'Bonjour,\n\nMerci pour votre intérêt. Votre besoin correspond tout à fait à ce que je mets en place. Pour vous envoyer un devis fixe, je vous propose un appel gratuit de 15 minutes : quel créneau vous conviendrait cette semaine ?\n\nBien cordialement,\nL\'équipe' : 'Hello,\n\nThank you for your interest. Your need is exactly the kind of system I build. To send you a fixed quote, I suggest a free 15-minute call: which slot would suit you this week?\n\nBest regards,\nL\'équipe'; }
+        else if (/rendez|meeting|appel|call|disponib|available|créneau|slot/.test(e)) { cat = fr ? 'Prise de rendez-vous' : 'Meeting request'; reply = fr ? 'Bonjour,\n\nAvec plaisir. Je suis disponible jeudi à 14 h ou vendredi à 15 h. Dites-moi ce qui vous arrange et je vous envoie l\'invitation.\n\nBonne journée,\nL\'équipe' : 'Hello,\n\nWith pleasure. I am available Thursday at 2 pm or Friday at 3 pm. Let me know what suits you and I will send the invite.\n\nHave a good day,\nL\'équipe'; }
         else if (/candidat|cv\b|resume|job|poste|stage|intern/.test(e)) { cat = fr ? 'Candidature' : 'Job application'; reply = fr ? 'Bonjour,\n\nMerci pour votre candidature. Nous l\'étudions avec attention et reviendrons vers vous sous 10 jours.\n\nCordialement' : 'Hello,\n\nThank you for your application. We are reviewing it carefully and will get back to you within 10 days.\n\nRegards'; }
         else if (/newsletter|promo|offre spéciale|unsubscribe|désabonn|webinar/.test(e)) { cat = fr ? 'Marketing / Spam' : 'Marketing / Spam'; urg = fr ? 'basse' : 'low'; reply = fr ? '(Aucune réponse nécessaire — email archivé automatiquement.)' : '(No reply needed — email archived automatically.)'; }
         else { cat = fr ? 'Demande d\'information' : 'Information request'; reply = fr ? 'Bonjour,\n\nMerci pour votre message. Je reviens vers vous très rapidement avec les informations demandées.\n\nBien cordialement' : 'Hello,\n\nThank you for your message. I will get back to you shortly with the requested information.\n\nBest regards'; }

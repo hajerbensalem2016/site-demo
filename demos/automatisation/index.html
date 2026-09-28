@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Automatisation de workflow · Hajer — Automatisation & IA</title>
+  <title>Automatisation de workflow · HBSGo</title>
   <meta name="description" content="Remplissez un formulaire : une ligne est ajoutée dans Google Sheets et un email part automatiquement. Démo interactive réelle.">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
   <link rel="stylesheet" href="../../style.css">
   <script src="../../config.js"></script>
 </head>
@@ -88,10 +89,10 @@
         p_lead: 'Un formulaire rempli déclenche toute la chaîne : ligne ajoutée dans Google Sheets, email envoyé automatiquement, équipe prévenue. Zéro saisie manuelle, zéro oubli.',
         p_hint: 'Remplissez ce formulaire avec votre vraie adresse email : le workflow s\'exécute pour de vrai et vous recevez l\'email ci-dessous dans quelques secondes.',
         mail_title: 'L\'email que vous allez recevoir',
-        mail_note: 'Remarque : pour votre sécurité et pour éviter tout usage abusif (spam), l\'email envoyé est toujours le même texte, présenté ci-dessous. Ce que vous écrivez dans le formulaire n\'est jamais recopié dans l\'email : il est seulement transmis à Hajer.',
+        mail_note: 'Remarque : pour votre sécurité et pour éviter tout usage abusif (spam), l\'email envoyé est toujours le même texte, présenté ci-dessous. Ce que vous écrivez dans le formulaire n\'est jamais recopié dans l\'email : il est seulement transmis à notre équipe.',
         mail_subject_label: 'Objet', mail_body_label: 'Message',
-        mail_subject: 'Votre démo d\'automatisation vient de fonctionner — Hajer, Automatisation & IA',
-        mail_body: 'Bonjour,\n\nCet email vient d\'être envoyé automatiquement : vous avez rempli le formulaire de ma démo, et le workflow a enregistré votre demande puis déclenché cet envoi, sans aucune intervention humaine.\n\nC\'est exactement ce que je peux mettre en place pour votre entreprise :\n- des agents IA qui trient vos emails et préparent les réponses ;\n- des automatisations entre vos outils (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) avec n8n, Make ou Zapier ;\n- des chatbots pour votre site et des agents vocaux qui répondent au téléphone ;\n- la collecte de données et la veille de prix automatiques ;\n- des rapports d\'activité générés et envoyés tout seuls.\n\nTestez toutes mes démos : https://site-demo-hbs16.vercel.app\n\nVous avez une tâche répétitive qui vous prend du temps ? Répondez simplement à cet email en la décrivant en quelques lignes : je vous réponds par écrit avec une proposition claire et un prix fixe.\n\nHajer\nAutomatisation & IA',
+        mail_subject: 'Votre démo d\'automatisation vient de fonctionner — HBSGo',
+        mail_body: 'Bonjour,\n\nCet email vient d\'être envoyé automatiquement : vous avez rempli le formulaire de notre démo, et le workflow a enregistré votre demande puis déclenché cet envoi, sans aucune intervention humaine.\n\nC\'est exactement ce que nous pouvons mettre en place pour votre entreprise :\n- des agents IA qui trient vos emails et préparent les réponses ;\n- des automatisations entre vos outils (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) avec n8n, Make ou Zapier ;\n- des chatbots pour votre site et des agents vocaux qui répondent au téléphone ;\n- la collecte de données et la veille de prix automatiques ;\n- des rapports d\'activité générés et envoyés tout seuls.\n\nTestez toutes nos démos : https://hbsgo.vercel.app\n\nVous avez une tâche répétitive qui vous prend du temps ? Répondez simplement à cet email en la décrivant en quelques lignes : nous vous répondons par écrit avec une proposition claire et un prix fixe.\n\nL\'équipe HBSGo',
         f_nom: 'Nom', f_nom_ph: 'Marie Dupont',
         f_email: 'Email',
         f_entreprise: 'Entreprise', f_entreprise_ph: 'Dupont & Fils',
@@ -101,7 +102,7 @@
         t1: 'Formulaire reçu', t1d: 'Le workflow reçoit les données et les vérifie.',
         t2: 'Ligne ajoutée dans Google Sheets', t2d: 'Nom, email, entreprise, besoin, date.',
         t3: 'Email de présentation envoyé', t3d: 'Envoyé à {email} via Gmail.',
-        t4: 'Hajer prévenue', t4d: 'Elle reçoit votre demande complète par email.',
+        t4: 'L\'équipe prévenue', t4d: 'Elle reçoit votre demande complète par email.',
         p_done: 'Workflow terminé en {ms} ms.',
         col_date: 'Date', col_nom: 'Nom', col_email: 'Email', col_entreprise: 'Entreprise', col_besoin: 'Besoin',
         s1t: 'Un déclencheur', s1d: 'Formulaire web, Typeform, Tally, Shopify, Stripe, Calendly… n\'importe quel événement démarre le workflow.',
@@ -114,10 +115,10 @@
         p_lead: 'One submitted form triggers the whole chain: row added to Google Sheets, email sent automatically, team notified. Zero manual entry, nothing forgotten.',
         p_hint: 'Fill in this form with your real email address: the workflow runs for real and you receive the email below within seconds.',
         mail_title: 'The email you will receive',
-        mail_note: 'Note: for your safety and to prevent abuse (spam), the email sent is always the same text, shown below. What you type in the form is never copied into the email: it is only passed on to Hajer.',
+        mail_note: 'Note: for your safety and to prevent abuse (spam), the email sent is always the same text, shown below. What you type in the form is never copied into the email: it is only passed on to our team.',
         mail_subject_label: 'Subject', mail_body_label: 'Message',
-        mail_subject: 'Your automation demo just worked — Hajer, Automation & AI',
-        mail_body: 'Hello,\n\nThis email was sent automatically: you filled in the form on my demo, and the workflow saved your request and triggered this email, with no human involved.\n\nThis is exactly what I can set up for your business:\n- AI agents that sort your emails and draft the replies;\n- automations between your tools (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) with n8n, Make or Zapier;\n- website chatbots and voice agents that answer the phone;\n- automatic data collection and price monitoring;\n- activity reports generated and sent on their own.\n\nTry all my demos: https://site-demo-hbs16.vercel.app\n\nDo you have a repetitive task that takes up your time? Just reply to this email and describe it in a few lines: I will answer in writing with a clear proposal and a fixed price.\n\nHajer\nAutomation & AI',
+        mail_subject: 'Your automation demo just worked — HBSGo',
+        mail_body: 'Hello,\n\nThis email was sent automatically: you filled in the form on our demo, and the workflow saved your request and triggered this email, with no human involved.\n\nThis is exactly what we can set up for your business:\n- AI agents that sort your emails and draft the replies;\n- automations between your tools (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) with n8n, Make or Zapier;\n- website chatbots and voice agents that answer the phone;\n- automatic data collection and price monitoring;\n- activity reports generated and sent on their own.\n\nTry all our demos: https://hbsgo.vercel.app\n\nDo you have a repetitive task that takes up your time? Just reply to this email and describe it in a few lines: we will answer in writing with a clear proposal and a fixed price.\n\nThe HBSGo team',
         f_nom: 'Name', f_nom_ph: 'Mary Smith',
         f_email: 'Email',
         f_entreprise: 'Company', f_entreprise_ph: 'Smith & Co',
@@ -127,7 +128,7 @@
         t1: 'Form received', t1d: 'The workflow receives and checks the data.',
         t2: 'Row added to Google Sheets', t2d: 'Name, email, company, need, date.',
         t3: 'Presentation email sent', t3d: 'Sent to {email} via Gmail.',
-        t4: 'Hajer notified', t4d: 'She receives your full request by email.',
+        t4: 'Team notified', t4d: 'The team receives your full request by email.',
         p_done: 'Workflow completed in {ms} ms.',
         col_date: 'Date', col_nom: 'Name', col_email: 'Email', col_entreprise: 'Company', col_besoin: 'Need',
         s1t: 'A trigger', s1d: 'Web form, Typeform, Tally, Shopify, Stripe, Calendly… any event starts the workflow.',

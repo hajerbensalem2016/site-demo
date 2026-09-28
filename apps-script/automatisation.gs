@@ -8,11 +8,11 @@
      1. ajoute une ligne dans la feuille « Leads » (date, nom, email, entreprise, besoin, langue, statut) ;
      2. envoie à l'adresse saisie un email de présentation FIXE (le visiteur ne peut rien y écrire :
         impossible d'utiliser la démo pour envoyer du spam) ;
-     3. envoie à Hajer une copie avec tout ce que le visiteur a écrit.
+     3. envoie au propriétaire du script une copie avec tout ce que le visiteur a écrit.
    Garde-fous : 1 email par adresse toutes les 6 h, 40 emails de présentation par jour au total.
    ============================================================ */
 
-var SITE = 'https://site-demo-hbs16.vercel.app';
+var SITE = 'https://hbsgo.vercel.app';
 /* Identifiant de la Google Sheet (dans son adresse : /spreadsheets/d/<ID>/edit).
    Vide = la feuille à laquelle le script est rattaché (Extensions > Apps Script). */
 var SHEET_ID = '';
@@ -20,50 +20,48 @@ var MAX_PAR_JOUR = 40;
 
 var EMAILS = {
   fr: {
-    sujet: 'Votre démo d\'automatisation vient de fonctionner — Hajer, Automatisation & IA',
+    sujet: 'Votre démo d\'automatisation vient de fonctionner — HBSGo',
     texte: [
       'Bonjour,',
       '',
-      'Cet email vient d\'être envoyé automatiquement : vous avez rempli le formulaire de ma démo, et le workflow a enregistré votre demande puis déclenché cet envoi, sans aucune intervention humaine.',
+      'Cet email vient d\'être envoyé automatiquement : vous avez rempli le formulaire de notre démo, et le workflow a enregistré votre demande puis déclenché cet envoi, sans aucune intervention humaine.',
       '',
-      'C\'est exactement ce que je peux mettre en place pour votre entreprise :',
+      'C\'est exactement ce que nous pouvons mettre en place pour votre entreprise :',
       '- des agents IA qui trient vos emails et préparent les réponses ;',
       '- des automatisations entre vos outils (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) avec n8n, Make ou Zapier ;',
       '- des chatbots pour votre site et des agents vocaux qui répondent au téléphone ;',
       '- la collecte de données et la veille de prix automatiques ;',
       '- des rapports d\'activité générés et envoyés tout seuls.',
       '',
-      'Testez toutes mes démos : ' + SITE,
+      'Testez toutes nos démos : ' + SITE,
       '',
-      'Vous avez une tâche répétitive qui vous prend du temps ? Répondez simplement à cet email en la décrivant en quelques lignes : je vous réponds par écrit avec une proposition claire et un prix fixe.',
+      'Vous avez une tâche répétitive qui vous prend du temps ? Répondez simplement à cet email en la décrivant en quelques lignes : nous vous répondons par écrit avec une proposition claire et un prix fixe.',
       '',
-      'Hajer',
-      'Automatisation & IA',
+      'L\'équipe HBSGo',
       '',
       '—',
       'Vous recevez cet email parce que cette adresse a été saisie dans le formulaire de démo de ' + SITE + '. Si ce n\'est pas vous, ignorez-le : aucun autre email ne vous sera envoyé.'
     ].join('\n')
   },
   en: {
-    sujet: 'Your automation demo just worked — Hajer, Automation & AI',
+    sujet: 'Your automation demo just worked — HBSGo',
     texte: [
       'Hello,',
       '',
-      'This email was sent automatically: you filled in the form on my demo, and the workflow saved your request and triggered this email, with no human involved.',
+      'This email was sent automatically: you filled in the form on our demo, and the workflow saved your request and triggered this email, with no human involved.',
       '',
-      'This is exactly what I can set up for your business:',
+      'This is exactly what we can set up for your business:',
       '- AI agents that sort your emails and draft the replies;',
       '- automations between your tools (Gmail, Google Sheets, Notion, Airtable, Slack, CRM…) with n8n, Make or Zapier;',
       '- website chatbots and voice agents that answer the phone;',
       '- automatic data collection and price monitoring;',
       '- activity reports generated and sent on their own.',
       '',
-      'Try all my demos: ' + SITE,
+      'Try all our demos: ' + SITE,
       '',
-      'Do you have a repetitive task that takes up your time? Just reply to this email and describe it in a few lines: I will answer in writing with a clear proposal and a fixed price.',
+      'Do you have a repetitive task that takes up your time? Just reply to this email and describe it in a few lines: we will answer in writing with a clear proposal and a fixed price.',
       '',
-      'Hajer',
-      'Automation & AI',
+      'The HBSGo team',
       '',
       '—',
       'You are receiving this email because this address was entered in the demo form on ' + SITE + '. If this was not you, please ignore it: no other email will be sent.'
@@ -74,36 +72,34 @@ var EMAILS = {
 /* Accusé de réception FIXE pour la page Contact (le message du visiteur n'y est jamais recopié). */
 var CONFIRMATIONS = {
   fr: {
-    sujet: 'Votre message est bien reçu — Hajer, Automatisation & IA',
+    sujet: 'Votre message est bien reçu — HBSGo',
     texte: [
       'Bonjour,',
       '',
-      'Merci pour votre message : il m\'est bien parvenu. Je l\'étudie et je vous réponds par écrit rapidement, avec une proposition claire et un devis fixe.',
+      'Merci pour votre message : il nous est bien parvenu. Nous l\'étudions et vous répondons par écrit rapidement, avec une proposition claire et un devis fixe.',
       '',
       'Si vous voulez ajouter une précision (outils utilisés, volumes, délais), répondez simplement à cet email.',
       '',
-      'En attendant, vous pouvez tester mes démos : ' + SITE,
+      'En attendant, vous pouvez tester nos démos : ' + SITE,
       '',
-      'Hajer',
-      'Automatisation & IA',
+      'L\'équipe HBSGo',
       '',
       '—',
       'Vous recevez cet email parce que cette adresse a été saisie dans le formulaire de contact de ' + SITE + '. Si ce n\'est pas vous, ignorez-le.'
     ].join('\n')
   },
   en: {
-    sujet: 'Your message has been received — Hajer, Automation & AI',
+    sujet: 'Your message has been received — HBSGo',
     texte: [
       'Hello,',
       '',
-      'Thank you for your message: I have received it. I will review it and reply in writing shortly, with a clear proposal and a fixed price.',
+      'Thank you for your message: we have received it. We will review it and reply in writing shortly, with a clear proposal and a fixed price.',
       '',
       'If you would like to add details (tools you use, volumes, deadlines), just reply to this email.',
       '',
-      'Meanwhile, feel free to try my demos: ' + SITE,
+      'Meanwhile, feel free to try our demos: ' + SITE,
       '',
-      'Hajer',
-      'Automation & AI',
+      'The HBSGo team',
       '',
       '—',
       'You are receiving this email because this address was entered in the contact form on ' + SITE + '. If this was not you, please ignore it.'
@@ -146,7 +142,7 @@ function doPost(e) {
       else if (compteur >= MAX_PAR_JOUR) statut = 'plafond du jour atteint (non envoyé)';
       else {
         var modele = (source === 'contact' ? CONFIRMATIONS : EMAILS)[lang];
-        MailApp.sendEmail({ to: email, subject: modele.sujet, body: modele.texte, name: 'Hajer — Automatisation & IA' });
+        MailApp.sendEmail({ to: email, subject: modele.sujet, body: modele.texte, name: 'HBSGo' });
         cache.put(cle, '1', 21600);
         props.setProperty('envois_' + jour, String(compteur + 1));
         statut = 'email envoyé';
