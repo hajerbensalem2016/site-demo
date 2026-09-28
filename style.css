@@ -11,12 +11,13 @@
   --text: #15192b;
   --text-muted: #5b6275;
   --border: #dfe3ec;
-  --primary: #3552d9;
-  --primary-hover: #2a43b8;
-  --primary-soft: #e6eafb;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: #eef0ff;
   --on-primary: #ffffff;
-  --accent: #0f9d8a;
-  --accent-soft: #dff5f0;
+  --accent: #be185d;
+  --accent-2: #ea580c;
+  --accent-soft: #fce7f3;
   --warn: #b45309;
   --warn-soft: #fff3df;
   --danger: #c2410c;
@@ -40,12 +41,13 @@
     --text: #e9ecf5;
     --text-muted: #a0a8c0;
     --border: #2a3049;
-    --primary: #7c93ff;
-    --primary-hover: #93a6ff;
-    --primary-soft: #232b4e;
+    --primary: #818cf8;
+    --primary-hover: #a5b4fc;
+    --primary-soft: #26284f;
     --on-primary: #0f1220;
-    --accent: #3fd0b9;
-    --accent-soft: #163a36;
+    --accent: #f472b6;
+    --accent-2: #fb923c;
+    --accent-soft: #3b1a2e;
     --warn: #f5b04c;
     --warn-soft: #3a2b12;
     --danger: #ff8a5b;
@@ -63,12 +65,13 @@
   --text: #e9ecf5;
   --text-muted: #a0a8c0;
   --border: #2a3049;
-  --primary: #7c93ff;
-  --primary-hover: #93a6ff;
-  --primary-soft: #232b4e;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-soft: #26284f;
   --on-primary: #0f1220;
-  --accent: #3fd0b9;
-  --accent-soft: #163a36;
+  --accent: #f472b6;
+    --accent-2: #fb923c;
+  --accent-soft: #3b1a2e;
   --warn: #f5b04c;
   --warn-soft: #3a2b12;
   --danger: #ff8a5b;
@@ -122,7 +125,7 @@ pre { background: var(--bg-soft); padding: 12px; border-radius: var(--radius-sm)
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .brand:hover { text-decoration: none; }
-.brand-dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); flex: none; }
+.brand-dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); flex: none; }
 .header-actions { display: flex; align-items: center; gap: 8px; flex: none; }
 .lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; background: var(--bg-elev); }
 .lang-switch button {
