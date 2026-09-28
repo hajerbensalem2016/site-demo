@@ -56,7 +56,7 @@ function lireObjet(src, debut, fin) {
   const a = src.indexOf(debut);
   if (a < 0) return null;
   const b = src.indexOf(fin, a);
-  const code = src.slice(a + debut.length - 1, b + 1); /* de "{" à "}" */
+  const code = src.slice(a + debut.length - 1, b + fin.indexOf('}') + 1); /* de "{" à "}" */
   return { a, b: b + fin.length, obj: Function('return (' + code + ')')() };
 }
 
