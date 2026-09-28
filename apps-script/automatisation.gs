@@ -20,7 +20,7 @@ var MAX_PAR_JOUR = 40;
 
 var EMAILS = {
   fr: {
-    sujet: 'Votre démo d\'automatisation vient de fonctionner — hbsGo',
+    sujet: 'Votre démo d\'automatisation vient de fonctionner — HBSGo',
     texte: [
       'Bonjour,',
       '',
@@ -37,14 +37,14 @@ var EMAILS = {
       '',
       'Vous avez une tâche répétitive qui vous prend du temps ? Répondez simplement à cet email en la décrivant en quelques lignes : nous vous répondons par écrit avec une proposition claire et un prix fixe.',
       '',
-      'L\'équipe hbsGo',
+      'L\'équipe HBSGo',
       '',
       '—',
       'Vous recevez cet email parce que cette adresse a été saisie dans le formulaire de démo de ' + SITE + '. Si ce n\'est pas vous, ignorez-le : aucun autre email ne vous sera envoyé.'
     ].join('\n')
   },
   en: {
-    sujet: 'Your automation demo just worked — hbsGo',
+    sujet: 'Your automation demo just worked — HBSGo',
     texte: [
       'Hello,',
       '',
@@ -61,7 +61,7 @@ var EMAILS = {
       '',
       'Do you have a repetitive task that takes up your time? Just reply to this email and describe it in a few lines: we will answer in writing with a clear proposal and a fixed price.',
       '',
-      'The hbsGo team',
+      'The HBSGo team',
       '',
       '—',
       'You are receiving this email because this address was entered in the demo form on ' + SITE + '. If this was not you, please ignore it: no other email will be sent.'
@@ -72,7 +72,7 @@ var EMAILS = {
 /* Accusé de réception FIXE pour la page Contact (le message du visiteur n'y est jamais recopié). */
 var CONFIRMATIONS = {
   fr: {
-    sujet: 'Votre message est bien reçu — hbsGo',
+    sujet: 'Votre message est bien reçu — HBSGo',
     texte: [
       'Bonjour,',
       '',
@@ -82,14 +82,14 @@ var CONFIRMATIONS = {
       '',
       'En attendant, vous pouvez tester nos démos : ' + SITE,
       '',
-      'L\'équipe hbsGo',
+      'L\'équipe HBSGo',
       '',
       '—',
       'Vous recevez cet email parce que cette adresse a été saisie dans le formulaire de contact de ' + SITE + '. Si ce n\'est pas vous, ignorez-le.'
     ].join('\n')
   },
   en: {
-    sujet: 'Your message has been received — hbsGo',
+    sujet: 'Your message has been received — HBSGo',
     texte: [
       'Hello,',
       '',
@@ -99,7 +99,7 @@ var CONFIRMATIONS = {
       '',
       'Meanwhile, feel free to try our demos: ' + SITE,
       '',
-      'The hbsGo team',
+      'The HBSGo team',
       '',
       '—',
       'You are receiving this email because this address was entered in the contact form on ' + SITE + '. If this was not you, please ignore it.'
@@ -142,7 +142,7 @@ function doPost(e) {
       else if (compteur >= MAX_PAR_JOUR) statut = 'plafond du jour atteint (non envoyé)';
       else {
         var modele = (source === 'contact' ? CONFIRMATIONS : EMAILS)[lang];
-        MailApp.sendEmail({ to: email, subject: modele.sujet, body: modele.texte, name: 'hbsGo' });
+        MailApp.sendEmail({ to: email, subject: modele.sujet, body: modele.texte, name: 'HBSGo' });
         cache.put(cle, '1', 21600);
         props.setProperty('envois_' + jour, String(compteur + 1));
         statut = 'email envoyé';

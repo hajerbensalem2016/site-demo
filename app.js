@@ -36,7 +36,7 @@
   /* ---------- i18n ---------- */
   var i18n = {
     fr: {
-      site_name: 'hbsGo',
+      site_name: 'HBSGo',
       site_tag: 'Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM',
       nav_home: 'Accueil',
       nav_contact: 'Contactez-nous',
@@ -60,12 +60,12 @@
       btn_run: 'Lancer le test',
       loading: 'Traitement en cours…',
       error_generic: 'Une erreur est survenue. Réessayez dans un instant.',
-      footer_text: '© {year} hbsGo',
+      footer_text: '© {year} HBSGo',
       footer_free: 'Automatisation · Intelligence artificielle · Sites et applications',
       yes: 'Oui', no: 'Non'
     },
     en: {
-      site_name: 'hbsGo',
+      site_name: 'HBSGo',
       site_tag: 'AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM',
       nav_home: 'Home',
       nav_contact: 'Contact us',
@@ -89,7 +89,7 @@
       btn_run: 'Run the test',
       loading: 'Processing…',
       error_generic: 'Something went wrong. Please try again in a moment.',
-      footer_text: '© {year} hbsGo',
+      footer_text: '© {year} HBSGo',
       footer_free: 'Automation · Artificial intelligence · Websites and apps',
       yes: 'Yes', no: 'No'
     }
@@ -274,12 +274,19 @@
   }
 
   /* ---------- montage de la page ---------- */
+  /* Logo HBSGo : lettre H + flèche (même dessin que logo.svg / favicon.svg) */
+  var LOGO = '<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="hbsg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3552d9"/><stop offset="1" stop-color="#0f9d8a"/></linearGradient></defs><path d="M8 50 V14 M8 32 H30 M30 14 V50" fill="none" stroke="url(#hbsg)" stroke-width="7" stroke-linecap="round"/><path d="M40 14 L56 32 L40 50" fill="none" stroke="#0f9d8a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-name">HBS<span class="go">Go</span></span>';
+  function mountFavicon() {
+    if (document.querySelector('link[rel="icon"]')) return;
+    var l = document.createElement('link'); l.rel = 'icon'; l.type = 'image/svg+xml'; l.href = root() + 'favicon.svg';
+    document.head.appendChild(l);
+  }
   function mountHeader() {
     var header = qs('#site-header');
     if (!header) return;
     header.innerHTML =
       '<div class="container header-inner">' +
-      '  <a class="brand" href="' + root() + '"><span class="brand-dot"></span><span data-i18n="site_name"></span></a>' +
+      '  <a class="brand" href="' + root() + '">' + LOGO + '</a>' +
       '  <div class="header-actions">' +
       '    <a class="btn btn-sm nav-contact" href="' + root() + 'contact" data-i18n="nav_contact"></a>' +
       '    <div class="lang-switch" role="group" aria-label="Langue / Language">' +
@@ -297,7 +304,7 @@
     if (!footer) return;
     footer.innerHTML =
       '<div class="container footer-inner">' +
-      '  <div class="footer-brand"><a class="brand" href="' + root() + '"><span class="brand-dot"></span><span data-i18n="site_name"></span></a><p data-i18n="footer_free"></p></div>' +
+      '  <div class="footer-brand"><a class="brand" href="' + root() + '">' + LOGO + '</a><p data-i18n="footer_free"></p></div>' +
       '  <nav class="footer-links"><a href="' + root() + '#services" data-i18n="footer_services"></a><a href="' + root() + '#demos" data-i18n="footer_demos"></a><a href="' + root() + 'contact" data-i18n="nav_contact"></a></nav>' +
       '</div>' +
       '<div class="container footer-bottom"><p data-year></p></div>';
@@ -345,6 +352,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    mountFavicon();
     mountHeader();
     mountFooter();
     mountLoom();
