@@ -14,7 +14,7 @@
    Cache mémoire de 15 minutes par source pour ne pas solliciter les sites à chaque visite.
    ============================================================ */
 
-const { createHandler, InputError } = require('./_lib/http');
+const { createHandler, InputError, consigneLangue } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
 const UA = 'HBSGoDemoBot/1.0 (+https://hbsgo.vercel.app/demos/veille)';
@@ -166,7 +166,7 @@ function prompt(lang, titreSujet, chiffres, articles) {
   return L.filter(function (x) { return x !== ''; }).join('\n');
 }
 
-module.exports = createHandler('veille', async function ({ body, lang }) {
+module.exports = createHandler('veille', async function ({ body, lang, outLang }) {
   const sujet = String(body.sujet || '');
   let titreSujet, filtre;
   if (sujet === 'motcle') {
@@ -189,7 +189,7 @@ module.exports = createHandler('veille', async function ({ body, lang }) {
   const articles = articlesR.status === 'fulfilled' ? articlesR.value : [];
 
   const out = await llm.complete({
-    system: prompt(lang, titreSujet, chiffres, articles),
+    system: prompt(lang, titreSujet, chiffres, articles) + consigneLangue(outLang),
     messages: [{ role: 'user', content: lang === 'fr' ? 'Rédige le rapport de ce matin.' : 'Write this morning\'s report.' }],
     maxTokens: 1400
   });

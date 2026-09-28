@@ -7,7 +7,7 @@
    Clés API : variables d'environnement uniquement (voir _lib/llm.js).
    ============================================================ */
 
-const { createHandler, requireString, MAX_INPUT_CHARS } = require('./_lib/http');
+const { createHandler, requireString, MAX_INPUT_CHARS, consigneLangue } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
 const URGENCY = {
@@ -50,11 +50,11 @@ function clean(v, max) {
   return String(v == null ? '' : v).replace(/\r\n/g, '\n').trim().slice(0, max);
 }
 
-module.exports = createHandler('agent-email', async function ({ body, lang }) {
+module.exports = createHandler('agent-email', async function ({ body, lang, outLang }) {
   const email = requireString(body.email, { name: 'email', min: 20, max: MAX_INPUT_CHARS });
 
   const out = await llm.complete({
-    system: PROMPTS[lang].join('\n'),
+    system: PROMPTS[lang].join('\n') + consigneLangue(outLang) + (consigneLangue(outLang) ? ' The JSON keys stay in English, "urgence" stays high|medium|low; categorie, resume and reponse_proposee are written in that language.' : ''),
     messages: [{ role: 'user', content: (lang === 'fr' ? 'Email reçu :\n\n' : 'Incoming email:\n\n') + email }],
     json: true,
     maxTokens: 700

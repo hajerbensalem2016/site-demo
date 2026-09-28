@@ -11,7 +11,7 @@
    L'image n'est ni stockée ni journalisée. Clé API : variable d'environnement GROQ_API_KEY.
    ============================================================ */
 
-const { createHandler, InputError } = require('./_lib/http');
+const { createHandler, InputError, consigneLangue } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
@@ -66,7 +66,7 @@ function controle(doc) {
   return { somme_lignes: somme, ecart: meilleur, coherent: Math.abs(meilleur) <= 0.05 };
 }
 
-module.exports = createHandler('facture', async function ({ body, lang }) {
+module.exports = createHandler('facture', async function ({ body, lang, outLang }) {
   const image = typeof body.image === 'string' ? body.image : '';
   if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(image)) throw new InputError('invalid_input');
   if (image.length > MAX_IMAGE_CHARS) throw new InputError('too_long');
@@ -84,7 +84,7 @@ module.exports = createHandler('facture', async function ({ body, lang }) {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
       body: JSON.stringify({
         model: model, max_tokens: 2500, temperature: 0.1,
-        messages: [{ role: 'user', content: [{ type: 'text', text: prompt(lang) }, { type: 'image_url', image_url: { url: image } }] }]
+        messages: [{ role: 'user', content: [{ type: 'text', text: prompt(lang) + (consigneLangue(outLang) ? '\nThe reader speaks ' + outLang + ': keep the extracted text exactly as printed on the document, do not translate it.' : '') }, { type: 'image_url', image_url: { url: image } }] }]
       }),
       signal: ctrl.signal
     });

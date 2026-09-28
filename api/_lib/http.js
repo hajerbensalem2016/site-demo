@@ -51,13 +51,29 @@ const MESSAGES = {
 };
 
 /** Normalise le paramètre `lang` envoyé par le front ("fr" par défaut). */
+/* Langues du site. Les modèles de texte (prompts, messages) existent en fr et en ; pour ar, de et es,
+   on part du modèle anglais et on demande à l'IA de répondre dans la langue du visiteur. */
+const LANGUES = ['fr', 'en', 'ar', 'de', 'es'];
+const NOMS_LANGUES = { fr: 'French', en: 'English', ar: 'Modern Standard Arabic', de: 'German', es: 'Spanish' };
+const LOCALES = { fr: 'fr-FR', en: 'en-GB', ar: 'ar-u-nu-latn', de: 'de-DE', es: 'es-ES' };
+
 function pickLang(v) {
-  return String(v || '').toLowerCase().slice(0, 2) === 'en' ? 'en' : 'fr';
+  const l = String(v || '').toLowerCase().slice(0, 2);
+  return LANGUES.indexOf(l) !== -1 ? l : 'fr';
+}
+/** Langue des modèles de texte : fr pour le français, en pour toutes les autres. */
+function baseLang(l) { return pickLang(l) === 'fr' ? 'fr' : 'en'; }
+function locale(l) { return LOCALES[pickLang(l)]; }
+/** Consigne à ajouter aux prompts quand le visiteur n'est ni francophone ni anglophone. */
+function consigneLangue(l) {
+  const x = pickLang(l);
+  if (x === 'fr' || x === 'en') return '';
+  return '\n\nIMPORTANT: write every word of your answer for the reader in ' + NOMS_LANGUES[x] + ' (translate headings, labels and categories too), even though these instructions are in English. Keep numbers, product names and brand names unchanged.';
 }
 
-/** Message d'erreur dans la langue du visiteur. */
+/** Message d'erreur dans la langue du visiteur (anglais pour ar / de / es). */
 function msg(code, lang) {
-  const d = MESSAGES[pickLang(lang)];
+  const d = MESSAGES[baseLang(lang)];
   return d[code] || d.internal;
 }
 
@@ -189,7 +205,8 @@ function createHandler(name, fn, options) {
     try {
       const body = await readJsonBody(req);
       lang = pickLang(body.lang);
-      const result = await fn({ body: body, lang: lang, req: req, res: res });
+      /* lang : langue des modèles (fr | en) ; outLang : langue réelle du visiteur (fr | en | ar | de | es) */
+      const result = await fn({ body: body, lang: baseLang(lang), outLang: lang, req: req, res: res });
       const extra = Object.assign({}, rlHeaders, cors);
       if (result && result.__meta) {
         if (result.__meta.provider) extra['X-LLM-Provider'] = String(result.__meta.provider);
@@ -238,6 +255,9 @@ module.exports = {
   MESSAGES: MESSAGES,
   InputError: InputError,
   pickLang: pickLang,
+  baseLang: baseLang,
+  locale: locale,
+  consigneLangue: consigneLangue,
   msg: msg,
   corsHeaders: corsHeaders,
   sendJson: sendJson,

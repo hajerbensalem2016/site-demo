@@ -35,71 +35,166 @@
 
   /* ---------- i18n ---------- */
   var i18n = {
-    fr: {
-      site_name: 'HBSGo',
-      site_tag: 'Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM',
-      nav_home: 'Accueil',
-      nav_contact: 'Contactez-nous',
-      footer_services: 'Services',
-      footer_demos: 'Démos',
-      cta_contact: 'Contactez-nous',
-      theme_toggle: 'Changer de thème (clair / sombre)',
-      back_home: '← Retour à l\'accueil',
-      test_zone: 'Testez vous-même',
-      tests_left: 'Tests gratuits restants aujourd\'hui : {n}/{max}',
-      quota_reached: 'Vous avez utilisé vos {max} tests gratuits pour cette démo aujourd\'hui. Revenez demain, ou contactez-nous pour une démo complète sur vos propres données.',
-      offline_banner: 'Mode démo hors ligne — le backend n\'est pas encore connecté : le résultat ci-dessous est une simulation locale, mais le rendu final sera identique.',
-      loom_title: 'La démo en 60 secondes',
-      loom_todo: 'Vidéo Loom à venir — remplacer la valeur TODO_LOOM dans config.js',
-      how_title: 'Comment ça marche',
-      cta_title: 'Vous voulez ça pour votre entreprise ?',
-      cta_text: 'Décrivez votre besoin par écrit : nous vous répondons avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c\'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.',
-      cta_upwork: 'Nous trouver sur Upwork',
-      cta_malt: 'Nous trouver sur Malt',
-      cta_todo: 'Lien à configurer dans config.js (TODO_UPWORK / TODO_MALT)',
-      btn_run: 'Lancer le test',
-      loading: 'Traitement en cours…',
-      error_generic: 'Une erreur est survenue. Réessayez dans un instant.',
-      footer_text: '© {year} HBSGo',
-      footer_free: 'Automatisation · Intelligence artificielle · Sites et applications',
-      yes: 'Oui', no: 'Non'
+    "fr": {
+      "site_name": "HBSGo",
+      "site_tag": "Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM",
+      "nav_home": "Accueil",
+      "nav_contact": "Contactez-nous",
+      "footer_services": "Services",
+      "footer_demos": "Démos",
+      "cta_contact": "Contactez-nous",
+      "theme_toggle": "Changer de thème (clair / sombre)",
+      "back_home": "← Retour à l'accueil",
+      "test_zone": "Testez vous-même",
+      "tests_left": "Tests gratuits restants aujourd'hui : {n}/{max}",
+      "quota_reached": "Vous avez utilisé vos {max} tests gratuits pour cette démo aujourd'hui. Revenez demain, ou contactez-nous pour une démo complète sur vos propres données.",
+      "offline_banner": "Mode démo hors ligne — le backend n'est pas encore connecté : le résultat ci-dessous est une simulation locale, mais le rendu final sera identique.",
+      "loom_title": "La démo en 60 secondes",
+      "loom_todo": "Vidéo Loom à venir — remplacer la valeur TODO_LOOM dans config.js",
+      "how_title": "Comment ça marche",
+      "cta_title": "Vous voulez ça pour votre entreprise ?",
+      "cta_text": "Décrivez votre besoin par écrit : nous vous répondons avec un cadrage clair et un devis fixe avant de commencer, et on fixe un échange seulement si c'est utile. Vidéo explicative de chaque système livré et 14 jours de support offerts.",
+      "cta_upwork": "Nous trouver sur Upwork",
+      "cta_malt": "Nous trouver sur Malt",
+      "cta_todo": "Lien à configurer dans config.js (TODO_UPWORK / TODO_MALT)",
+      "btn_run": "Lancer le test",
+      "loading": "Traitement en cours…",
+      "error_generic": "Une erreur est survenue. Réessayez dans un instant.",
+      "footer_text": "© {year} HBSGo",
+      "footer_free": "Automatisation · Intelligence artificielle · Sites et applications",
+      "yes": "Oui",
+      "no": "Non"
     },
-    en: {
-      site_name: 'HBSGo',
-      site_tag: 'AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM',
-      nav_home: 'Home',
-      nav_contact: 'Contact us',
-      footer_services: 'Services',
-      footer_demos: 'Demos',
-      cta_contact: 'Contact us',
-      theme_toggle: 'Toggle theme (light / dark)',
-      back_home: '← Back to home',
-      test_zone: 'Try it yourself',
-      tests_left: 'Free tests left today: {n}/{max}',
-      quota_reached: 'You have used your {max} free tests for this demo today. Come back tomorrow, or contact us for a full demo on your own data.',
-      offline_banner: 'Offline demo mode — the backend is not connected yet: the result below is a local simulation, but the final output will look the same.',
-      loom_title: 'The demo in 60 seconds',
-      loom_todo: 'Loom video coming soon — replace the TODO_LOOM value in config.js',
-      how_title: 'How it works',
-      cta_title: 'Want this for your business?',
-      cta_text: 'Describe your need in writing: we reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.',
-      cta_upwork: 'Find us on Upwork',
-      cta_malt: 'Find us on Malt',
-      cta_todo: 'Link to configure in config.js (TODO_UPWORK / TODO_MALT)',
-      btn_run: 'Run the test',
-      loading: 'Processing…',
-      error_generic: 'Something went wrong. Please try again in a moment.',
-      footer_text: '© {year} HBSGo',
-      footer_free: 'Automation · Artificial intelligence · Websites and apps',
-      yes: 'Yes', no: 'No'
+    "en": {
+      "site_name": "HBSGo",
+      "site_tag": "AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM",
+      "nav_home": "Home",
+      "nav_contact": "Contact us",
+      "footer_services": "Services",
+      "footer_demos": "Demos",
+      "cta_contact": "Contact us",
+      "theme_toggle": "Toggle theme (light / dark)",
+      "back_home": "← Back to home",
+      "test_zone": "Try it yourself",
+      "tests_left": "Free tests left today: {n}/{max}",
+      "quota_reached": "You have used your {max} free tests for this demo today. Come back tomorrow, or contact us for a full demo on your own data.",
+      "offline_banner": "Offline demo mode — the backend is not connected yet: the result below is a local simulation, but the final output will look the same.",
+      "loom_title": "The demo in 60 seconds",
+      "loom_todo": "Loom video coming soon — replace the TODO_LOOM value in config.js",
+      "how_title": "How it works",
+      "cta_title": "Want this for your business?",
+      "cta_text": "Describe your need in writing: we reply with a clear scope and a fixed price before starting, and we schedule a call only if useful. Video walkthrough of every system delivered and 14 days of free support.",
+      "cta_upwork": "Find us on Upwork",
+      "cta_malt": "Find us on Malt",
+      "cta_todo": "Link to configure in config.js (TODO_UPWORK / TODO_MALT)",
+      "btn_run": "Run the test",
+      "loading": "Processing…",
+      "error_generic": "Something went wrong. Please try again in a moment.",
+      "footer_text": "© {year} HBSGo",
+      "footer_free": "Automation · Artificial intelligence · Websites and apps",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "ar": {
+      "site_name": "HBSGo",
+      "site_tag": "خبير الذكاء الاصطناعي والأتمتة | n8n, Make, Zapier | روبوتات الدردشة، الوكلاء الصوتيون، CRM",
+      "nav_home": "الصفحة الرئيسية",
+      "nav_contact": "اتصل بنا",
+      "footer_services": "الخدمات",
+      "footer_demos": "العروض التجريبية",
+      "cta_contact": "اتصل بنا",
+      "theme_toggle": "تبديل السمة (فاتح / داكن)",
+      "back_home": "← العودة إلى الصفحة الرئيسية",
+      "test_zone": "جرّبه بنفسك",
+      "tests_left": "عدد الاختبارات المجانية المتبقية اليوم: {n}/{max}",
+      "quota_reached": "لقد استنفدت {max} اختبارًا مجانيًا لهذا العرض اليوم. عد غدًا، أو تواصل معنا للحصول على عرض تجريبي كامل على بياناتك الخاصة.",
+      "offline_banner": "وضع العرض التجريبي غير المتصل — الخلفية غير متصلة بعد: النتيجة أدناه محاكاة محلية، لكن المخرجات النهائية ستظهر بنفس الشكل.",
+      "loom_title": "العرض التجريبي في 60 ثانية",
+      "loom_todo": "فيديو Loom قادم قريبًا — استبدل قيمة TODO_LOOM في config.js",
+      "how_title": "كيف يعمل",
+      "cta_title": "هل تريد ذلك لعملك؟",
+      "cta_text": "صف حاجتك كتابةً: سنرد بنطاق واضح وسعر ثابت قبل البدء، وسنحدد مكالمة فقط إذا كانت مفيدة. فيديو توضيحي لكل نظام يتم تسليمه ودعم مجاني لمدة 14 يومًا.",
+      "cta_upwork": "اعثر علينا على Upwork",
+      "cta_malt": "اعثر علينا على Malt",
+      "cta_todo": "رابط للتكوين في config.js (TODO_UPWORK / TODO_MALT)",
+      "btn_run": "تشغيل الاختبار",
+      "loading": "جارٍ المعالجة…",
+      "error_generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى بعد قليل.",
+      "footer_text": "© {year} HBSGo",
+      "footer_free": "الأتمتة · الذكاء الاصطناعي · المواقع والتطبيقات",
+      "yes": "نعم",
+      "no": "لا"
+    },
+    "de": {
+      "site_name": "HBSGo",
+      "site_tag": "KI & Automatisierungs‑Experte | n8n, Make, Zapier | Chatbots, Voice Agents, CRM",
+      "nav_home": "Startseite",
+      "nav_contact": "Kontaktieren Sie uns",
+      "footer_services": "Leistungen",
+      "footer_demos": "Demos",
+      "cta_contact": "Kontaktieren Sie uns",
+      "theme_toggle": "Design umschalten (hell / dunkel)",
+      "back_home": "← Zurück zur Startseite",
+      "test_zone": "Probieren Sie es selbst",
+      "tests_left": "Kostenlose Tests heute übrig: {n}/{max}",
+      "quota_reached": "Sie haben heute Ihre {max} kostenlosen Tests für diese Demo genutzt. Kommen Sie morgen wieder oder kontaktieren Sie uns für eine vollständige Demo mit Ihren eigenen Daten.",
+      "offline_banner": "Offline‑Demo‑Modus — das Backend ist noch nicht verbunden: Das Ergebnis unten ist eine lokale Simulation, das endgültige Ergebnis wird jedoch identisch aussehen.",
+      "loom_title": "Die Demo in 60 Sekunden",
+      "loom_todo": "Loom‑Video kommt bald — ersetzen Sie den TODO_LOOM‑Wert in config.js",
+      "how_title": "So funktioniert es",
+      "cta_title": "Möchten Sie das für Ihr Unternehmen?",
+      "cta_text": "Beschreiben Sie Ihren Bedarf schriftlich: Wir antworten mit einem klaren Leistungsumfang und einem Festpreis, bevor wir starten, und vereinbaren einen Call nur, wenn er sinnvoll ist. Video‑Walkthrough jedes gelieferten Systems und 14 Tage kostenloser Support.",
+      "cta_upwork": "Finden Sie uns auf Upwork",
+      "cta_malt": "Finden Sie uns auf Malt",
+      "cta_todo": "Link zur Konfiguration in config.js (TODO_UPWORK / TODO_MALT)",
+      "btn_run": "Test starten",
+      "loading": "Verarbeitung…",
+      "error_generic": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es in einem Moment erneut.",
+      "footer_text": "© {year} HBSGo",
+      "footer_free": "Automatisierung · Künstliche Intelligenz · Websites und Apps",
+      "yes": "Ja",
+      "no": "Nein"
+    },
+    "es": {
+      "site_name": "HBSGo",
+      "site_tag": "Experto en IA y Automatización | n8n, Make, Zapier | Chatbots, Agentes de Voz, CRM",
+      "nav_home": "Inicio",
+      "nav_contact": "Contáctenos",
+      "footer_services": "Servicios",
+      "footer_demos": "Demostraciones",
+      "cta_contact": "Contáctenos",
+      "theme_toggle": "Cambiar tema (claro / oscuro)",
+      "back_home": "← Volver al inicio",
+      "test_zone": "Pruébelo usted mismo",
+      "tests_left": "Pruebas gratuitas restantes hoy: {n}/{max}",
+      "quota_reached": "Ha utilizado sus {max} pruebas gratuitas para esta demostración hoy. Vuelva mañana o contáctenos para una demostración completa con sus propios datos.",
+      "offline_banner": "Modo de demostración sin conexión — el backend aún no está conectado: el resultado a continuación es una simulación local, pero la salida final será idéntica.",
+      "loom_title": "La demo en 60 segundos",
+      "loom_todo": "Video de Loom próximamente — reemplace el valor TODO_LOOM en config.js",
+      "how_title": "Cómo funciona",
+      "cta_title": "¿Quiere esto para su empresa?",
+      "cta_text": "Describa su necesidad por escrito: le responderemos con un alcance claro y un precio fijo antes de comenzar, y programaremos una llamada solo si es útil. Recibirá un recorrido en video de cada sistema entregado y 14 días de soporte gratuito.",
+      "cta_upwork": "Encuéntrenos en Upwork",
+      "cta_malt": "Encuéntrenos en Malt",
+      "cta_todo": "Enlace para configurar en config.js (TODO_UPWORK / TODO_MALT)",
+      "btn_run": "Ejecutar la prueba",
+      "loading": "Procesando…",
+      "error_generic": "Algo salió mal. Por favor, inténtelo de nuevo en un momento.",
+      "footer_text": "© {year} HBSGo",
+      "footer_free": "Automatización · Inteligencia artificial · Sitios web y aplicaciones",
+      "yes": "Sí",
+      "no": "No"
     }
   };
 
+  /* Langues proposées (l'arabe s'affiche de droite à gauche) */
+  var LANGS = [['fr', 'FR', 'Français'], ['en', 'EN', 'English'], ['ar', 'AR', 'العربية'], ['de', 'DE', 'Deutsch'], ['es', 'ES', 'Español']];
+  function isLang(l) { return LANGS.some(function (x) { return x[0] === l; }); }
   var lang = (function () {
     var saved = store.get('demo_lang');
-    if (saved === 'fr' || saved === 'en') return saved;
-    var nav = (navigator.language || 'fr').toLowerCase();
-    return nav.indexOf('en') === 0 ? 'en' : 'fr';
+    if (isLang(saved)) return saved;
+    var nav = (navigator.language || 'fr').toLowerCase().slice(0, 2);
+    return isLang(nav) ? nav : 'fr';
   })();
 
   function dict(l) {
@@ -109,12 +204,15 @@
   function t(key, vars) {
     var d = dict(lang);
     var s = d[key];
+    if (s === undefined) s = dict('en')[key];
     if (s === undefined) s = (dict('fr')[key] !== undefined ? dict('fr')[key] : key);
     if (vars) Object.keys(vars).forEach(function (k) { s = s.split('{' + k + '}').join(vars[k]); });
     return s;
   }
   function applyI18n(rootEl) {
     document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     qsa('[data-i18n]', rootEl).forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     qsa('[data-i18n-html]', rootEl).forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
     qsa('[data-i18n-placeholder]', rootEl).forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder'))); });
@@ -122,11 +220,11 @@
     qsa('[data-i18n-aria]', rootEl).forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     var titleKey = document.body && document.body.getAttribute('data-title-key');
     if (titleKey) document.title = t(titleKey) + ' · ' + t('site_name');
-    qsa('.lang-switch button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false'); });
+    qsa('.lang-select').forEach(function (sel) { sel.value = lang; });
     qsa('#site-footer [data-year]').forEach(function (el) { el.textContent = t('footer_text', { year: new Date().getFullYear() }); });
   }
   function setLang(l) {
-    if (l !== 'fr' && l !== 'en') return;
+    if (!isLang(l)) return;
     lang = l;
     store.set('demo_lang', l);
     applyI18n();
@@ -275,7 +373,7 @@
 
   /* ---------- montage de la page ---------- */
   /* Logo HBSGo : lettre H + flèche (même dessin que logo.svg / favicon.svg) */
-  var LOGO = '<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="hbsg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3552d9"/><stop offset="1" stop-color="#0f9d8a"/></linearGradient></defs><path d="M8 50 V14 M8 32 H30 M30 14 V50" fill="none" stroke="url(#hbsg)" stroke-width="7" stroke-linecap="round"/><path d="M40 14 L56 32 L40 50" fill="none" stroke="#0f9d8a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-name">HBS<span class="go">Go</span></span>';
+  var LOGO = '<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="hbsg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#db2777"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><path d="M8 50 V14 M8 32 H30 M30 14 V50" fill="none" stroke="url(#hbsg)" stroke-width="7" stroke-linecap="round"/><path d="M40 14 L56 32 L40 50" fill="none" stroke="#f97316" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-name">HBS<span class="go">Go</span></span>';
   function mountFavicon() {
     if (document.querySelector('link[rel="icon"]')) return;
     var l = document.createElement('link'); l.rel = 'icon'; l.type = 'image/svg+xml'; l.href = root() + 'favicon.svg';
@@ -289,14 +387,13 @@
       '  <a class="brand" href="' + root() + '">' + LOGO + '</a>' +
       '  <div class="header-actions">' +
       '    <a class="btn btn-sm nav-contact" href="' + root() + 'contact" data-i18n="nav_contact"></a>' +
-      '    <div class="lang-switch" role="group" aria-label="Langue / Language">' +
-      '      <button type="button" data-lang="fr" aria-pressed="false">FR</button>' +
-      '      <button type="button" data-lang="en" aria-pressed="false">EN</button>' +
-      '    </div>' +
+      '    <label class="lang-wrap"><span class="sr-only">Langue / Language</span><select class="lang-select" aria-label="Langue / Language">' +
+      LANGS.map(function (x) { return '<option value="' + x[0] + '" title="' + x[2] + '">' + x[1] + '</option>'; }).join('') +
+      '    </select></label>' +
       '    <button type="button" class="theme-btn" data-i18n-aria="theme_toggle" data-i18n-title="theme_toggle"></button>' +
       '  </div>' +
       '</div>';
-    qsa('.lang-switch button', header).forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); }); });
+    qsa('.lang-select', header).forEach(function (sel) { sel.addEventListener('change', function () { setLang(sel.value); }); });
     qs('.theme-btn', header).addEventListener('click', toggleTheme);
   }
   function mountFooter() {

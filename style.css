@@ -11,12 +11,13 @@
   --text: #15192b;
   --text-muted: #5b6275;
   --border: #dfe3ec;
-  --primary: #3552d9;
-  --primary-hover: #2a43b8;
-  --primary-soft: #e6eafb;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-soft: #eef0ff;
   --on-primary: #ffffff;
-  --accent: #0f9d8a;
-  --accent-soft: #dff5f0;
+  --accent: #be185d;
+  --accent-2: #ea580c;
+  --accent-soft: #fce7f3;
   --warn: #b45309;
   --warn-soft: #fff3df;
   --danger: #c2410c;
@@ -40,12 +41,13 @@
     --text: #e9ecf5;
     --text-muted: #a0a8c0;
     --border: #2a3049;
-    --primary: #7c93ff;
-    --primary-hover: #93a6ff;
-    --primary-soft: #232b4e;
+    --primary: #818cf8;
+    --primary-hover: #a5b4fc;
+    --primary-soft: #26284f;
     --on-primary: #0f1220;
-    --accent: #3fd0b9;
-    --accent-soft: #163a36;
+    --accent: #f472b6;
+    --accent-2: #fb923c;
+    --accent-soft: #3b1a2e;
     --warn: #f5b04c;
     --warn-soft: #3a2b12;
     --danger: #ff8a5b;
@@ -63,12 +65,13 @@
   --text: #e9ecf5;
   --text-muted: #a0a8c0;
   --border: #2a3049;
-  --primary: #7c93ff;
-  --primary-hover: #93a6ff;
-  --primary-soft: #232b4e;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-soft: #26284f;
   --on-primary: #0f1220;
-  --accent: #3fd0b9;
-  --accent-soft: #163a36;
+  --accent: #f472b6;
+    --accent-2: #fb923c;
+  --accent-soft: #3b1a2e;
   --warn: #f5b04c;
   --warn-soft: #3a2b12;
   --danger: #ff8a5b;
@@ -122,7 +125,7 @@ pre { background: var(--bg-soft); padding: 12px; border-radius: var(--radius-sm)
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .brand:hover { text-decoration: none; }
-.brand-dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); flex: none; }
+.brand-dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); flex: none; }
 .header-actions { display: flex; align-items: center; gap: 8px; flex: none; }
 .lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; background: var(--bg-elev); }
 .lang-switch button {
@@ -350,3 +353,23 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: now
 .brand-name .go { color: var(--accent); }
 .footer-brand .brand-mark { width: 34px; height: 34px; }
 .footer-brand .brand-name { font-size: 1.3rem; }
+
+/* ---------- sélecteur de langue ---------- */
+.lang-wrap { position: relative; display: inline-flex; }
+.lang-select { appearance: none; -webkit-appearance: none; font: inherit; font-weight: 700; font-size: .8rem; color: var(--text);
+  background: var(--bg-elev) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235b6275' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+  border: 1px solid var(--border); border-radius: 999px; padding: 7px 28px 7px 12px; cursor: pointer; max-width: 150px; }
+.lang-select:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+[dir="rtl"] .lang-select { background-position: left 10px center; padding: 7px 12px 7px 28px; }
+@media (max-width: 480px) { .lang-select { max-width: 74px; } }
+
+/* ---------- droite à gauche (arabe) ---------- */
+[dir="rtl"] body { font-family: 'Segoe UI', Tahoma, 'Noto Sans Arabic', Arial, sans-serif; }
+[dir="rtl"] .back, [dir="rtl"] .go { display: inline-block; }
+[dir="rtl"] .steps, [dir="rtl"] .links { padding-right: 18px; padding-left: 0; }
+[dir="rtl"] .brand, [dir="rtl"] .brand-name, [dir="rtl"] code, [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"], [dir="rtl"] input[type="url"] { direction: ltr; }
+
+@media (max-width: 420px) { .nav-contact { padding: 6px 10px; font-size: .78rem; } .header-actions { gap: 6px; } .theme-btn { width: 32px; height: 32px; } .brand-name { font-size: 1rem; } .lang-select { padding: 6px 22px 6px 9px; background-position: right 7px center; } }
+
+/* un élément masqué reste masqué, même si son style lui donne un display (ex. .btn) */
+[hidden] { display: none !important; }

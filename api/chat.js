@@ -10,7 +10,7 @@
    Clés API : variables d'environnement uniquement (voir _lib/llm.js).
    ============================================================ */
 
-const { createHandler, InputError, requireString, MAX_INPUT_CHARS } = require('./_lib/http');
+const { createHandler, InputError, requireString, MAX_INPUT_CHARS, consigneLangue } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
 const HISTORY = 6;              /* messages conservés */
@@ -86,10 +86,10 @@ function prepareMessages(raw) {
   return merged;
 }
 
-module.exports = createHandler('chat', async function ({ body, lang }) {
+module.exports = createHandler('chat', async function ({ body, lang, outLang }) {
   const messages = prepareMessages(body.messages);
   const out = await llm.complete({
-    system: systemPrompt(lang),
+    system: systemPrompt(lang) + consigneLangue(outLang),
     messages: messages,
     maxTokens: 400
   });
