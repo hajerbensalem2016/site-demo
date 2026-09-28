@@ -42,14 +42,27 @@ module.exports = createHandler('automatisation', async function ({ body, lang })
   const timer = setTimeout(function () { ctrl.abort(); }, 25000);
   let data;
   try {
+    /* Apps Script exécute doPost puis répond par une redirection (302) vers une page « echo » qui porte
+       la réponse JSON. Cette page est parfois introuvable côté Google : la redirection suffit alors
+       à prouver que le script a bien traité la demande (une erreur de script ne redirige pas). */
     const r = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, /* text/plain : pas de pré-requête côté Google */
       body: JSON.stringify({ source: source, lang: lang, nom: nom, email: email, telephone: telephone, entreprise: entreprise, besoin: besoin }),
-      redirect: 'follow',
+      redirect: 'manual',
       signal: ctrl.signal
     });
-    data = await r.json();
+    const location = r.headers.get('location');
+    if (r.status >= 300 && r.status < 400 && location) {
+      try {
+        const echo = await fetch(location, { signal: ctrl.signal });
+        data = await echo.json();
+      } catch (e) {
+        data = { ok: true, envoye: !!email, statut: 'traité (réponse du script non lisible)' };
+      }
+    } else {
+      data = await r.json();
+    }
   } catch (e) {
     throw new LlmError('all_failed', 'Apps Script injoignable : ' + (e && e.message));
   } finally {
