@@ -95,11 +95,14 @@
     }
   };
 
+  /* Langues proposées (l'arabe s'affiche de droite à gauche) */
+  var LANGS = [['fr', 'FR', 'Français'], ['en', 'EN', 'English'], ['ar', 'AR', 'العربية'], ['de', 'DE', 'Deutsch'], ['es', 'ES', 'Español']];
+  function isLang(l) { return LANGS.some(function (x) { return x[0] === l; }); }
   var lang = (function () {
     var saved = store.get('demo_lang');
-    if (saved === 'fr' || saved === 'en') return saved;
-    var nav = (navigator.language || 'fr').toLowerCase();
-    return nav.indexOf('en') === 0 ? 'en' : 'fr';
+    if (isLang(saved)) return saved;
+    var nav = (navigator.language || 'fr').toLowerCase().slice(0, 2);
+    return isLang(nav) ? nav : 'fr';
   })();
 
   function dict(l) {
@@ -109,12 +112,15 @@
   function t(key, vars) {
     var d = dict(lang);
     var s = d[key];
+    if (s === undefined) s = dict('en')[key];
     if (s === undefined) s = (dict('fr')[key] !== undefined ? dict('fr')[key] : key);
     if (vars) Object.keys(vars).forEach(function (k) { s = s.split('{' + k + '}').join(vars[k]); });
     return s;
   }
   function applyI18n(rootEl) {
     document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     qsa('[data-i18n]', rootEl).forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     qsa('[data-i18n-html]', rootEl).forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
     qsa('[data-i18n-placeholder]', rootEl).forEach(function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder'))); });
@@ -122,11 +128,11 @@
     qsa('[data-i18n-aria]', rootEl).forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     var titleKey = document.body && document.body.getAttribute('data-title-key');
     if (titleKey) document.title = t(titleKey) + ' · ' + t('site_name');
-    qsa('.lang-switch button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false'); });
+    qsa('.lang-select').forEach(function (sel) { sel.value = lang; });
     qsa('#site-footer [data-year]').forEach(function (el) { el.textContent = t('footer_text', { year: new Date().getFullYear() }); });
   }
   function setLang(l) {
-    if (l !== 'fr' && l !== 'en') return;
+    if (!isLang(l)) return;
     lang = l;
     store.set('demo_lang', l);
     applyI18n();
@@ -289,14 +295,13 @@
       '  <a class="brand" href="' + root() + '">' + LOGO + '</a>' +
       '  <div class="header-actions">' +
       '    <a class="btn btn-sm nav-contact" href="' + root() + 'contact" data-i18n="nav_contact"></a>' +
-      '    <div class="lang-switch" role="group" aria-label="Langue / Language">' +
-      '      <button type="button" data-lang="fr" aria-pressed="false">FR</button>' +
-      '      <button type="button" data-lang="en" aria-pressed="false">EN</button>' +
-      '    </div>' +
+      '    <label class="lang-wrap"><span class="sr-only">Langue / Language</span><select class="lang-select" aria-label="Langue / Language">' +
+      LANGS.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + ' · ' + x[2] + '</option>'; }).join('') +
+      '    </select></label>' +
       '    <button type="button" class="theme-btn" data-i18n-aria="theme_toggle" data-i18n-title="theme_toggle"></button>' +
       '  </div>' +
       '</div>';
-    qsa('.lang-switch button', header).forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); }); });
+    qsa('.lang-select', header).forEach(function (sel) { sel.addEventListener('change', function () { setLang(sel.value); }); });
     qs('.theme-btn', header).addEventListener('click', toggleTheme);
   }
   function mountFooter() {

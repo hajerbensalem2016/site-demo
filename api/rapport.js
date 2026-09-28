@@ -14,7 +14,7 @@
    Clés API : variables d'environnement uniquement (voir _lib/llm.js).
    ============================================================ */
 
-const { createHandler, requireNumber, InputError } = require('./_lib/http');
+const { createHandler, requireNumber, InputError, consigneLangue } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
 const SECTEURS = {
@@ -172,7 +172,7 @@ function prompt(lang, k, av, x) {
   return L.join('\n');
 }
 
-module.exports = createHandler('rapport', async function ({ body, lang }) {
+module.exports = createHandler('rapport', async function ({ body, lang, outLang }) {
   const ca = requireNumber(body.ca, { name: 'ca' });
   const dep = requireNumber(body.depenses, { name: 'depenses' });
   const cli = Math.round(requireNumber(body.clients, { name: 'clients', max: 1e9 }));
@@ -181,7 +181,7 @@ module.exports = createHandler('rapport', async function ({ body, lang }) {
   const x = av ? calculAvance(k, av) : {};
 
   const out = await llm.complete({
-    system: prompt(lang, k, av, x),
+    system: prompt(lang, k, av, x) + consigneLangue(outLang),
     messages: [{ role: 'user', content: lang === 'fr' ? 'Rédige le rapport maintenant.' : 'Write the report now.' }],
     maxTokens: av ? 1800 : 1200
   });

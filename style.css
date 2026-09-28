@@ -350,3 +350,18 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: now
 .brand-name .go { color: var(--accent); }
 .footer-brand .brand-mark { width: 34px; height: 34px; }
 .footer-brand .brand-name { font-size: 1.3rem; }
+
+/* ---------- sélecteur de langue ---------- */
+.lang-wrap { position: relative; display: inline-flex; }
+.lang-select { appearance: none; -webkit-appearance: none; font: inherit; font-weight: 700; font-size: .8rem; color: var(--text);
+  background: var(--bg-elev) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235b6275' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+  border: 1px solid var(--border); border-radius: 999px; padding: 7px 28px 7px 12px; cursor: pointer; max-width: 150px; }
+.lang-select:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+[dir="rtl"] .lang-select { background-position: left 10px center; padding: 7px 12px 7px 28px; }
+@media (max-width: 480px) { .lang-select { max-width: 74px; } }
+
+/* ---------- droite à gauche (arabe) ---------- */
+[dir="rtl"] body { font-family: 'Segoe UI', Tahoma, 'Noto Sans Arabic', Arial, sans-serif; }
+[dir="rtl"] .back, [dir="rtl"] .go { display: inline-block; }
+[dir="rtl"] .steps, [dir="rtl"] .links { padding-right: 18px; padding-left: 0; }
+[dir="rtl"] .brand, [dir="rtl"] .brand-name, [dir="rtl"] code, [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"], [dir="rtl"] input[type="url"] { direction: ltr; }
