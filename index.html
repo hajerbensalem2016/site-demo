@@ -191,6 +191,7 @@
     .pillar.compact p { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .3s, opacity .3s; margin: 0; }
     .pillar.compact:hover p, .pillar.compact:focus-visible p { max-height: 90px; opacity: 1; margin-top: 4px; }
     @media (hover: none) { .pillar.compact p { max-height: none; opacity: 1; } }
+    @media (max-width: 560px) { .bubbles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .bubble summary { padding: 16px 8px 12px; } .b-ic { width: 48px; height: 48px; } .b-ic svg { width: 24px; height: 24px; } .b-t { font-size: .88rem; } .steps-ic { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">

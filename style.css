@@ -365,3 +365,5 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: now
 [dir="rtl"] .back, [dir="rtl"] .go { display: inline-block; }
 [dir="rtl"] .steps, [dir="rtl"] .links { padding-right: 18px; padding-left: 0; }
 [dir="rtl"] .brand, [dir="rtl"] .brand-name, [dir="rtl"] code, [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"], [dir="rtl"] input[type="url"] { direction: ltr; }
+
+@media (max-width: 420px) { .nav-contact { padding: 6px 10px; font-size: .78rem; } .header-actions { gap: 6px; } .theme-btn { width: 32px; height: 32px; } .brand-name { font-size: 1rem; } .lang-select { padding: 6px 22px 6px 9px; background-position: right 7px center; } }

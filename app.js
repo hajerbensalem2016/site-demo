@@ -388,7 +388,7 @@
       '  <div class="header-actions">' +
       '    <a class="btn btn-sm nav-contact" href="' + root() + 'contact" data-i18n="nav_contact"></a>' +
       '    <label class="lang-wrap"><span class="sr-only">Langue / Language</span><select class="lang-select" aria-label="Langue / Language">' +
-      LANGS.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + ' · ' + x[2] + '</option>'; }).join('') +
+      LANGS.map(function (x) { return '<option value="' + x[0] + '" title="' + x[2] + '">' + x[1] + '</option>'; }).join('') +
       '    </select></label>' +
       '    <button type="button" class="theme-btn" data-i18n-aria="theme_toggle" data-i18n-title="theme_toggle"></button>' +
       '  </div>' +
