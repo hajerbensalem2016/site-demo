@@ -91,6 +91,40 @@
       .marquee-track, .fstep { animation: none; }
       .flow-dot { display: none; }
     }
+    /* ---- hero premium ---- */
+    .hero { padding-top: clamp(64px, 12vh, 140px); padding-bottom: 32px; }
+    .hero-center { display: grid; justify-items: center; text-align: center; gap: 0; }
+    .hero-text { display: grid; justify-items: center; }
+    .hero .eyebrow { background: transparent; border: 1px solid var(--border); color: var(--text-muted); letter-spacing: .12em; font-size: .72rem; padding: 6px 14px; }
+    .hero h1 { font-size: clamp(2.5rem, 5.4vw + .6rem, 5.4rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 800; max-width: 17ch; margin: 18px auto 0; }
+    .hero .lead { font-size: clamp(1.1rem, .6vw + 1rem, 1.45rem); max-width: 40ch; margin: 22px auto 0; color: var(--text-muted); }
+    .hero .btns { justify-content: center; margin-top: 34px; }
+    .hero .btn { padding: 14px 28px; font-size: 1rem; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; animation: flotte 14s ease-in-out infinite alternate; }
+    .orb.o1 { width: 520px; height: 520px; left: calc(50% - 460px); top: 40px; background: var(--primary); }
+    .orb.o2 { width: 440px; height: 440px; left: calc(50% + 20px); top: 140px; background: var(--accent); animation-delay: -7s; opacity: .42; }
+    @keyframes flotte { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 30px) scale(1.12); } }
+    .hero-bg { background: none; }
+    .hero-bg::after { mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); }
+
+    /* vitrine : l'automatisation en grand, à l'horizontale */
+    .flow { width: 100%; max-width: 1040px; margin: 64px auto 0; min-height: 0; padding: 34px 22px 26px; border-radius: 26px;
+      background: color-mix(in srgb, var(--bg-elev) 72%, transparent); box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--primary) 60%, transparent), var(--shadow); }
+    .flow-steps { gap: 14px; text-align: left; }
+    @media (min-width: 900px) { .flow-steps { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+    .fstep { flex-direction: column; align-items: flex-start; padding: 18px; min-height: 128px; }
+    .fstep b { font-size: 1rem; margin-top: 4px; }
+    .flow-rail { position: absolute; left: 40px; right: 40px; top: 50%; height: 2px; overflow: hidden; border-radius: 2px; background: var(--border); display: none; }
+    @media (min-width: 900px) { .flow-rail { display: block; } }
+    .flow-rail span { position: absolute; top: 0; left: -30%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, var(--accent), var(--primary), transparent); animation: rail 4s linear infinite; }
+    @keyframes rail { to { left: 100%; } }
+    .flow-badge { right: 50%; transform: translateX(50%); top: -13px; }
+
+    .stats { max-width: 1040px; margin: 40px auto 0; }
+    .stats li { background: transparent; border: 0; border-left: 1px solid var(--border); border-radius: 0; padding: 4px 18px; text-align: left; }
+    .stats b { font-size: clamp(1.6rem, 1.4vw + 1rem, 2.3rem); letter-spacing: -.02em; }
+    .pillars { max-width: 1040px; margin: 56px auto 0; }
+    @media (prefers-reduced-motion: reduce) { .orb, .flow-rail span { animation: none; } }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
@@ -98,9 +132,9 @@
 
   <main>
     <section class="hero-wrap">
-      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
       <div class="container hero">
-        <div class="hero-grid">
+        <div class="hero-center">
           <div class="hero-text reveal">
             <span class="eyebrow" data-i18n="home_eyebrow"></span>
             <h1><span data-i18n="home_h1a"></span> <span class="grad" data-i18n="home_h1b"></span></h1>
@@ -111,14 +145,7 @@
             </div>
           </div>
         <div class="flow" aria-hidden="true">
-          <svg viewBox="0 0 360 400" class="flow-svg">
-            <defs>
-              <linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--primary)"/><stop offset="1" stop-color="var(--accent)"/></linearGradient>
-            </defs>
-            <path id="flowpath" d="M180 58 V342" class="flow-line"/>
-            <circle r="6" class="flow-dot"><animateMotion dur="4s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#flowpath"/></animateMotion></circle>
-            <circle r="6" class="flow-dot"><animateMotion dur="4s" begin="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#flowpath"/></animateMotion></circle>
-          </svg>
+          <div class="flow-rail"><span></span></div>
           <div class="flow-steps">
             <div class="fstep" style="--d:0s"><span class="fic">✉</span><div><b data-i18n="f1_t"></b><small data-i18n="f1_d"></small></div></div>
             <div class="fstep" style="--d:1s"><span class="fic ai">✦</span><div><b data-i18n="f2_t"></b><small data-i18n="f2_d"></small></div></div>
@@ -228,8 +255,8 @@
         "home_title": "Automatisation, IA et développement",
         "home_eyebrow": "Freelance · Automatisation · IA · Sites et applications",
         "home_h1": "J'automatise vos tâches, j'ajoute l'IA à votre entreprise et je développe vos sites et applications.",
-        "home_lead": "Moins de saisie, moins d'oublis, des clients mieux suivis. Chaque démo ci-dessous est réelle : testez-la gratuitement, puis décrivez-moi votre besoin par écrit pour recevoir une proposition et un devis fixe.",
-        "home_cta_demos": "Tester les démos",
+        "home_lead": "Moins de saisie, moins d'oublis, des clients mieux suivis.",
+        "home_cta_demos": "Découvrir les démos",
         "p1_t": "Automatisation",
         "p1_d": "Vos outils reliés entre eux, les tâches répétitives faites toutes seules.",
         "p2_t": "Intelligence artificielle",
@@ -323,8 +350,8 @@
         "home_title": "Automation, AI and development",
         "home_eyebrow": "Freelance · Automation · AI · Websites and apps",
         "home_h1": "I automate your tasks, bring AI into your business and build your websites and apps.",
-        "home_lead": "Less data entry, fewer things forgotten, better follow-up with your customers. Every demo below is real: try it for free, then describe your need in writing to get a proposal and a fixed quote.",
-        "home_cta_demos": "Try the demos",
+        "home_lead": "Less data entry, fewer things forgotten, better follow-up with your customers.",
+        "home_cta_demos": "Explore the demos",
         "p1_t": "Automation",
         "p1_d": "Your tools connected, repetitive tasks done on their own.",
         "p2_t": "Artificial intelligence",
