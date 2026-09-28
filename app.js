@@ -40,6 +40,8 @@
       site_tag: 'Expert Automatisation & IA | n8n, Make, Zapier | Chatbots, Agents vocaux, CRM',
       nav_home: 'Accueil',
       nav_contact: 'Contactez-nous',
+      footer_services: 'Services',
+      footer_demos: 'Démos',
       cta_contact: 'Contactez-nous',
       theme_toggle: 'Changer de thème (clair / sombre)',
       back_home: '← Retour à l\'accueil',
@@ -67,6 +69,8 @@
       site_tag: 'AI & Automation Expert | n8n, Make, Zapier | Chatbots, Voice Agents, CRM',
       nav_home: 'Home',
       nav_contact: 'Contact us',
+      footer_services: 'Services',
+      footer_demos: 'Demos',
       cta_contact: 'Contact us',
       theme_toggle: 'Toggle theme (light / dark)',
       back_home: '← Back to home',
@@ -291,7 +295,12 @@
   function mountFooter() {
     var footer = qs('#site-footer');
     if (!footer) return;
-    footer.innerHTML = '<div class="container"><p data-year></p><p data-i18n="footer_free"></p></div>';
+    footer.innerHTML =
+      '<div class="container footer-inner">' +
+      '  <div class="footer-brand"><a class="brand" href="' + root() + '"><span class="brand-dot"></span><span data-i18n="site_name"></span></a><p data-i18n="footer_free"></p></div>' +
+      '  <nav class="footer-links"><a href="' + root() + '#services" data-i18n="footer_services"></a><a href="' + root() + '#demos" data-i18n="footer_demos"></a><a href="' + root() + 'contact" data-i18n="nav_contact"></a></nav>' +
+      '</div>' +
+      '<div class="container footer-bottom"><p data-year></p></div>';
   }
   function mountLoom() {
     qsa('[data-loom]').forEach(function (box) {
