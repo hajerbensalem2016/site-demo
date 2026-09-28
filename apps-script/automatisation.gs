@@ -12,7 +12,7 @@
    Garde-fous : 1 email par adresse toutes les 6 h, 40 emails de présentation par jour au total.
    ============================================================ */
 
-var SITE = 'https://site-demo-hbs16.vercel.app';
+var SITE = 'https://hbsgo.vercel.app';
 /* Identifiant de la Google Sheet (dans son adresse : /spreadsheets/d/<ID>/edit).
    Vide = la feuille à laquelle le script est rattaché (Extensions > Apps Script). */
 var SHEET_ID = '';

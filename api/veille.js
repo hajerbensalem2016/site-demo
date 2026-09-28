@@ -17,7 +17,7 @@
 const { createHandler, InputError } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
-const UA = 'HBSGoDemoBot/1.0 (+https://site-demo-hbs16.vercel.app/demos/veille)';
+const UA = 'HBSGoDemoBot/1.0 (+https://hbsgo.vercel.app/demos/veille)';
 const CACHE_MS = 15 * 60 * 1000;
 const cache = new Map();
 

@@ -18,7 +18,7 @@ const net = require('net');
 const { createHandler, InputError } = require('./_lib/http');
 const llm = require('./_lib/llm');
 
-const USER_AGENT = 'HBSGoDemoBot/1.0 (+https://site-demo-hbs16.vercel.app/demos/scraping)';
+const USER_AGENT = 'HBSGoDemoBot/1.0 (+https://hbsgo.vercel.app/demos/scraping)';
 const BOT_TOKEN = 'hbsgodemobot';
 const MAX_PAGE_BYTES = 1.5 * 1024 * 1024;
 const MAX_ROBOTS_BYTES = 256 * 1024;

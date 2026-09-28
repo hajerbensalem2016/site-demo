@@ -24,7 +24,7 @@ const FACTS = {
     'Outils maîtrisés : n8n, Make, Zapier, HubSpot, GoHighLevel, Notion, Airtable, Google Sheets, Slack, Shopify, Stripe, WhatsApp Business API, Vapi, API Claude et OpenAI.',
     'Tarifs : devis fixe et écrit, établi à partir de la description écrite du besoin. Ordre de grandeur : automatisation simple à partir de 150 €, chatbot à partir de 400 €, agent vocal à partir de 700 €.',
     'Délais : automatisation simple en 2 à 5 jours, chatbot en 1 à 2 semaines, agent vocal en 2 à 3 semaines. Chaque livraison inclut une vidéo explicative et 14 jours de support.',
-    'Contact : le visiteur décrit son besoin par écrit dans le formulaire de contact (https://site-demo-hbs16.vercel.app/contact) ; l\'équipe répond par écrit avec une proposition et un devis fixe. Un échange (visio ou appel) est fixé ensuite seulement si c\'est utile. Il n\'y a aucun créneau d\'appel à proposer.'
+    'Contact : le visiteur décrit son besoin par écrit dans le formulaire de contact (https://hbsgo.vercel.app/contact) ; l\'équipe répond par écrit avec une proposition et un devis fixe. Un échange (visio ou appel) est fixé ensuite seulement si c\'est utile. Il n\'y a aucun créneau d\'appel à proposer.'
   ],
   en: [
     'You are the virtual assistant of HBSGo, an automation, AI and web and mobile development agency. Never give the name of anyone on the team.',
@@ -32,7 +32,7 @@ const FACTS = {
     'Tools: n8n, Make, Zapier, HubSpot, GoHighLevel, Notion, Airtable, Google Sheets, Slack, Shopify, Stripe, WhatsApp Business API, Vapi, Claude and OpenAI APIs.',
     'Pricing: fixed written quote, based on the written description of the need. Rough range: simple automation from $150, chatbot from $400, voice agent from $700.',
     'Timelines: simple automation in 2 to 5 days, chatbot in 1 to 2 weeks, voice agent in 2 to 3 weeks. Every delivery includes a walkthrough video and 14 days of support.',
-    'Contact: the visitor describes the need in writing in the contact form (https://site-demo-hbs16.vercel.app/contact); the team replies in writing with a proposal and a fixed quote. A call or video meeting is scheduled afterwards only if useful. There are no call slots to offer.'
+    'Contact: the visitor describes the need in writing in the contact form (https://hbsgo.vercel.app/contact); the team replies in writing with a proposal and a fixed quote. A call or video meeting is scheduled afterwards only if useful. There are no call slots to offer.'
   ]
 };
 
