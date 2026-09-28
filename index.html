@@ -20,31 +20,139 @@
     .service h3 { margin: 6px 0 4px; font-size: 1rem; }
     .service p { margin: 0; color: var(--text-muted); font-size: .9rem; }
     .tag-cat { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .03em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+
+    /* ---- design moderne ---- */
+    .hero-wrap { position: relative; margin-top: 0; overflow: hidden; }
+    .hero-bg { position: absolute; inset: -120px 0 auto 0; height: 760px; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(600px 380px at 12% 18%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 70%),
+        radial-gradient(520px 360px at 88% 28%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+        radial-gradient(700px 300px at 50% 100%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 70%); }
+    .hero-bg::after { content: ""; position: absolute; inset: 0;
+      background-image: linear-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
+      background-size: 44px 44px; mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%); }
+    .hero-grid { display: grid; gap: 32px; align-items: center; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } }
+    .hero h1 { max-width: none; font-size: clamp(2rem, 3.2vw + 1rem, 3.3rem); line-height: 1.08; letter-spacing: -.025em; }
+    .grad { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .btn-glow { box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--primary) 70%, transparent); background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, var(--accent))); border-color: transparent; }
+    .btn-glow:hover { filter: brightness(1.08); }
+
+    .flow { position: relative; border-radius: 22px; padding: 22px 18px; background: color-mix(in srgb, var(--bg-elev) 80%, transparent);
+      border: 1px solid var(--border); box-shadow: var(--shadow); backdrop-filter: blur(8px); min-height: 400px; }
+    .flow-svg { position: absolute; inset: 22px 18px; width: calc(100% - 36px); height: calc(100% - 44px); overflow: visible; }
+    .flow-line { stroke: url(#fl); stroke-width: 2; stroke-dasharray: 5 7; fill: none; opacity: .55; }
+    .flow-dot { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent)); }
+    .flow-steps { position: relative; display: grid; gap: 30px; }
+    .fstep { display: flex; gap: 12px; align-items: center; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px;
+      animation: pulse 4s infinite; animation-delay: var(--d); }
+    .fstep b { display: block; font-size: .95rem; }
+    .fstep small { color: var(--text-muted); font-size: .8rem; }
+    .fic { flex: none; width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem;
+      background: var(--primary-soft); color: var(--primary); }
+    .fic.ai { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; }
+    .fic.ok { background: var(--success-soft); color: var(--success); }
+    @keyframes pulse { 0%, 100% { border-color: var(--border); box-shadow: none; } 8%, 18% { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); } }
+    .flow-badge { position: absolute; top: -12px; right: 16px; font-size: .72rem; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 999px;
+      background: var(--accent); color: #fff; }
+
+    .stats { list-style: none; padding: 0; margin: 34px 0 0; display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 760px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+    .stats li { background: color-mix(in srgb, var(--bg-elev) 85%, transparent); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+    .stats b { display: block; font-size: 1.5rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .stats span { color: var(--text-muted); font-size: .85rem; }
+
+    .marquee { margin-top: 40px; border-block: 1px solid var(--border); overflow: hidden; padding: 14px 0; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .marquee-track { display: flex; gap: 40px; width: max-content; animation: defile 40s linear infinite; }
+    .marquee-track span { font-weight: 700; color: var(--text-muted); white-space: nowrap; font-size: 1rem; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes defile { to { transform: translateX(-50%); } }
+
+    .pillar, .service, .demo-card { position: relative; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .pillar:hover, .service:hover, .demo-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 60%, var(--border)); box-shadow: 0 14px 34px -14px color-mix(in srgb, var(--primary) 55%, transparent); }
+    .service:hover .tag-cat { background: var(--accent); color: #fff; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .stagger > * { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+    .stagger.in > * { opacity: 1; transform: none; }
+    .stagger.in > *:nth-child(1) { transition-delay: 0.00s; }
+    .stagger.in > *:nth-child(2) { transition-delay: 0.05s; }
+    .stagger.in > *:nth-child(3) { transition-delay: 0.10s; }
+    .stagger.in > *:nth-child(4) { transition-delay: 0.15s; }
+    .stagger.in > *:nth-child(5) { transition-delay: 0.20s; }
+    .stagger.in > *:nth-child(6) { transition-delay: 0.25s; }
+    .stagger.in > *:nth-child(7) { transition-delay: 0.30s; }
+    .stagger.in > *:nth-child(8) { transition-delay: 0.35s; }
+    .stagger.in > *:nth-child(9) { transition-delay: 0.40s; }
+    .stagger.in > *:nth-child(10) { transition-delay: 0.45s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger > * { opacity: 1; transform: none; transition: none; }
+      .marquee-track, .fstep { animation: none; }
+      .flow-dot { display: none; }
+    }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
   <header id="site-header"></header>
 
   <main>
-    <section class="container hero">
-      <span class="eyebrow" data-i18n="home_eyebrow"></span>
-      <h1 data-i18n="home_h1"></h1>
-      <p class="lead" data-i18n="home_lead"></p>
-      <div class="btns">
-        <a class="btn" href="#demos" data-i18n="home_cta_demos"></a>
-        <a class="btn btn-outline" href="contact" data-i18n="cta_contact"></a>
-      </div>
-      <div class="pillars">
+    <section class="hero-wrap">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero">
+        <div class="hero-grid">
+          <div class="hero-text reveal">
+            <span class="eyebrow" data-i18n="home_eyebrow"></span>
+            <h1><span data-i18n="home_h1a"></span> <span class="grad" data-i18n="home_h1b"></span></h1>
+            <p class="lead" data-i18n="home_lead"></p>
+            <div class="btns">
+              <a class="btn btn-glow" href="#demos" data-i18n="home_cta_demos"></a>
+              <a class="btn btn-outline" href="contact" data-i18n="cta_contact"></a>
+            </div>
+          </div>
+        <div class="flow" aria-hidden="true">
+          <svg viewBox="0 0 360 400" class="flow-svg">
+            <defs>
+              <linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--primary)"/><stop offset="1" stop-color="var(--accent)"/></linearGradient>
+            </defs>
+            <path id="flowpath" d="M180 58 V342" class="flow-line"/>
+            <circle r="6" class="flow-dot"><animateMotion dur="4s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#flowpath"/></animateMotion></circle>
+            <circle r="6" class="flow-dot"><animateMotion dur="4s" begin="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#flowpath"/></animateMotion></circle>
+          </svg>
+          <div class="flow-steps">
+            <div class="fstep" style="--d:0s"><span class="fic">✉</span><div><b data-i18n="f1_t"></b><small data-i18n="f1_d"></small></div></div>
+            <div class="fstep" style="--d:1s"><span class="fic ai">✦</span><div><b data-i18n="f2_t"></b><small data-i18n="f2_d"></small></div></div>
+            <div class="fstep" style="--d:2s"><span class="fic">▦</span><div><b data-i18n="f3_t"></b><small data-i18n="f3_d"></small></div></div>
+            <div class="fstep" style="--d:3s"><span class="fic ok">✓</span><div><b data-i18n="f4_t"></b><small data-i18n="f4_d"></small></div></div>
+          </div>
+          <span class="flow-badge" data-i18n="f_badge"></span>
+        </div>
+        </div>
+        <ul class="stats reveal">
+          <li><b>9</b><span data-i18n="st1"></span></li>
+          <li><b>0 €</b><span data-i18n="st2"></span></li>
+          <li><b>FR · EN</b><span data-i18n="st3"></span></li>
+          <li><b>14 j</b><span data-i18n="st4"></span></li>
+        </ul>
+      <div class="pillars reveal">
         <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.6M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3.6M20 19v-4h-4"/></svg></span><h3 data-i18n="p1_t"></h3><p data-i18n="p1_d"></p></a>
         <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><h3 data-i18n="p2_t"></h3><p data-i18n="p2_d"></p></a>
         <a class="pillar" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M1.5 17h16"/><rect x="17.5" y="8" width="5" height="12" rx="1.2"/><path d="M19.5 18h1"/></svg></span><h3 data-i18n="p3_t"></h3><p data-i18n="p3_d"></p></a>
       </div>
+      </div>
     </section>
 
-    <section class="container" id="services">
+    <section class="marquee" aria-label="Outils">
+      <div class="marquee-track">
+        <span>n8n</span><span>Make</span><span>Zapier</span><span>Python</span><span>JavaScript</span><span>Node.js</span><span>Claude API</span><span>OpenAI</span><span>Groq</span><span>Vapi</span><span>Google Sheets</span><span>Apps Script</span><span>Notion</span><span>Airtable</span><span>HubSpot</span><span>WhatsApp API</span><span>Slack</span><span>Stripe</span><span>Shopify</span><span>Vercel</span>
+        <span aria-hidden="true">n8n</span><span aria-hidden="true">Make</span><span aria-hidden="true">Zapier</span><span aria-hidden="true">Python</span><span aria-hidden="true">JavaScript</span><span aria-hidden="true">Node.js</span><span aria-hidden="true">Claude API</span><span aria-hidden="true">OpenAI</span><span aria-hidden="true">Groq</span><span aria-hidden="true">Vapi</span><span aria-hidden="true">Google Sheets</span><span aria-hidden="true">Apps Script</span><span aria-hidden="true">Notion</span><span aria-hidden="true">Airtable</span><span aria-hidden="true">HubSpot</span><span aria-hidden="true">WhatsApp API</span><span aria-hidden="true">Slack</span><span aria-hidden="true">Stripe</span><span aria-hidden="true">Shopify</span><span aria-hidden="true">Vercel</span>
+      </div>
+    </section>
+
+    <section class="container reveal" id="services">
       <h2 data-i18n="home_services_title"></h2>
       <p class="muted" data-i18n="home_services_sub"></p>
-      <div class="services">
+      <div class="services stagger">
         <div class="service"><span class="tag-cat" data-i18n="sv1_c"></span><h3 data-i18n="sv1_t"></h3><p data-i18n="sv1_d"></p></div>
         <div class="service"><span class="tag-cat" data-i18n="sv2_c"></span><h3 data-i18n="sv2_t"></h3><p data-i18n="sv2_d"></p></div>
         <div class="service"><span class="tag-cat" data-i18n="sv3_c"></span><h3 data-i18n="sv3_t"></h3><p data-i18n="sv3_d"></p></div>
@@ -58,10 +166,10 @@
       </div>
     </section>
 
-    <section class="container" id="demos">
+    <section class="container reveal" id="demos">
       <h2 data-i18n="home_demos_title"></h2>
       <p class="muted" data-i18n="home_demos_sub"></p>
-      <div class="grid">
+      <div class="grid stagger">
         <a class="card demo-card" href="demos/agent-email/"><span class="num">01</span><h3 data-i18n="c1_t"></h3><p data-i18n="c1_d"></p><span class="go" data-i18n="home_try"></span></a>
         <a class="card demo-card" href="demos/automatisation/"><span class="num">02</span><h3 data-i18n="c2_t"></h3><p data-i18n="c2_d"></p><span class="go" data-i18n="home_try"></span></a>
         <a class="card demo-card" href="demos/chatbot/"><span class="num">03</span><h3 data-i18n="c3_t"></h3><p data-i18n="c3_d"></p><span class="go" data-i18n="home_try"></span></a>
@@ -84,10 +192,6 @@
       </div>
     </section>
 
-    <section class="container">
-      <h2 data-i18n="home_tools_title"></h2>
-      <p class="muted" data-i18n="home_tools_list"></p>
-    </section>
 
     <section class="container" id="contact">
       <div class="cta" data-cta>
@@ -106,6 +210,21 @@
   <script>
     window.PAGE_I18N = {
       "fr": {
+        "home_h1a": "J'automatise vos tâches, j'ajoute l'IA à votre entreprise et",
+        "home_h1b": "je développe vos sites et applications.",
+        "f1_t": "Un email arrive",
+        "f1_d": "« Bonjour, je voudrais un devis… »",
+        "f2_t": "L'IA l'analyse",
+        "f2_d": "Demande commerciale · urgence haute",
+        "f3_t": "Ajouté au tableau",
+        "f3_d": "Google Sheets + CRM, automatiquement",
+        "f4_t": "Réponse prête",
+        "f4_d": "Brouillon rédigé en 3 secondes",
+        "f_badge": "Exemple d'automatisation",
+        "st1": "démos réelles à tester",
+        "st2": "pour tester, sans inscription",
+        "st3": "bilingue",
+        "st4": "de support après livraison",
         "home_title": "Automatisation, IA et développement",
         "home_eyebrow": "Freelance · Automatisation · IA · Sites et applications",
         "home_h1": "J'automatise vos tâches, j'ajoute l'IA à votre entreprise et je développe vos sites et applications.",
@@ -186,6 +305,21 @@
         "home_contact_text": "Décrivez-la en quelques lignes : je vous dirai franchement si elle peut être automatisée ou développée, comment, et à quel prix."
       },
       "en": {
+        "home_h1a": "I automate your tasks, bring AI into your business and",
+        "home_h1b": "build your websites and apps.",
+        "f1_t": "An email arrives",
+        "f1_d": "“Hello, I would like a quote…”",
+        "f2_t": "The AI reads it",
+        "f2_d": "Sales inquiry · high priority",
+        "f3_t": "Added to the sheet",
+        "f3_d": "Google Sheets + CRM, automatically",
+        "f4_t": "Reply ready",
+        "f4_d": "Draft written in 3 seconds",
+        "f_badge": "Automation example",
+        "st1": "real demos to try",
+        "st2": "to try, no sign-up",
+        "st3": "bilingual",
+        "st4": "of support after delivery",
         "home_title": "Automation, AI and development",
         "home_eyebrow": "Freelance · Automation · AI · Websites and apps",
         "home_h1": "I automate your tasks, bring AI into your business and build your websites and apps.",
@@ -268,5 +402,15 @@
     };
   </script>
   <script src="app.js"></script>
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal, .stagger');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
 </body>
 </html>
