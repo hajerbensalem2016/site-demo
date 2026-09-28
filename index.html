@@ -148,6 +148,10 @@
     @keyframes flotteN { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
     #net { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .7; }
     @media (prefers-reduced-motion: reduce) { .v-wave, .v-spin, .v-halo, .v-node { animation: none; } .v-pulse, #net { display: none; } }
+    .scroll-cue { display: inline-flex; margin-top: 34px; width: 30px; height: 48px; border: 2px solid var(--border); border-radius: 999px; justify-content: center; padding-top: 8px; }
+    .scroll-cue span { width: 4px; height: 10px; border-radius: 4px; background: var(--accent); animation: descend 1.8s ease-in-out infinite; }
+    @keyframes descend { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(16px); opacity: 0; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .scroll-cue span { animation: none; } }
   </style>
 </head>
 <body data-root="./" data-title-key="home_title">
@@ -162,10 +166,7 @@
             <span class="eyebrow" data-i18n="home_eyebrow"></span>
             <h1><span data-i18n="home_h1a"></span> <span class="grad" data-i18n="home_h1b"></span></h1>
             <p class="lead" data-i18n="home_lead"></p>
-            <div class="btns">
-              <a class="btn btn-glow" href="#demos" data-i18n="home_cta_demos"></a>
-              <a class="btn btn-outline" href="contact" data-i18n="cta_contact"></a>
-            </div>
+            <a class="scroll-cue" href="#services" data-i18n-aria="home_scroll"><span></span></a>
           </div>
         <div class="visual" aria-hidden="true">
           <svg viewBox="0 0 600 460" class="visual-svg">
@@ -351,7 +352,8 @@
         "home_tools_title": "Outils et technologies",
         "home_tools_list": "n8n · Make · Zapier · API Claude, OpenAI, Groq · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Quelle tâche vous prend le plus de temps ?",
-        "home_contact_text": "Décrivez-la en quelques lignes : nous vous dirons franchement si elle peut être automatisée ou développée, comment, et à quel prix."
+        "home_contact_text": "Décrivez-la en quelques lignes : nous vous dirons franchement si elle peut être automatisée ou développée, comment, et à quel prix.",
+        "home_scroll": "Voir la suite"
       },
       "en": {
         "home_h1a": "Automation and AI",
@@ -436,7 +438,8 @@
         "home_tools_title": "Tools and technologies",
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Which task takes you the most time?",
-        "home_contact_text": "Describe it in a few lines: we will tell you honestly whether it can be automated or built, how, and what it will cost."
+        "home_contact_text": "Describe it in a few lines: we will tell you honestly whether it can be automated or built, how, and what it will cost.",
+        "home_scroll": "Scroll down"
       },
       "ar": {
         "home_h1a": "الأتمتة والذكاء الاصطناعي",
@@ -521,7 +524,8 @@
         "home_tools_title": "الأدوات والتقنيات",
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groق APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "ما هي المهمة التي تستغرق معظم وقتك؟",
-        "home_contact_text": "صفها في بضع سطور: سنخبرك بصراحة ما إذا كان يمكن أتمتتها أو بناؤها، وكيف، وما سيكلفها."
+        "home_contact_text": "صفها في بضع سطور: سنخبرك بصراحة ما إذا كان يمكن أتمتتها أو بناؤها، وكيف، وما سيكلفها.",
+        "home_scroll": "تابع التصفح"
       },
       "de": {
         "home_h1a": "Automatisierung und KI",
@@ -606,7 +610,8 @@
         "home_tools_title": "Werkzeuge und Technologien",
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "Welche Aufgabe nimmt bei Ihnen am meisten Zeit in Anspruch?",
-        "home_contact_text": "Beschreiben Sie sie in wenigen Zeilen: Wir sagen Ihnen ehrlich, ob sie automatisiert oder entwickelt werden kann, wie und was sie kosten wird."
+        "home_contact_text": "Beschreiben Sie sie in wenigen Zeilen: Wir sagen Ihnen ehrlich, ob sie automatisiert oder entwickelt werden kann, wie und was sie kosten wird.",
+        "home_scroll": "Weiter nach unten"
       },
       "es": {
         "home_h1a": "Automatización e IA",
@@ -691,7 +696,8 @@
         "home_tools_title": "Herramientas y tecnologías",
         "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
         "home_contact_title": "¿Qué tarea le ocupa más tiempo?",
-        "home_contact_text": "Descríbala en unas líneas: le diremos honestamente si puede automatizarse o desarrollarse, cómo hacerlo y cuál será su costo."
+        "home_contact_text": "Descríbala en unas líneas: le diremos honestamente si puede automatizarse o desarrollarse, cómo hacerlo y cuál será su costo.",
+        "home_scroll": "Ver más"
       }
     };
   </script>
