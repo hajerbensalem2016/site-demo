@@ -101,9 +101,9 @@
     .hero .lead { font-size: clamp(1.1rem, .6vw + 1rem, 1.45rem); max-width: 40ch; margin: 22px auto 0; color: var(--text-muted); }
     .hero .btns { justify-content: center; margin-top: 34px; }
     .hero .btn { padding: 14px 28px; font-size: 1rem; }
-    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; animation: flotte 14s ease-in-out infinite alternate; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .22; animation: flotte 14s ease-in-out infinite alternate; }
     .orb.o1 { width: 520px; height: 520px; left: calc(50% - 460px); top: 40px; background: var(--primary); }
-    .orb.o2 { width: 440px; height: 440px; left: calc(50% + 20px); top: 140px; background: var(--accent); animation-delay: -7s; opacity: .42; }
+    .orb.o2 { width: 440px; height: 440px; left: calc(50% + 20px); top: 140px; background: var(--accent); animation-delay: -7s; opacity: .16; }
     @keyframes flotte { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 30px) scale(1.12); } }
     .hero-bg { background: none; }
     .hero-bg::after { mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); }
@@ -802,7 +802,7 @@
     (function () {
       var c = document.getElementById('net');
       if (!c || !c.getContext || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var g = c.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), W = 0, H = 0, pts = [], mouse = { x: -9999, y: -9999 }, visible = true, col = '#4f46e5', col2 = '#db2777';
+      var g = c.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), W = 0, H = 0, pts = [], mouse = { x: -9999, y: -9999 }, visible = true, col = '#a4532a', col2 = '#a4532a';
       function couleurs() { var cs = getComputedStyle(document.documentElement); col = cs.getPropertyValue('--primary').trim() || col; col2 = cs.getPropertyValue('--accent').trim() || col2; }
       function taille() {
         var r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);

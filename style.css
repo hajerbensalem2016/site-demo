@@ -2,22 +2,22 @@
    style.css — feuille de style commune (mode clair / sombre)
    Police unique : Inter (Google Fonts). Couleurs en variables.
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap');
 
 :root {
-  --bg: #f6f7fb;
+  --bg: #f7f3ec;
   --bg-elev: #ffffff;
-  --bg-soft: #eef1f8;
+  --bg-soft: #efe8dd;
   --text: #15192b;
   --text-muted: #5b6275;
   --border: #dfe3ec;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --primary-soft: #eef0ff;
+  --primary: #a4532a;
+  --primary-hover: #a4532a;
+  --primary-soft: #f5e6da;
   --on-primary: #ffffff;
-  --accent: #be185d;
-  --accent-2: #ea580c;
-  --accent-soft: #fce7f3;
+  --accent: #a4532a;
+  --accent-2: #a4532a;
+  --accent-soft: #f5e6da;
   --warn: #b45309;
   --warn-soft: #fff3df;
   --danger: #c2410c;
@@ -35,19 +35,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f1220;
-    --bg-elev: #171b2e;
-    --bg-soft: #1e2338;
+    --bg: #131211;
+    --bg-elev: #1b1917;
+    --bg-soft: #24211e;
     --text: #e9ecf5;
     --text-muted: #a0a8c0;
     --border: #2a3049;
-    --primary: #818cf8;
-    --primary-hover: #a5b4fc;
-    --primary-soft: #26284f;
-    --on-primary: #0f1220;
-    --accent: #f472b6;
-    --accent-2: #fb923c;
-    --accent-soft: #3b1a2e;
+    --primary: #d98b52;
+    --primary-hover: #d98b52;
+    --primary-soft: #2e1d13;
+    --on-primary: #131211;
+    --accent: #d98b52;
+    --accent-2: #d98b52;
+    --accent-soft: #2e1d13;
     --warn: #f5b04c;
     --warn-soft: #3a2b12;
     --danger: #ff8a5b;
@@ -59,19 +59,19 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0f1220;
-  --bg-elev: #171b2e;
-  --bg-soft: #1e2338;
+  --bg: #131211;
+  --bg-elev: #1b1917;
+  --bg-soft: #24211e;
   --text: #e9ecf5;
   --text-muted: #a0a8c0;
   --border: #2a3049;
-  --primary: #818cf8;
-  --primary-hover: #a5b4fc;
-  --primary-soft: #26284f;
-  --on-primary: #0f1220;
-  --accent: #f472b6;
-    --accent-2: #fb923c;
-  --accent-soft: #3b1a2e;
+  --primary: #d98b52;
+  --primary-hover: #d98b52;
+  --primary-soft: #2e1d13;
+  --on-primary: #131211;
+  --accent: #d98b52;
+    --accent-2: #d98b52;
+  --accent-soft: #2e1d13;
   --warn: #f5b04c;
   --warn-soft: #3a2b12;
   --danger: #ff8a5b;
@@ -373,3 +373,8 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: now
 
 /* un élément masqué reste masqué, même si son style lui donne un display (ex. .btn) */
 [hidden] { display: none !important; }
+
+/* ---- style éditorial HBSGo : titres à empattement, accent cuivre unique ---- */
+h1, h2, .hero h1 { font-family: 'Fraunces', Georgia, 'Times New Roman', serif; font-weight: 600; letter-spacing: -.02em; }
+.grad { font-style: italic; font-weight: 500; }
+[dir="rtl"] h1, [dir="rtl"] h2 { font-family: 'Segoe UI', Tahoma, 'Noto Sans Arabic', Arial, sans-serif; letter-spacing: 0; }

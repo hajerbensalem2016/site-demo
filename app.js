@@ -373,7 +373,7 @@
 
   /* ---------- montage de la page ---------- */
   /* Logo HBSGo : lettre H + flèche (même dessin que logo.svg / favicon.svg) */
-  var LOGO = '<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="hbsg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4f46e5"/><stop offset=".55" stop-color="#db2777"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><path d="M8 50 V14 M8 32 H30 M30 14 V50" fill="none" stroke="url(#hbsg)" stroke-width="7" stroke-linecap="round"/><path d="M40 14 L56 32 L40 50" fill="none" stroke="#f97316" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-name">HBS<span class="go">Go</span></span>';
+  var LOGO = '<svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="hbsg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a4532a"/><stop offset=".55" stop-color="#a4532a"/><stop offset="1" stop-color="#a4532a"/></linearGradient></defs><path d="M8 50 V14 M8 32 H30 M30 14 V50" fill="none" stroke="url(#hbsg)" stroke-width="7" stroke-linecap="round"/><path d="M40 14 L56 32 L40 50" fill="none" stroke="#a4532a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-name">HBS<span class="go">Go</span></span>';
   function mountFavicon() {
     if (document.querySelector('link[rel="icon"]')) return;
     var l = document.createElement('link'); l.rel = 'icon'; l.type = 'image/svg+xml'; l.href = root() + 'favicon.svg';
