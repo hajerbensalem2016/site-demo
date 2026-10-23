@@ -3,839 +3,253 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HBSGo — Automatisation, IA et développement</title>
-  <meta name="description" content="Freelance : automatisation (n8n, Make, Zapier), agents IA et chatbots, sites vitrines, sites dynamiques et applications mobiles. 9 démos réelles à tester gratuitement.">
+  <title>HBSGo — Automatisation & IA pour votre entreprise</title>
+  <meta name="description" content="Automatisation n8n/Make/Zapier, agents IA, chatbots, scraping. 7 démos réelles à tester gratuitement.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
   <script src="config.js"></script>
-  <style>
-    .hero h1 { max-width: 26ch; }
-    .pillars { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 28px; }
-    .pillar { display: block; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; color: inherit; transition: border-color .15s, transform .15s; }
-    .pillar:hover { border-color: var(--primary); transform: translateY(-2px); text-decoration: none; }
-    .pillar .ic { display: inline-flex; width: 46px; height: 46px; align-items: center; justify-content: center; border-radius: 12px; background: var(--primary-soft); color: var(--primary); }
-    .pillar h3 { margin: 12px 0 4px; font-size: 1.1rem; }
-    .pillar p { margin: 0; color: var(--text-muted); font-size: .95rem; }
-    .services { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-    .service { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
-    .service h3 { margin: 6px 0 4px; font-size: 1rem; }
-    .service p { margin: 0; color: var(--text-muted); font-size: .9rem; }
-    .tag-cat { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .03em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
-
-    /* ---- design moderne ---- */
-    .hero-wrap { position: relative; margin-top: 0; overflow: hidden; }
-    .hero-bg { position: absolute; inset: -120px 0 0 0; z-index: -1; pointer-events: none;
-      background:
-        radial-gradient(600px 380px at 12% 18%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 70%),
-        radial-gradient(520px 360px at 88% 28%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
-        radial-gradient(700px 300px at 50% 100%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 70%); }
-    .hero-bg::after { content: ""; position: absolute; inset: 0;
-      background-image: linear-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
-      background-size: 44px 44px; mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%); }
-    .hero-grid { display: grid; gap: 32px; align-items: center; grid-template-columns: 1fr; }
-    @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr .85fr; } }
-    .hero h1 { max-width: none; font-size: clamp(2rem, 3.2vw + 1rem, 3.3rem); line-height: 1.08; letter-spacing: -.025em; }
-    .grad { background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .btn-glow { box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--primary) 70%, transparent); background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, var(--accent))); border-color: transparent; }
-    .btn-glow:hover { filter: brightness(1.08); }
-
-    .flow { position: relative; border-radius: 22px; padding: 22px 18px; background: color-mix(in srgb, var(--bg-elev) 80%, transparent);
-      border: 1px solid var(--border); box-shadow: var(--shadow); backdrop-filter: blur(8px); min-height: 400px; }
-    .flow-svg { position: absolute; inset: 22px 18px; width: calc(100% - 36px); height: calc(100% - 44px); overflow: visible; }
-    .flow-line { stroke: url(#fl); stroke-width: 2; stroke-dasharray: 5 7; fill: none; opacity: .55; }
-    .flow-dot { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent)); }
-    .flow-steps { position: relative; display: grid; gap: 30px; }
-    .fstep { display: flex; gap: 12px; align-items: center; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px;
-      animation: pulse 4s infinite; animation-delay: var(--d); }
-    .fstep b { display: block; font-size: .95rem; }
-    .fstep small { color: var(--text-muted); font-size: .8rem; }
-    .fic { flex: none; width: 38px; height: 38px; border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem;
-      background: var(--primary-soft); color: var(--primary); }
-    .fic.ai { background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); color: #fff; }
-    .fic.ok { background: var(--success-soft); color: var(--success); }
-    @keyframes pulse { 0%, 100% { border-color: var(--border); box-shadow: none; } 8%, 18% { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); } }
-    .flow-badge { position: absolute; top: -12px; right: 16px; font-size: .72rem; font-weight: 700; letter-spacing: .03em; padding: 4px 10px; border-radius: 999px;
-      background: var(--accent); color: #fff; }
-
-    .stats { list-style: none; padding: 0; margin: 34px 0 0; display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
-    @media (min-width: 760px) { .stats { grid-template-columns: repeat(4, 1fr); } }
-    .stats li { background: color-mix(in srgb, var(--bg-elev) 85%, transparent); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
-    .stats b { display: block; font-size: 1.5rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .stats span { color: var(--text-muted); font-size: .85rem; }
-
-    .marquee { margin-top: 40px; border-block: 1px solid var(--border); overflow: hidden; padding: 14px 0; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-    .marquee-track { display: flex; gap: 40px; width: max-content; animation: defile 40s linear infinite; }
-    .marquee-track span { font-weight: 700; color: var(--text-muted); white-space: nowrap; font-size: 1rem; }
-    .marquee:hover .marquee-track { animation-play-state: paused; }
-    @keyframes defile { to { transform: translateX(-50%); } }
-
-    .pillar, .service, .demo-card { position: relative; transition: transform .2s, border-color .2s, box-shadow .2s; }
-    .pillar:hover, .service:hover, .demo-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 60%, var(--border)); box-shadow: 0 14px 34px -14px color-mix(in srgb, var(--primary) 55%, transparent); }
-    .service:hover .tag-cat { background: var(--accent); color: #fff; }
-
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.in { opacity: 1; transform: none; }
-    .stagger > * { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
-    .stagger.in > * { opacity: 1; transform: none; }
-    .stagger.in > *:nth-child(1) { transition-delay: 0.00s; }
-    .stagger.in > *:nth-child(2) { transition-delay: 0.05s; }
-    .stagger.in > *:nth-child(3) { transition-delay: 0.10s; }
-    .stagger.in > *:nth-child(4) { transition-delay: 0.15s; }
-    .stagger.in > *:nth-child(5) { transition-delay: 0.20s; }
-    .stagger.in > *:nth-child(6) { transition-delay: 0.25s; }
-    .stagger.in > *:nth-child(7) { transition-delay: 0.30s; }
-    .stagger.in > *:nth-child(8) { transition-delay: 0.35s; }
-    .stagger.in > *:nth-child(9) { transition-delay: 0.40s; }
-    .stagger.in > *:nth-child(10) { transition-delay: 0.45s; }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal, .stagger > * { opacity: 1; transform: none; transition: none; }
-      .marquee-track, .fstep { animation: none; }
-      .flow-dot { display: none; }
-    }
-    /* ---- hero premium ---- */
-    .hero { padding-top: clamp(64px, 12vh, 140px); padding-bottom: 32px; }
-    .hero-center { display: grid; justify-items: center; text-align: center; gap: 0; }
-    .hero-text { display: grid; justify-items: center; }
-    .hero .eyebrow { background: transparent; border: 1px solid var(--border); color: var(--text-muted); letter-spacing: .12em; font-size: .72rem; padding: 6px 14px; }
-    .hero h1 { font-size: clamp(2.1rem, 3.6vw + .8rem, 3.9rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 800; max-width: 20ch; margin: 18px auto 0; }
-    .hero .lead { font-size: clamp(1.1rem, .6vw + 1rem, 1.45rem); max-width: 40ch; margin: 22px auto 0; color: var(--text-muted); }
-    .hero .btns { justify-content: center; margin-top: 34px; }
-    .hero .btn { padding: 14px 28px; font-size: 1rem; }
-    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .22; animation: flotte 14s ease-in-out infinite alternate; }
-    .orb.o1 { width: 520px; height: 520px; left: calc(50% - 460px); top: 40px; background: var(--primary); }
-    .orb.o2 { width: 440px; height: 440px; left: calc(50% + 20px); top: 140px; background: var(--accent); animation-delay: -7s; opacity: .16; }
-    @keyframes flotte { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 30px) scale(1.12); } }
-    .hero-bg { background: none; }
-    .hero-bg::after { mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%); }
-
-    /* vitrine : l'automatisation en grand, à l'horizontale */
-    .flow { width: 100%; max-width: 1040px; margin: 64px auto 0; min-height: 0; padding: 34px 22px 26px; border-radius: 26px;
-      background: color-mix(in srgb, var(--bg-elev) 72%, transparent); box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--primary) 60%, transparent), var(--shadow); }
-    .flow-steps { gap: 14px; text-align: start; }
-    @media (min-width: 900px) { .flow-steps { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
-    .fstep { flex-direction: column; align-items: flex-start; padding: 18px; min-height: 128px; }
-    .fstep b { font-size: 1rem; margin-top: 4px; }
-    .flow-rail { position: absolute; left: 40px; right: 40px; top: 50%; height: 2px; overflow: hidden; border-radius: 2px; background: var(--border); display: none; }
-    @media (min-width: 900px) { .flow-rail { display: block; } }
-    .flow-rail span { position: absolute; top: 0; left: -30%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, var(--accent), var(--primary), transparent); animation: rail 4s linear infinite; }
-    @keyframes rail { to { left: 100%; } }
-    .flow-badge { right: 50%; transform: translateX(50%); top: -13px; }
-
-    .stats { max-width: 1040px; margin: 40px auto 0; }
-    .stats li { background: transparent; border: 0; border-inline-start: 1px solid var(--border); border-radius: 0; padding: 4px 18px; text-align: start; }
-    .stats b { font-size: clamp(1.6rem, 1.4vw + 1rem, 2.3rem); letter-spacing: -.02em; }
-    .pillars { max-width: 1040px; margin: 56px auto 0; }
-    @media (prefers-reduced-motion: reduce) { .orb, .flow-rail span { animation: none; } }
-    /* ---- illustration animée ---- */
-    .visual { width: 100%; max-width: 760px; margin: 40px auto 0; }
-    .visual-svg { width: 100%; height: auto; display: block; overflow: visible; }
-    .v-orbit { fill: none; stroke: color-mix(in srgb, var(--text) 14%, transparent); stroke-width: 1; stroke-dasharray: 2 8; }
-    .v-orbit.o2 { stroke: color-mix(in srgb, var(--text) 8%, transparent); }
-    .v-link { fill: none; stroke: color-mix(in srgb, var(--primary) 45%, transparent); stroke-width: 1.5; }
-    .v-pulse { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent)); }
-    .v-core-disc { filter: drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 70%, transparent)); }
-    .v-spark { fill: #fff; opacity: .95; }
-    .v-wave { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; animation: onde 3.2s ease-out infinite; }
-    .v-wave.w2 { animation-delay: 1.6s; }
-    @keyframes onde { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
-    .v-spin { transform-box: fill-box; transform-origin: center; animation: tourne 18s linear infinite; }
-    @keyframes tourne { to { transform: rotate(360deg); } }
-    .v-disc { fill: var(--bg-elev); stroke: color-mix(in srgb, var(--primary) 55%, var(--border)); stroke-width: 1.5; }
-    .v-halo { fill: color-mix(in srgb, var(--primary) 16%, transparent); opacity: 0; animation: halo 4s ease-in-out infinite; animation-delay: calc(var(--i) * .66s); }
-    @keyframes halo { 0%, 100% { opacity: 0; } 20%, 35% { opacity: 1; } }
-    .v-ic { fill: none; stroke: var(--primary); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-    .v-node { animation: flotteN 6s ease-in-out infinite; animation-delay: calc(var(--i) * -1s); }
-    @keyframes flotteN { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
-    #net { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .7; }
-    @media (prefers-reduced-motion: reduce) { .v-wave, .v-spin, .v-halo, .v-node { animation: none; } .v-pulse, #net { display: none; } }
-    .scroll-cue { display: inline-flex; margin-top: 34px; width: 30px; height: 48px; border: 2px solid var(--border); border-radius: 999px; justify-content: center; padding-top: 8px; }
-    .scroll-cue span { width: 4px; height: 10px; border-radius: 4px; background: var(--accent); animation: descend 1.8s ease-in-out infinite; }
-    @keyframes descend { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(16px); opacity: 0; } 100% { opacity: 0; } }
-    @media (prefers-reduced-motion: reduce) { .scroll-cue span { animation: none; } }
-    /* ---- bulles (services), tuiles (démos), étapes (méthode) ---- */
-    .bubbles { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); margin-top: 18px; }
-    .bubble, .step-ic { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 22px; transition: transform .2s, border-color .2s, box-shadow .2s; }
-    .bubble:hover, .step-ic:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 55%, var(--border)); box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--primary) 60%, transparent); }
-    .bubble summary, .step-ic summary { list-style: none; cursor: pointer; display: grid; justify-items: center; text-align: center; gap: 8px; padding: 20px 12px 16px; }
-    .bubble summary::-webkit-details-marker, .step-ic summary::-webkit-details-marker { display: none; }
-    .b-ic { width: 58px; height: 58px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff;
-      background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); box-shadow: 0 10px 22px -10px color-mix(in srgb, var(--primary) 80%, transparent); }
-    .b-ic svg { width: 28px; height: 28px; }
-    .b-t { font-weight: 700; font-size: .98rem; line-height: 1.25; }
-    .b-cat { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-    .bubble p, .step-ic p { margin: 0; padding: 0 16px 16px; color: var(--text-muted); font-size: .9rem; text-align: center; }
-    .bubble[open], .step-ic[open] { border-color: var(--primary); }
-    .bubble[open] .b-ic, .step-ic[open] .b-ic { transform: scale(1.06); }
-    .hint-click { margin: 0; }
-
-    .tiles-demo { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin-top: 18px; }
-    .tile-demo { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 16px; border-radius: 18px;
-      background: var(--bg-elev); border: 1px solid var(--border); color: inherit; overflow: hidden; transition: transform .2s, border-color .2s, box-shadow .2s; }
-    .tile-demo:hover { text-decoration: none; transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary) 55%, var(--border)); box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--primary) 60%, transparent); }
-    .td-ic { width: 46px; height: 46px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; background: var(--primary-soft); color: var(--primary); transition: background .2s, color .2s; }
-    .td-ic svg { width: 24px; height: 24px; }
-    .tile-demo:hover .td-ic { background: linear-gradient(135deg, var(--primary), var(--accent), var(--accent-2)); color: #fff; }
-    .td-t { font-weight: 700; }
-    .td-new { position: absolute; top: 8px; inset-inline-end: 10px; font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; background: var(--accent); color: #fff; padding: 2px 7px; border-radius: 999px; }
-    .td-go { color: var(--primary); font-weight: 800; transition: transform .2s; }
-    [dir="rtl"] .td-go { transform: scaleX(-1); }
-    .tile-demo:hover .td-go { transform: translateX(4px); }
-    .td-d { grid-column: 1 / -1; max-height: 0; opacity: 0; overflow: hidden; color: var(--text-muted); font-size: .88rem; transition: max-height .3s, opacity .3s; }
-    .tile-demo:hover .td-d, .tile-demo:focus-visible .td-d { max-height: 80px; opacity: 1; }
-
-    .steps-ic { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 18px; }
-    .step-ic summary { position: relative; }
-    .s-num { position: absolute; top: 10px; inset-inline-start: 14px; font-size: .8rem; font-weight: 800; color: var(--text-muted); }
-
-    .pillar.compact { display: grid; justify-items: center; text-align: center; }
-    .pillar.compact p { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .3s, opacity .3s; margin: 0; }
-    .pillar.compact:hover p, .pillar.compact:focus-visible p { max-height: 90px; opacity: 1; margin-top: 4px; }
-    @media (hover: none) { .pillar.compact p { max-height: none; opacity: 1; } }
-    @media (max-width: 560px) { .bubbles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .bubble summary { padding: 16px 8px 12px; } .b-ic { width: 48px; height: 48px; } .b-ic svg { width: 24px; height: 24px; } .b-t { font-size: .88rem; } .b-cat { font-size: .6rem; letter-spacing: .03em; } .steps-ic { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
-    /* ---- premier écran : texte compact + image animée visible tout de suite ---- */
-    .hero { padding-top: clamp(24px, 5vh, 56px); padding-bottom: 16px; }
-    .hero h1 { font-size: clamp(1.7rem, 2.2vw + .9rem, 2.9rem); line-height: 1.12; letter-spacing: -.03em; max-width: 18ch; margin-top: 12px; }
-    .hero .lead { font-size: clamp(1rem, .3vw + .95rem, 1.15rem); margin-top: 12px; max-width: 38ch; }
-    .hero .eyebrow { font-size: .66rem; padding: 5px 12px; }
-    .scroll-cue { margin-top: 20px; width: 26px; height: 42px; }
-    .visual { max-width: 380px; margin: 18px auto 0; }
-    @media (min-width: 900px) {
-      .hero-center { grid-template-columns: 1fr 1fr; align-items: center; text-align: start; justify-items: stretch; gap: 32px; }
-      .hero-text { justify-items: start; }
-      .hero h1, .hero .lead { margin-inline: 0; }
-      .visual { max-width: 520px; margin: 0; justify-self: end; width: 100%; }
-    }
-    /* ---- illustration « usine d'automatisation » ---- */
-    .usine { max-width: 560px; }
-    .u-belt { stroke: color-mix(in srgb, var(--text) 35%, transparent); stroke-width: 2; stroke-dasharray: 10 18; fill: none; }
-    .u-roll { fill: var(--bg-elev); stroke: color-mix(in srgb, var(--text) 30%, transparent); stroke-width: 2; }
-    .u-card-bg { fill: var(--bg-elev); stroke: color-mix(in srgb, var(--primary) 50%, var(--border)); stroke-width: 1.5; }
-    .u-ic { fill: none; stroke: var(--primary); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-    .u-card-ok { fill: color-mix(in srgb, var(--success) 18%, var(--bg-elev)); stroke: var(--success); stroke-width: 1.5; }
-    .u-check { fill: none; stroke: var(--success); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-    .u-machine { filter: drop-shadow(0 18px 30px color-mix(in srgb, var(--accent) 45%, transparent)); }
-    .u-shine { fill: none; stroke: rgba(255, 255, 255, .35); stroke-width: 1.5; }
-    .u-door { fill: rgba(0, 0, 0, .28); }
-    .u-gear path, .u-gear circle { fill: rgba(255, 255, 255, .92); }
-    .u-gear.g2 path, .u-gear.g2 circle { fill: rgba(255, 255, 255, .7); }
-    .u-hole { fill: color-mix(in srgb, var(--primary) 70%, #000) !important; }
-    .u-spark { fill: #fff; }
-    .u-led { fill: #fff; } .u-led.l2 { fill: #ffd29a; }
-    .u-db-bg { fill: var(--bg-elev); stroke: var(--success); stroke-width: 2; }
-    .u-db-lines { fill: none; stroke: color-mix(in srgb, var(--success) 70%, var(--text)); stroke-width: 1.6; opacity: .7; }
-  </style>
 </head>
-<body data-root="./" data-title-key="home_title">
-  <header id="site-header"></header>
+<body>
+  <!-- HEADER STICKY -->
+  <header class="header">
+    <div class="container-fluid">
+      <div class="header-content">
+        <a href="#" class="logo">HBSGo</a>
+        <nav class="nav">
+          <a href="#hero">Accueil</a>
+          <a href="#services">Services</a>
+          <a href="#demos">Démos</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a href="#demos" class="btn btn-primary btn-sm">Essayer →</a>
+      </div>
+    </div>
+  </header>
 
+  <!-- MAIN CONTENT -->
   <main>
-    <section class="hero-wrap">
-      <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><canvas id="net"></canvas></div>
-      <div class="container hero">
-        <div class="hero-center">
-          <div class="hero-text reveal">
-            <span class="eyebrow" data-i18n="home_eyebrow"></span>
-            <h1><span data-i18n="home_h1a"></span> <span class="grad" data-i18n="home_h1b"></span></h1>
-            <p class="lead" data-i18n="home_lead"></p>
-            <a class="scroll-cue" href="#services" data-i18n-aria="home_scroll"><span></span></a>
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+      <div class="container-fluid">
+        <div class="hero-content">
+          <h1>Automatisez votre entreprise en 5 minutes</h1>
+          <p class="hero-subtitle">7 démos réelles à tester gratuitement. Aucune installation, pas d'inscription.</p>
+          <div class="hero-cta">
+            <a href="#demos" class="btn btn-primary btn-lg">Découvrir les démos</a>
+            <a href="https://www.upwork.com/freelancers/~hajerbensalem" target="_blank" class="btn btn-secondary btn-lg">Voir mon profil</a>
           </div>
-        <div class="visual usine" aria-hidden="true">
-          <svg viewBox="0 0 540 330" class="visual-svg">
-            <defs>
-              <linearGradient id="uMach" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--primary)"/><stop offset=".6" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
-              <linearGradient id="uBelt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--primary)" stop-opacity=".15"/><stop offset=".5" stop-color="var(--accent)" stop-opacity=".5"/><stop offset="1" stop-color="var(--accent-2)" stop-opacity=".15"/></linearGradient>
-            </defs>
-            <!-- tapis roulant -->
-            <rect x="10" y="238" width="520" height="14" rx="7" fill="url(#uBelt)"/>
-            <path d="M18 245 H522" class="u-belt"><animate attributeName="stroke-dashoffset" from="0" to="-28" dur=".7s" repeatCount="indefinite"/></path>
-            <circle cx="22" cy="245" r="9" class="u-roll"/><circle cx="518" cy="245" r="9" class="u-roll"/>
-            <!-- entrées : tâches à traiter -->
-            <g class="u-item" opacity="0"><g class="u-card"><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-bg"/><g class="u-ic"><rect x="-13" y="-9" width="26" height="18" rx="3"/><path d="M-13 -7 L0 2 L13 -7"/></g></g><animateTransform attributeName="transform" type="translate" values="30 214; 206 214" dur="3.6s" begin="0.0s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3.6s" begin="0.0s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g class="u-card"><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-bg"/><g class="u-ic"><path d="M-10 -13 H10 V13 L6 10 L2 13 L-2 10 L-6 13 L-10 10 Z"/><path d="M-5 -6 H5 M-5 -1 H5 M-5 4 H1"/></g></g><animateTransform attributeName="transform" type="translate" values="30 214; 206 214" dur="3.6s" begin="1.2s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3.6s" begin="1.2s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g class="u-card"><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-bg"/><g class="u-ic"><rect x="-11" y="-13" width="22" height="26" rx="3"/><path d="M-6 -6 H6 M-6 0 H6 M-6 6 H1"/></g></g><animateTransform attributeName="transform" type="translate" values="30 214; 206 214" dur="3.6s" begin="2.4s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="3.6s" begin="2.4s" repeatCount="indefinite" /></g>
-            <!-- machine -->
-            <g class="u-machine">
-              <rect x="200" y="84" width="160" height="176" rx="26" fill="url(#uMach)"/>
-              <rect x="200" y="84" width="160" height="176" rx="26" class="u-shine"/>
-              <rect x="222" y="196" width="116" height="40" rx="12" class="u-door"/>
-              <g class="u-gear"><path d="M273.7 134.1 L280.8 134.4 L280.8 141.6 L273.7 141.9 M271.8 147.6 L277.4 152.0 L273.2 157.8 L267.3 153.8 M262.4 157.4 L264.3 164.3 L257.5 166.5 L255.0 159.8 M249.0 159.8 L246.5 166.5 L239.7 164.3 L241.6 157.4 M236.7 153.8 L230.8 157.8 L226.6 152.0 L232.2 147.6 M230.3 141.9 L223.2 141.6 L223.2 134.4 L230.3 134.1 M232.2 128.4 L226.6 124.0 L230.8 118.2 L236.7 122.2 M241.6 118.6 L239.7 111.7 L246.5 109.5 L249.0 116.2 M255.0 116.2 L257.5 109.5 L264.3 111.7 L262.4 118.6 M267.3 122.2 L273.2 118.2 L277.4 124.0 L271.8 128.4 " /><circle cx="252" cy="138" r="22" /><circle cx="252" cy="138" r="8.4" class="u-hole" /><animateTransform attributeName="transform" type="rotate" from="0 252 138" to="360 252 138" dur="6s" repeatCount="indefinite" /></g>
-              <g class="u-gear g2"><path d="M314.6 154.7 L321.7 154.6 L321.7 161.4 L314.6 161.3 M312.7 166.0 L317.8 171.0 L313.0 175.8 L308.0 170.7 M303.3 172.6 L303.4 179.7 L296.6 179.7 L296.7 172.6 M292.0 170.7 L287.0 175.8 L282.2 171.0 L287.3 166.0 M285.4 161.3 L278.3 161.4 L278.3 154.6 L285.4 154.7 M287.3 150.0 L282.2 145.0 L287.0 140.2 L292.0 145.3 M296.7 143.4 L296.6 136.3 L303.4 136.3 L303.3 143.4 M308.0 145.3 L313.0 140.2 L317.8 145.0 L312.7 150.0 " /><circle cx="300" cy="158" r="15" /><circle cx="300" cy="158" r="5.7" class="u-hole" /><animateTransform attributeName="transform" type="rotate" from="360 300 158" to="0 300 158" dur="4.2s" repeatCount="indefinite" /></g>
-              <path class="u-spark" d="M318 108 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z"><animate attributeName="opacity" values=".4;1;.4" dur="1.6s" repeatCount="indefinite"/></path>
-              <circle cx="230" cy="106" r="4" class="u-led"><animate attributeName="opacity" values="1;.25;1" dur="1.2s" repeatCount="indefinite"/></circle>
-              <circle cx="244" cy="106" r="4" class="u-led l2"><animate attributeName="opacity" values=".25;1;.25" dur="1.2s" repeatCount="indefinite"/></circle>
-            </g>
-            <!-- sorties : tâches terminées -->
-            <g class="u-item" opacity="0"><g><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-ok"/><path d="M-8 0 L-2 6 L9 -6" class="u-check"/></g><animateTransform attributeName="transform" type="translate" values="354 214; 470 214; 470 150" keyTimes="0;.7;1" dur="3.6s" begin="1.8s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="3.6s" begin="1.8s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-ok"/><path d="M-8 0 L-2 6 L9 -6" class="u-check"/></g><animateTransform attributeName="transform" type="translate" values="354 214; 470 214; 470 150" keyTimes="0;.7;1" dur="3.6s" begin="3.0s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="3.6s" begin="3.0s" repeatCount="indefinite" /></g><g class="u-item" opacity="0"><g><rect x="-20" y="-20" width="40" height="40" rx="10" class="u-card-ok"/><path d="M-8 0 L-2 6 L9 -6" class="u-check"/></g><animateTransform attributeName="transform" type="translate" values="354 214; 470 214; 470 150" keyTimes="0;.7;1" dur="3.6s" begin="4.2s" repeatCount="indefinite" /><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.8;1" dur="3.6s" begin="4.2s" repeatCount="indefinite" /></g>
-            <!-- tableau / CRM de destination -->
-            <g class="u-db" transform="translate(470 92)">
-              <rect x="-38" y="-30" width="76" height="60" rx="12" class="u-db-bg"/>
-              <path d="M-26 -14 H26 M-26 0 H26 M-26 14 H26 M-8 -26 V26" class="u-db-lines"/>
-            </g>
-          </svg>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>7</strong>
+              <span>Démos interactives</span>
+            </div>
+            <div class="stat">
+              <strong>0€</strong>
+              <span>Sans frais</span>
+            </div>
+            <div class="stat">
+              <strong>&lt; 3s</strong>
+              <span>Chargement rapide</span>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="services-section">
+      <div class="container-fluid">
+        <h2>Ce que je fais pour vous</h2>
+        <p class="section-subtitle">Solutions complètes en automatisation, IA et développement</p>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">⚙️</div>
+            <h3>Automatisation</h3>
+            <p>n8n, Make, Zapier — vos outils parlent entre eux, les tâches répétitives disparaissent.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🤖</div>
+            <h3>Agents IA</h3>
+            <p>Chatbots, agents email, assistants vocaux — une IA qui comprend et répond.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">📞</div>
+            <h3>Agents vocaux</h3>
+            <p>Un standard téléphonique IA qui décroche, répond aux questions et prend rendez-vous.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">📊</div>
+            <h3>Données & rapports</h3>
+            <p>Scraping, veille, rapports — chaque jour vos données les plus importantes.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🗂️</div>
+            <h3>CRM & suivi</h3>
+            <p>Notion, Airtable — chaque contact automatisé, noté, relancé.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🌐</div>
+            <h3>Sites & apps</h3>
+            <p>Vitrines rapides, plateformes dynamiques, applications mobiles natives.</p>
+          </div>
         </div>
-        <ul class="stats reveal">
-          <li><b>9</b><span data-i18n="st1"></span></li>
-          <li><b>0 €</b><span data-i18n="st2"></span></li>
-          <li><b>5</b><span data-i18n="st3"></span></li>
-          <li><b>14 j</b><span data-i18n="st4"></span></li>
-        </ul>
-      <div class="pillars reveal">
-        <a class="pillar compact" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.6M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 3.6M20 19v-4h-4"/></svg></span><h3 data-i18n="p1_t"></h3><p data-i18n="p1_d"></p></a>
-        <a class="pillar compact" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 16l-1.8-4.8L5.5 9.4l4.7-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span><h3 data-i18n="p2_t"></h3><p data-i18n="p2_d"></p></a>
-        <a class="pillar compact" href="#services"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M1.5 17h16"/><rect x="17.5" y="8" width="5" height="12" rx="1.2"/><path d="M19.5 18h1"/></svg></span><h3 data-i18n="p3_t"></h3><p data-i18n="p3_d"></p></a>
-      </div>
       </div>
     </section>
 
-    <section class="marquee" aria-label="Outils">
-      <div class="marquee-track">
-        <span>n8n</span><span>Make</span><span>Zapier</span><span>Python</span><span>JavaScript</span><span>Node.js</span><span>Claude API</span><span>OpenAI</span><span>Groq</span><span>Vapi</span><span>Google Sheets</span><span>Apps Script</span><span>Notion</span><span>Airtable</span><span>HubSpot</span><span>WhatsApp API</span><span>Slack</span><span>Stripe</span><span>Shopify</span><span>Vercel</span>
-        <span aria-hidden="true">n8n</span><span aria-hidden="true">Make</span><span aria-hidden="true">Zapier</span><span aria-hidden="true">Python</span><span aria-hidden="true">JavaScript</span><span aria-hidden="true">Node.js</span><span aria-hidden="true">Claude API</span><span aria-hidden="true">OpenAI</span><span aria-hidden="true">Groq</span><span aria-hidden="true">Vapi</span><span aria-hidden="true">Google Sheets</span><span aria-hidden="true">Apps Script</span><span aria-hidden="true">Notion</span><span aria-hidden="true">Airtable</span><span aria-hidden="true">HubSpot</span><span aria-hidden="true">WhatsApp API</span><span aria-hidden="true">Slack</span><span aria-hidden="true">Stripe</span><span aria-hidden="true">Shopify</span><span aria-hidden="true">Vercel</span>
+    <!-- DEMOS SECTION -->
+    <section id="demos" class="demos-section">
+      <div class="container-fluid">
+        <h2>7 démos à tester maintenant</h2>
+        <p class="section-subtitle">Cliquez sur une démo pour l'essayer (gratuit, sans inscription)</p>
+        <div class="demos-grid">
+          <a href="demos/agent-email/" class="demo-card">
+            <div class="demo-icon">📧</div>
+            <h3>Agent email IA</h3>
+            <p>Collez un email → il est classé, résumé et une réponse est rédigée.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+          <a href="demos/automatisation/" class="demo-card">
+            <div class="demo-icon">📋</div>
+            <h3>Formulaire auto</h3>
+            <p>Formulaire rempli → ajout dans Google Sheets + email envoyé.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+          <a href="demos/chatbot/" class="demo-card">
+            <div class="demo-icon">💬</div>
+            <h3>Chatbot web</h3>
+            <p>Un assistant IA qui répond 24h/24 et qualifie les visiteurs.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+          <a href="demos/agent-vocal/" class="demo-card">
+            <div class="demo-icon">🎙️</div>
+            <h3>Agent vocal</h3>
+            <p>Parlez à une réceptionniste IA depuis votre navigateur.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+          <a href="demos/scraping/" class="demo-card">
+            <div class="demo-icon">🔍</div>
+            <h3>Scraping en direct</h3>
+            <p>Collez une URL → les produits et prix sont extraits instant.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+          <a href="demos/crm-notion/" class="demo-card">
+            <div class="demo-icon">👥</div>
+            <h3>CRM Notion/Airtable</h3>
+            <p>Chaque lead entrant est noté et relancé automatiquement.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+          <a href="demos/rapport/" class="demo-card">
+            <div class="demo-icon">📈</div>
+            <h3>Rapport & graphiques</h3>
+            <p>Vos chiffres du mois → rapport rédigé avec graphiques en PDF.</p>
+            <span class="demo-cta">Essayer →</span>
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="container reveal" id="services">
-      <h2 data-i18n="home_services_title"></h2>
-      <p class="muted small hint-click" data-i18n="home_click"></p>
-      <div class="bubbles stagger">
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 6h9M6.3 8.2l4.4 7.6M17.7 8.2l-4.4 7.6"/></svg></span><span class="b-t" data-i18n="sv1_t"></span><span class="b-cat" data-i18n="sv1_c"></span></summary><p data-i18n="sv1_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/><circle cx="12" cy="3.5" r="1"/></svg></span><span class="b-t" data-i18n="sv2_t"></span><span class="b-cat" data-i18n="sv2_c"></span></summary><p data-i18n="sv2_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5l3 .5 1.2 4-2 1.5a11 11 0 0 0 5.8 5.8l1.5-2 4 1.2.5 3a2 2 0 0 1-2 2.2A17 17 0 0 1 4.3 5.5a2 2 0 0 1 2.2-2z"/></svg></span><span class="b-t" data-i18n="sv3_t"></span><span class="b-cat" data-i18n="sv3_c"></span></summary><p data-i18n="sv3_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 17v-3M13 17v-5M16 17v-2"/></svg></span><span class="b-t" data-i18n="sv4_t"></span><span class="b-cat" data-i18n="sv4_c"></span></summary><p data-i18n="sv4_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg></span><span class="b-t" data-i18n="sv5_t"></span><span class="b-cat" data-i18n="sv5_c"></span></summary><p data-i18n="sv5_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg></span><span class="b-t" data-i18n="sv6_t"></span><span class="b-cat" data-i18n="sv6_c"></span></summary><p data-i18n="sv6_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 11l2 2 3.5-4"/></svg></span><span class="b-t" data-i18n="sv7_t"></span><span class="b-cat" data-i18n="sv7_c"></span></summary><p data-i18n="sv7_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="b-t" data-i18n="sv8_t"></span><span class="b-cat" data-i18n="sv8_c"></span></summary><p data-i18n="sv8_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span><span class="b-t" data-i18n="sv9_t"></span><span class="b-cat" data-i18n="sv9_c"></span></summary><p data-i18n="sv9_d"></p></details>
-        <details class="bubble"><summary><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span><span class="b-t" data-i18n="sv10_t"></span><span class="b-cat" data-i18n="sv10_c"></span></summary><p data-i18n="sv10_d"></p></details>
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+      <div class="container-fluid">
+        <h2>Comment ça marche</h2>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Vous décrivez</h3>
+            <p>Votre besoin en quelques lignes (email ou formulaire).</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Nous cadrons</h3>
+            <p>Devis fixe avant de commencer, aucune surprise.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Nous livrons</h3>
+            <p>Vidéo + doc, pour que votre équipe soit autonome.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Nous supportons</h3>
+            <p>14 jours gratuits pour ajuster et corriger.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="container reveal" id="demos">
-      <h2 data-i18n="home_demos_title"></h2>
-      <div class="tiles-demo stagger">
-        <a class="tile-demo" href="demos/agent-email/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg></span><span class="td-t" data-i18n="c1_t"></span><span class="td-d" data-i18n="c1_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/automatisation/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg></span><span class="td-t" data-i18n="c2_t"></span><span class="td-d" data-i18n="c2_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/chatbot/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></svg></span><span class="td-t" data-i18n="c3_t"></span><span class="td-d" data-i18n="c3_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/agent-vocal/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5l3 .5 1.2 4-2 1.5a11 11 0 0 0 5.8 5.8l1.5-2 4 1.2.5 3a2 2 0 0 1-2 2.2A17 17 0 0 1 4.3 5.5a2 2 0 0 1 2.2-2z"/></svg></span><span class="td-t" data-i18n="c4_t"></span><span class="td-d" data-i18n="c4_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/scraping/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5M8.5 11h5M11 8.5v5"/></svg></span><span class="td-t" data-i18n="c5_t"></span><span class="td-d" data-i18n="c5_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/crm-notion/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 11l2 2 3.5-4"/></svg></span><span class="td-t" data-i18n="c6_t"></span><span class="td-d" data-i18n="c6_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/rapport/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></span><span class="td-t" data-i18n="c7_t"></span><span class="td-d" data-i18n="c7_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/facture/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span class="td-t" data-i18n="c8_t"></span><span class="td-new" data-i18n="home_new"></span><span class="td-d" data-i18n="c8_d"></span><span class="td-go" aria-hidden="true">→</span></a>
-        <a class="tile-demo" href="demos/veille/"><span class="td-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a8 8 0 0 1 16 0v4l2 3H2l2-3z"/><path d="M10 21h4"/></svg></span><span class="td-t" data-i18n="c9_t"></span><span class="td-new" data-i18n="home_new"></span><span class="td-d" data-i18n="c9_d"></span><span class="td-go" aria-hidden="true">→</span></a>
+    <!-- AVANTAGES -->
+    <section class="advantages">
+      <div class="container-fluid">
+        <h2>Pourquoi HBSGo</h2>
+        <div class="advantages-grid">
+          <div class="advantage">
+            <div class="advantage-icon">✅</div>
+            <h3>100% gratuit à tester</h3>
+            <p>7 démos fonctionnelles, aucune limite, aucune inscription requise.</p>
+          </div>
+          <div class="advantage">
+            <div class="advantage-icon">⚡</div>
+            <h3>Rapide et moderne</h3>
+            <p>Déployé sur Vercel, optimisé Lighthouse. Chargement &lt; 2s.</p>
+          </div>
+          <div class="advantage">
+            <div class="advantage-icon">🛡️</div>
+            <h3>Production-ready</h3>
+            <p>Tous les workflows testés, documentés, prêts pour vos données.</p>
+          </div>
+          <div class="advantage">
+            <div class="advantage-icon">🌍</div>
+            <h3>Multilingue</h3>
+            <p>Français, English, العربية, Deutsch, Español — adapté partout.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="container">
-      <h2 data-i18n="home_method_title"></h2>
-      <div class="steps-ic">
-        <details class="step-ic"><summary><span class="s-num">1</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span><span class="b-t" data-i18n="m1_t"></span></summary><p data-i18n="m1_d"></p></details>
-        <details class="step-ic"><summary><span class="s-num">2</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9z"/><circle cx="16" cy="8" r="1.5"/></svg></span><span class="b-t" data-i18n="m2_t"></span></summary><p data-i18n="m2_d"></p></details>
-        <details class="step-ic"><summary><span class="s-num">3</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></span><span class="b-t" data-i18n="m3_t"></span></summary><p data-i18n="m3_d"></p></details>
-        <details class="step-ic"><summary><span class="s-num">4</span><span class="b-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"/></svg></span><span class="b-t" data-i18n="m4_t"></span></summary><p data-i18n="m4_d"></p></details>
-      </div>
-    </section>
-
-
-    <section class="container" id="contact">
-      <div class="cta" data-cta>
-        <h2 data-i18n="home_contact_title"></h2>
-        <p data-i18n="home_contact_text"></p>
-        <div class="btns">
+    <!-- CONTACT CTA -->
+    <section id="contact" class="contact-section">
+      <div class="container-fluid">
+        <h2>Vous avez une tâche à automatiser ?</h2>
+        <p>Décrivez-la en quelques lignes. Je vous dirai franchement si elle peut être automatisée, comment, et à quel prix.</p>
+        <div class="contact-cta">
+          <a href="https://www.upwork.com/freelancers/~hajerbensalem" target="_blank" class="btn btn-primary btn-lg">Voir mon profil Upwork</a>
+          <a href="mailto:hajer.bensalem.2018@gmail.com" class="btn btn-secondary btn-lg">Me contacter par email</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer id="site-footer"></footer>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>HBSGo</h4>
+          <p>Automatisation, IA et développement pour votre entreprise.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Liens</h4>
+          <ul>
+            <li><a href="https://www.upwork.com/freelancers/~hajerbensalem" target="_blank">Upwork</a></li>
+            <li><a href="https://www.malt.fr/profile/haj_bs" target="_blank">Malt</a></li>
+            <li><a href="mailto:hajer.bensalem.2018@gmail.com">Email</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tech</h4>
+          <ul>
+            <li>n8n · Make · Zapier</li>
+            <li>Claude · OpenAI · Groq</li>
+            <li>Vercel · GitHub</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 HBSGo. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
 
-  <script>
-    window.PAGE_I18N = {
-      "fr": {
-        "home_h1a": "L'automatisation et l'IA",
-        "home_h1b": "pour votre entreprise.",
-        "st1": "démos réelles à tester",
-        "st2": "pour tester, sans inscription",
-        "st3": "langues : FR · EN · AR · DE · ES",
-        "st4": "de support après livraison",
-        "home_title": "Automatisation, IA et développement",
-        "home_eyebrow": "Automatisation · IA · Sites et applications",
-        "home_lead": "Des workflows, des agents IA et des applications qui travaillent pour vous.",
-        "home_cta_demos": "Découvrir les démos",
-        "p1_t": "Automatisation",
-        "p1_d": "Vos outils reliés entre eux, les tâches répétitives faites toutes seules.",
-        "p2_t": "Intelligence artificielle",
-        "p2_d": "Agents, chatbots et assistants vocaux qui lisent, trient et répondent.",
-        "p3_t": "Développement",
-        "p3_d": "Sites vitrines, sites dynamiques avec back-end et applications mobiles.",
-        "home_services_title": "Ce que nous faisons pour vous",
-        "home_services_sub": "Chaque projet commence par votre besoin écrit, et un devis fixe avant de démarrer.",
-        "sv1_c": "Automatisation",
-        "sv1_t": "Workflows n8n, Make, Zapier",
-        "sv1_d": "Formulaires, emails, tableaux, CRM, factures : vos outils se parlent et la saisie disparaît.",
-        "sv2_c": "IA",
-        "sv2_t": "Agents IA et chatbots",
-        "sv2_d": "Tri et réponse aux emails, assistant sur votre site ou WhatsApp, réponses à partir de vos documents.",
-        "sv3_c": "IA",
-        "sv3_t": "Agents vocaux",
-        "sv3_d": "Un standard téléphonique IA qui décroche, répond aux questions et prend rendez-vous.",
-        "sv4_c": "Automatisation",
-        "sv4_t": "Rapports et veille programmés",
-        "sv4_d": "Chaque jour ou chaque semaine : vos chiffres, vos concurrents ou l'actualité de votre secteur, résumés et envoyés par email.",
-        "sv5_c": "IA",
-        "sv5_t": "Documents et photos lus par l'IA",
-        "sv5_d": "Factures, tickets, bons de commande : les informations sont extraites, vérifiées et rangées.",
-        "sv6_c": "Données",
-        "sv6_t": "Collecte de données (scraping)",
-        "sv6_d": "Prix, annonces ou fiches produits collectés automatiquement dans un tableau.",
-        "sv7_c": "Automatisation",
-        "sv7_t": "CRM et suivi des prospects",
-        "sv7_d": "Notion, Airtable, HubSpot : chaque contact est enregistré, noté et relancé.",
-        "sv8_c": "Développement",
-        "sv8_t": "Sites vitrines",
-        "sv8_d": "Un site clair et rapide pour présenter votre activité, adapté au téléphone et bien référencé.",
-        "sv9_c": "Développement",
-        "sv9_t": "Sites dynamiques avec back-end",
-        "sv9_d": "Espace client, réservation, formulaires, base de données, tableau de bord d'administration.",
-        "sv10_c": "Développement",
-        "sv10_t": "Applications mobiles",
-        "sv10_d": "Applications Android et iOS reliées à vos données et à vos automatisations.",
-        "home_demos_title": "9 démos à tester vous-même",
-        "home_demos_sub": "5 tests gratuits par démo et par jour, sans inscription.",
-        "home_new": "Nouveau",
-        "home_try": "Tester →",
-        "c1_t": "Agent email IA",
-        "c1_d": "Collez un email : il est classé, priorisé, résumé et une réponse est rédigée.",
-        "c2_t": "Formulaire automatique",
-        "c2_d": "Un formulaire rempli : une ligne dans Google Sheets et un email envoyé tout seul.",
-        "c3_t": "Chatbot de site web",
-        "c3_d": "Un assistant qui répond aux questions 24h/24, qualifie les visiteurs et recueille leurs demandes.",
-        "c4_t": "Agent vocal IA",
-        "c4_d": "Parlez à une réceptionniste IA depuis votre navigateur.",
-        "c5_t": "Scraping en direct",
-        "c5_d": "Collez l'adresse d'une page : les produits et les prix sont extraits en direct.",
-        "c6_t": "CRM Notion / Airtable",
-        "c6_d": "Chaque lead entrant est noté, rangé dans le bon pipeline et suivi.",
-        "c7_t": "Rapport avec graphiques",
-        "c7_d": "Vos chiffres du mois : un rapport rédigé, comparé, avec graphiques, prêt en PDF.",
-        "c8_t": "Photo de facture → tableau",
-        "c8_d": "Envoyez la photo d'une facture : l'IA remplit le tableau et vérifie les montants.",
-        "c9_t": "Veille chaque matin",
-        "c9_d": "Choisissez un sujet : voici le rapport que vous recevriez chaque jour, avec les vraies données.",
-        "home_method_title": "Notre méthode",
-        "m1_t": "Votre besoin, par écrit",
-        "m1_d": "Décrivez votre tâche en quelques lignes (formulaire ou email) : nous vous répondons par écrit, et un échange est fixé seulement si c'est utile.",
-        "m2_t": "Devis fixe avant de commencer",
-        "m2_d": "Cadrage clair, prix fixé, aucune surprise.",
-        "m3_t": "Vidéo explicative + documentation",
-        "m3_d": "Chaque système livré avec une vidéo et une documentation pour que votre équipe soit autonome.",
-        "m4_t": "14 jours de support gratuit",
-        "m4_d": "Après la livraison, nous restons disponibles pour ajuster et corriger.",
-        "home_tools_title": "Outils et technologies",
-        "home_tools_list": "n8n · Make · Zapier · API Claude, OpenAI, Groq · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
-        "home_contact_title": "Quelle tâche vous prend le plus de temps ?",
-        "home_contact_text": "Décrivez-la en quelques lignes : nous vous dirons franchement si elle peut être automatisée ou développée, comment, et à quel prix.",
-        "home_scroll": "Voir la suite",
-        "home_click": "Cliquez sur une bulle pour voir le détail."
-      },
-      "en": {
-        "home_h1a": "Automation and AI",
-        "home_h1b": "for your business.",
-        "st1": "real demos to try",
-        "st2": "to try, no sign-up",
-        "st3": "languages: FR · EN · AR · DE · ES",
-        "st4": "of support after delivery",
-        "home_title": "Automation, AI and development",
-        "home_eyebrow": "Automation · AI · Websites and apps",
-        "home_lead": "Workflows, AI agents and apps that work for you.",
-        "home_cta_demos": "Explore the demos",
-        "p1_t": "Automation",
-        "p1_d": "Your tools connected, repetitive tasks done on their own.",
-        "p2_t": "Artificial intelligence",
-        "p2_d": "Agents, chatbots and voice assistants that read, sort and reply.",
-        "p3_t": "Development",
-        "p3_d": "Showcase websites, dynamic websites with a back end, and mobile apps.",
-        "home_services_title": "What we do for you",
-        "home_services_sub": "Every project starts with your need in writing, and a fixed quote before we begin.",
-        "sv1_c": "Automation",
-        "sv1_t": "n8n, Make, Zapier workflows",
-        "sv1_d": "Forms, emails, spreadsheets, CRM, invoices: your tools talk to each other and data entry disappears.",
-        "sv2_c": "AI",
-        "sv2_t": "AI agents and chatbots",
-        "sv2_d": "Email triage and replies, an assistant on your website or WhatsApp, answers from your own documents.",
-        "sv3_c": "AI",
-        "sv3_t": "Voice agents",
-        "sv3_d": "An AI phone receptionist that picks up, answers questions and books appointments.",
-        "sv4_c": "Automation",
-        "sv4_t": "Scheduled reports and monitoring",
-        "sv4_d": "Daily or weekly: your figures, your competitors or your industry news, summarised and emailed.",
-        "sv5_c": "AI",
-        "sv5_t": "Documents and photos read by AI",
-        "sv5_d": "Invoices, receipts, purchase orders: data is extracted, checked and filed.",
-        "sv6_c": "Data",
-        "sv6_t": "Data collection (scraping)",
-        "sv6_d": "Prices, listings or product pages collected automatically into a spreadsheet.",
-        "sv7_c": "Automation",
-        "sv7_t": "CRM and lead follow-up",
-        "sv7_d": "Notion, Airtable, HubSpot: every contact is saved, scored and followed up.",
-        "sv8_c": "Development",
-        "sv8_t": "Showcase websites",
-        "sv8_d": "A clear, fast website to present your business, mobile-friendly and search-optimised.",
-        "sv9_c": "Development",
-        "sv9_t": "Dynamic websites with a back end",
-        "sv9_d": "Customer area, booking, forms, database, admin dashboard.",
-        "sv10_c": "Development",
-        "sv10_t": "Mobile apps",
-        "sv10_d": "Android and iOS apps connected to your data and automations.",
-        "home_demos_title": "9 demos to try yourself",
-        "home_demos_sub": "5 free tests per demo per day, no sign-up.",
-        "home_new": "New",
-        "home_try": "Try it →",
-        "c1_t": "AI email agent",
-        "c1_d": "Paste an email: it gets classified, prioritised, summarised and a reply is drafted.",
-        "c2_t": "Automatic form",
-        "c2_d": "A submitted form: a row in Google Sheets and an email sent on its own.",
-        "c3_t": "Website chatbot",
-        "c3_d": "An assistant that answers questions 24/7, qualifies visitors and collects their requests.",
-        "c4_t": "AI voice agent",
-        "c4_d": "Talk to an AI receptionist from your browser.",
-        "c5_t": "Live scraping",
-        "c5_d": "Paste a page address: products and prices are extracted live.",
-        "c6_t": "Notion / Airtable CRM",
-        "c6_d": "Every incoming lead is scored, placed in the right pipeline and followed up.",
-        "c7_t": "Report with charts",
-        "c7_d": "Your monthly figures: a written, compared report with charts, ready as PDF.",
-        "c8_t": "Invoice photo → spreadsheet",
-        "c8_d": "Send a photo of an invoice: the AI fills in the table and checks the amounts.",
-        "c9_t": "Morning briefing",
-        "c9_d": "Pick a topic: here is the report you would receive every day, with real data.",
-        "home_method_title": "How I work",
-        "m1_t": "Your need, in writing",
-        "m1_d": "Describe your task in a few lines (form or email): we reply in writing, and a call is scheduled only if it is useful.",
-        "m2_t": "Fixed price before starting",
-        "m2_d": "Clear scope, fixed quote, no surprises.",
-        "m3_t": "Video walkthrough + documentation",
-        "m3_d": "Every system ships with a video and documentation so your team can maintain it.",
-        "m4_t": "14 days of free support",
-        "m4_d": "After delivery, we stay available to adjust and fix.",
-        "home_tools_title": "Tools and technologies",
-        "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
-        "home_contact_title": "Which task takes you the most time?",
-        "home_contact_text": "Describe it in a few lines: we will tell you honestly whether it can be automated or built, how, and what it will cost.",
-        "home_scroll": "Scroll down",
-        "home_click": "Tap a bubble to see the details."
-      },
-      "ar": {
-        "home_h1a": "الأتمتة والذكاء الاصطناعي",
-        "home_h1b": "لشركتك.",
-        "st1": "عروض حية لتجربتها",
-        "st2": "لتجربتها، دون تسجيل",
-        "st3": "لغات: FR · EN · AR · DE · ES",
-        "st4": "من الدعم بعد التسليم",
-        "home_title": "الأتمتة والذكاء الاصطناعي والتطوير",
-        "home_eyebrow": "الأتمتة · الذكاء الاصطناعي · المواقع والتطبيقات",
-        "home_lead": "سير عمل ووكلاء ذكاء اصطناعي وتطبيقات تعمل من أجلك.",
-        "home_cta_demos": "استكشف العروض التجريبية",
-        "p1_t": "الأتمتة",
-        "p1_d": "ربط أدواتك، وإنجاز المهام المتكررة تلقائيًا.",
-        "p2_t": "الذكاء الاصطناعي",
-        "p2_d": "وكلاء، روبوتات محادثة ومساعدات صوتية تقرأ وتفرز وترد.",
-        "p3_t": "التطوير",
-        "p3_d": "مواقع عرض، مواقع ديناميكية بواجهة خلفية، وتطبيقات هاتفية.",
-        "home_services_title": "ما نقدمه لك",
-        "home_services_sub": "يبدأ كل مشروع بكتابة احتياجك، وعرض سعر ثابت قبل البدء.",
-        "sv1_c": "الأتمتة",
-        "sv1_t": "سير عمل n8n، Make، Zapier",
-        "sv1_d": "النماذج، البريد الإلكتروني، جداول البيانات، CRM، الفواتير: أدواتك تتواصل وتختفي الحاجة لإدخال البيانات يدويًا.",
-        "sv2_c": "الذكاء الاصطناعي",
-        "sv2_t": "وكلاء الذكاء الاصطناعي وروبوتات المحادثة",
-        "sv2_d": "فرز البريد والردود، مساعد على موقعك أو WhatsApp، إجابات من مستنداتك الخاصة.",
-        "sv3_c": "الذكاء الاصطناعي",
-        "sv3_t": "وكلاء صوتيين",
-        "sv3_d": "موظف استقبال هاتفى بالذكاء الاصطناعي يرد على المكالمات، يجيب على الأسئلة ويحجز المواعيد.",
-        "sv4_c": "الأتمتة",
-        "sv4_t": "تقارير ومراقبة مجدولة",
-        "sv4_d": "يوميًا أو أسبوعيًا: أرقامك، أرقام منافسيك أو أخبار قطاعك، ملخصة ومُرسلة بالبريد الإلكتروني.",
-        "sv5_c": "الذكاء الاصطناعي",
-        "sv5_t": "قراءة المستندات والصور بالذكاء الاصطناعي",
-        "sv5_d": "الفواتير، الإيصالات، أوامر الشراء: يتم استخراج البيانات، التحقق منها وحفظها.",
-        "sv6_c": "البيانات",
-        "sv6_t": "جمع البيانات (استخلاص)",
-        "sv6_d": "الأسعار، القوائم أو صفحات المنتجات تُجمع تلقائيًا في جدول بيانات.",
-        "sv7_c": "الأتمتة",
-        "sv7_t": "إدارة علاقات العملاء ومتابعة العملاء المحتملين",
-        "sv7_d": "Notion, Airtable, HubSpot: يتم حفظ كل جهة اتصال، تقييمها ومتابعتها.",
-        "sv8_c": "التطوير",
-        "sv8_t": "مواقع عرض الأعمال",
-        "sv8_d": "موقع واضح وسريع لعرض عملك، متوافق مع الهواتف المحمولة ومحسّن للبحث.",
-        "sv9_c": "التطوير",
-        "sv9_t": "مواقع ديناميكية مع خلفية",
-        "sv9_d": "منطقة عملاء، حجز، نماذج، قاعدة بيانات، لوحة تحكم إدارية.",
-        "sv10_c": "التطوير",
-        "sv10_t": "تطبيقات جوال",
-        "sv10_d": "تطبيقات Android و iOS متصلة ببياناتك وأتمتتك.",
-        "home_demos_title": "9 عروض تجريبية لتجربتها بنفسك",
-        "home_demos_sub": "5 اختبارات مجانية لكل عرض توضيحي يوميًا، دون تسجيل.",
-        "home_new": "جديد",
-        "home_try": "جرّبه →",
-        "c1_t": "وكيل بريد إلكتروني بالذكاء الاصطناعي",
-        "c1_d": "الصق بريدًا إلكترونيًا: يتم تصنيفه، وتحديد أولويته، وتلخيصه، وصياغة رد تلقائيًا.",
-        "c2_t": "نموذج تلقائي",
-        "c2_d": "نموذج مُرسل: يُضاف صف في Google Sheets وتُرسل رسالة بريد إلكتروني تلقائيًا.",
-        "c3_t": "دردشة موقع ويب",
-        "c3_d": "مساعد يجيب على الأسئلة على مدار 24 ساعة، يؤهل الزوار ويجمع طلباتهم.",
-        "c4_t": "وكيل صوتي بالذكاء الاصطناعي",
-        "c4_d": "تحدث إلى موظف استقبال بالذكاء الاصطناعي من متصفحك.",
-        "c5_t": "استخلاص مباشر",
-        "c5_d": "الصق عنوان صفحة: يتم استخراج المنتجات والأسعار مباشرةً.",
-        "c6_t": "CRM Notion / Airtable",
-        "c6_d": "يتم تقييم كل عميل محتمل وارد، ووضعه في المسار المناسب ومتابعته.",
-        "c7_t": "تقرير مع مخططات",
-        "c7_d": "أرقامك الشهرية: تقرير مكتوب ومقارن مع مخططات، جاهز كملف PDF.",
-        "c8_t": "صورة الفاتورة → جدول بيانات",
-        "c8_d": "أرسل صورة فاتورة: يملأ الذكاء الاصطناعي الجدول ويتحقق من المبالغ.",
-        "c9_t": "ملخص الصباح",
-        "c9_d": "اختر موضوعًا: هذا هو التقرير الذي ستحصل عليه كل يوم، ببيانات حقيقية.",
-        "home_method_title": "كيف أعمل",
-        "m1_t": "احتياجك كتابةً",
-        "m1_d": "صف مهمتك في بضع سطور (نموذج أو بريد إلكتروني): نرد كتابةً، وتُحدد مكالمة فقط إذا كانت مفيدة.",
-        "m2_t": "سعر ثابت قبل البدء",
-        "m2_d": "نطاق واضح، عرض ثابت، لا مفاجآت.",
-        "m3_t": "جولة فيديو + وثائق",
-        "m3_d": "كل نظام يُسلم مع فيديو ووثائق حتى يتمكن فريقك من صيانته.",
-        "m4_t": "14 يوماً من الدعم المجاني",
-        "m4_d": "بعد التسليم، نبقى متاحين للتعديل والإصلاح.",
-        "home_tools_title": "الأدوات والتقنيات",
-        "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groق APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
-        "home_contact_title": "ما هي المهمة التي تستغرق معظم وقتك؟",
-        "home_contact_text": "صفها في بضع سطور: سنخبرك بصراحة ما إذا كان يمكن أتمتتها أو بناؤها، وكيف، وما سيكلفها.",
-        "home_scroll": "تابع التصفح",
-        "home_click": "انقر على أي فقاعة لعرض التفاصيل."
-      },
-      "de": {
-        "home_h1a": "Automatisierung und KI",
-        "home_h1b": "für Ihr Unternehmen.",
-        "st1": "echte Demos zum Ausprobieren",
-        "st2": "zum Ausprobieren, keine Anmeldung",
-        "st3": "Sprachen: FR · EN · AR · DE · ES",
-        "st4": "von Support nach Lieferung",
-        "home_title": "Automatisierung, KI und Entwicklung",
-        "home_eyebrow": "Automatisierung · KI · Websites und Apps",
-        "home_lead": "Workflows, KI-Agenten und Apps, die für Sie arbeiten.",
-        "home_cta_demos": "Demos erkunden",
-        "p1_t": "Automatisierung",
-        "p1_d": "Ihre Tools vernetzt, wiederkehrende Aufgaben erledigen sich von selbst.",
-        "p2_t": "Künstliche Intelligenz",
-        "p2_d": "Agenten, Chatbots und Sprachassistenten, die lesen, sortieren und antworten.",
-        "p3_t": "Entwicklung",
-        "p3_d": "Präsentations-Websites, dynamische Websites mit Backend und mobile Apps.",
-        "home_services_title": "Was wir für Sie tun",
-        "home_services_sub": "Jedes Projekt beginnt mit Ihrem schriftlichen Bedarf und einem festen Angebot, bevor wir starten.",
-        "sv1_c": "Automatisierung",
-        "sv1_t": "n8n, Make, Zapier Workflows",
-        "sv1_d": "Formulare, E‑Mails, Tabellen, CRM, Rechnungen: Ihre Tools kommunizieren miteinander und die Dateneingabe entfällt.",
-        "sv2_c": "KI",
-        "sv2_t": "KI‑Agenten und Chatbots",
-        "sv2_d": "E‑Mail‑Triagierung und Antworten, ein Assistent auf Ihrer Website oder WhatsApp, Antworten aus Ihren eigenen Dokumenten.",
-        "sv3_c": "KI",
-        "sv3_t": "Sprachagenten",
-        "sv3_d": "Ein KI-Telefonrezeptionist, der anspricht, Fragen beantwortet und Termine bucht.",
-        "sv4_c": "Automatisierung",
-        "sv4_t": "Geplante Berichte und Überwachung",
-        "sv4_d": "Täglich oder wöchentlich: Ihre Kennzahlen, Ihre Wettbewerber oder Branchennews, zusammengefasst und per E‑Mail verschickt.",
-        "sv5_c": "KI",
-        "sv5_t": "Dokumente und Fotos von KI gelesen",
-        "sv5_d": "Rechnungen, Quittungen, Bestellungen: Daten werden extrahiert, geprüft und abgelegt.",
-        "sv6_c": "Daten",
-        "sv6_t": "Datenerfassung (Scraping)",
-        "sv6_d": "Preise, Angebote oder Produktseiten werden automatisch in eine Tabelle gesammelt.",
-        "sv7_c": "Automatisierung",
-        "sv7_t": "CRM und Lead‑Nachverfolgung",
-        "sv7_d": "Notion, Airtable, HubSpot: Jeder Kontakt wird gespeichert, bewertet und nachverfolgt.",
-        "sv8_c": "Entwicklung",
-        "sv8_t": "Präsentationswebsites",
-        "sv8_d": "Eine klare, schnelle Website zur Darstellung Ihres Unternehmens, mobilfreundlich und suchoptimiert.",
-        "sv9_c": "Entwicklung",
-        "sv9_t": "Dynamische Websites mit Backend",
-        "sv9_d": "Kundenbereich, Buchungen, Formulare, Datenbank, Admin‑Dashboard.",
-        "sv10_c": "Entwicklung",
-        "sv10_t": "Mobile Apps",
-        "sv10_d": "Android‑ und iOS‑Apps, die mit Ihren Daten und Automatisierungen verbunden sind.",
-        "home_demos_title": "9 Demos zum Selber‑Ausprobieren",
-        "home_demos_sub": "5 kostenlose Tests pro Demo pro Tag, keine Anmeldung erforderlich.",
-        "home_new": "Neu",
-        "home_try": "Jetzt ausprobieren →",
-        "c1_t": "KI-E-Mail-Agent",
-        "c1_d": "E-Mail einfügen: Sie wird klassifiziert, priorisiert, zusammengefasst und eine Antwort wird entworfen.",
-        "c2_t": "Automatisches Formular",
-        "c2_d": "Ein eingereichtes Formular: eine Zeile in Google Sheets und eine E-Mail wird automatisch gesendet.",
-        "c3_t": "Website-Chatbot",
-        "c3_d": "Ein Assistent, der 24/7 Fragen beantwortet, Besucher qualifiziert und deren Anfragen sammelt.",
-        "c4_t": "KI-Sprachagent",
-        "c4_d": "Sprechen Sie mit einer KI-Rezeptionistin direkt im Browser.",
-        "c5_t": "Live-Scraping",
-        "c5_d": "Seitenadresse einfügen: Produkte und Preise werden live extrahiert.",
-        "c6_t": "Notion / Airtable CRM",
-        "c6_d": "Jeder eingehende Lead wird bewertet, in die richtige Pipeline eingeordnet und nachverfolgt.",
-        "c7_t": "Bericht mit Diagrammen",
-        "c7_d": "Ihre Monatszahlen: ein schriftlicher, verglichener Bericht mit Diagrammen, bereit als PDF.",
-        "c8_t": "Rechnungsfoto → Tabelle",
-        "c8_d": "Senden Sie ein Foto einer Rechnung: Die KI füllt die Tabelle aus und prüft die Beträge.",
-        "c9_t": "Morgenbriefing",
-        "c9_d": "Wählen Sie ein Thema: Hier ist der Bericht, den Sie täglich erhalten würden, mit realen Daten.",
-        "home_method_title": "Wie ich arbeite",
-        "m1_t": "Ihr Bedarf, schriftlich",
-        "m1_d": "Beschreiben Sie Ihre Aufgabe in wenigen Zeilen (Formular oder E‑Mail): Wir antworten schriftlich und ein Gespräch wird nur vereinbart, wenn es sinnvoll ist.",
-        "m2_t": "Festpreis vor Projektstart",
-        "m2_d": "Klare Zielsetzung, Festpreis, keine Überraschungen.",
-        "m3_t": "Video‑Durchgang + Dokumentation",
-        "m3_d": "Jedes System wird mit einem Video und einer Dokumentation geliefert, damit Ihr Team es warten kann.",
-        "m4_t": "14 Tage kostenloser Support",
-        "m4_d": "Nach der Lieferung stehen wir für Anpassungen und Fehlerbehebungen zur Verfügung.",
-        "home_tools_title": "Werkzeuge und Technologien",
-        "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
-        "home_contact_title": "Welche Aufgabe nimmt bei Ihnen am meisten Zeit in Anspruch?",
-        "home_contact_text": "Beschreiben Sie sie in wenigen Zeilen: Wir sagen Ihnen ehrlich, ob sie automatisiert oder entwickelt werden kann, wie und was sie kosten wird.",
-        "home_scroll": "Weiter nach unten",
-        "home_click": "Klicken Sie auf eine Blase, um Details zu sehen."
-      },
-      "es": {
-        "home_h1a": "Automatización e IA",
-        "home_h1b": "para su empresa.",
-        "st1": "demos reales para probar",
-        "st2": "para probar, sin registro",
-        "st3": "idiomas: FR · EN · AR · DE · ES",
-        "st4": "de soporte después de la entrega",
-        "home_title": "Automatización, IA y desarrollo",
-        "home_eyebrow": "Automatización · IA · Sitios web y apps",
-        "home_lead": "Flujos de trabajo, agentes de IA y aplicaciones que trabajan para usted.",
-        "home_cta_demos": "Explore los demos",
-        "p1_t": "Automatización",
-        "p1_d": "Sus herramientas conectadas, tareas repetitivas realizadas automáticamente.",
-        "p2_t": "Inteligencia artificial",
-        "p2_d": "Agentes, chatbots y asistentes de voz que leen, clasifican y responden.",
-        "p3_t": "Desarrollo",
-        "p3_d": "Sitios web de muestra, sitios web dinámicos con backend y aplicaciones móviles.",
-        "home_services_title": "Lo que hacemos por usted",
-        "home_services_sub": "Cada proyecto comienza con su necesidad por escrito y un presupuesto fijo antes de iniciar.",
-        "sv1_c": "Automatización",
-        "sv1_t": "flujos de trabajo n8n, Make, Zapier",
-        "sv1_d": "Formularios, correos, hojas de cálculo, CRM, facturas: sus herramientas se comunican entre sí y la entrada de datos desaparece.",
-        "sv2_c": "IA",
-        "sv2_t": "agentes de IA y chatbots",
-        "sv2_d": "Triaging y respuestas de correo, un asistente en su sitio web o WhatsApp, respuestas a partir de sus propios documentos.",
-        "sv3_c": "IA",
-        "sv3_t": "Agentes de voz",
-        "sv3_d": "Un recepcionista telefónico de IA que contesta, responde preguntas y agenda citas.",
-        "sv4_c": "Automatización",
-        "sv4_t": "Informes programados y monitorización",
-        "sv4_d": "Diario o semanal: sus cifras, sus competidores o las noticias de su sector, resumidas y enviadas por correo electrónico.",
-        "sv5_c": "IA",
-        "sv5_t": "Documentos y fotos leídos por IA",
-        "sv5_d": "Facturas, recibos, órdenes de compra: los datos se extraen, verifican y archivan.",
-        "sv6_c": "Datos",
-        "sv6_t": "Recopilación de datos (scraping)",
-        "sv6_d": "Precios, listados o páginas de productos recopilados automáticamente en una hoja de cálculo.",
-        "sv7_c": "Automatización",
-        "sv7_t": "CRM y seguimiento de leads",
-        "sv7_d": "Notion, Airtable, HubSpot: cada contacto se guarda, se puntúa y se le da seguimiento.",
-        "sv8_c": "Desarrollo",
-        "sv8_t": "Sitios web de presentación",
-        "sv8_d": "Un sitio web claro y rápido para presentar su negocio, adaptable a móviles y optimizado para buscadores.",
-        "sv9_c": "Desarrollo",
-        "sv9_t": "Sitios web dinámicos con backend",
-        "sv9_d": "Área de cliente, reservas, formularios, base de datos, panel de administración.",
-        "sv10_c": "Desarrollo",
-        "sv10_t": "Aplicaciones móviles",
-        "sv10_d": "Aplicaciones Android e iOS conectadas a sus datos y automatizaciones.",
-        "home_demos_title": "9 demostraciones para probar por usted mismo",
-        "home_demos_sub": "5 pruebas gratuitas por demo al día, sin registro.",
-        "home_new": "Nuevo",
-        "home_try": "Pruébelo →",
-        "c1_t": "Agente de correo AI",
-        "c1_d": "Pegue un correo: se clasifica, prioriza, resume y se redacta una respuesta.",
-        "c2_t": "Formulario automático",
-        "c2_d": "Un formulario enviado: una fila en Google Sheets y un correo enviado automáticamente.",
-        "c3_t": "Chatbot web",
-        "c3_d": "Un asistente que responde preguntas 24/7, califica a los visitantes y recoge sus solicitudes.",
-        "c4_t": "Agente de voz AI",
-        "c4_d": "Hable con una recepcionista AI desde su navegador.",
-        "c5_t": "Scraping en vivo",
-        "c5_d": "Pegue la dirección de una página: los productos y precios se extraen en tiempo real.",
-        "c6_t": "CRM Notion / Airtable",
-        "c6_d": "Cada cliente potencial entrante se puntúa, se coloca en la tubería adecuada y se le da seguimiento.",
-        "c7_t": "Informe con gráficos",
-        "c7_d": "Sus cifras mensuales: un informe escrito y comparado con gráficos, listo como PDF.",
-        "c8_t": "Foto de factura → hoja de cálculo",
-        "c8_d": "Envíe una foto de una factura: la IA completa la tabla y verifica los importes.",
-        "c9_t": "Resumen matutino",
-        "c9_d": "Elija un tema: aquí está el informe que recibiría cada día, con datos reales.",
-        "home_method_title": "Cómo trabajo",
-        "m1_t": "Su necesidad, por escrito",
-        "m1_d": "Describa su tarea en unas líneas (formulario o correo): respondemos por escrito y solo se agenda una llamada si es útil.",
-        "m2_t": "Precio fijo antes de comenzar",
-        "m2_d": "Alcance claro, presupuesto fijo, sin sorpresas.",
-        "m3_t": "Recorrido en video + documentación",
-        "m3_d": "Cada sistema se entrega con un video y documentación para que su equipo pueda mantenerlo.",
-        "m4_t": "14 días de soporte gratuito",
-        "m4_d": "Después de la entrega, permanecemos disponibles para ajustar y corregir.",
-        "home_tools_title": "Herramientas y tecnologías",
-        "home_tools_list": "n8n · Make · Zapier · Claude, OpenAI, Groq APIs · Python · JavaScript · Node.js · HTML/CSS · Vapi · Voiceflow · Botpress · WhatsApp Business API · HubSpot · Notion · Airtable · Google Sheets · Google Apps Script · Slack · Shopify · Stripe · Vercel · GitHub Actions",
-        "home_contact_title": "¿Qué tarea le ocupa más tiempo?",
-        "home_contact_text": "Descríbala en unas líneas: le diremos honestamente si puede automatizarse o desarrollarse, cómo hacerlo y cuál será su costo.",
-        "home_scroll": "Ver más",
-        "home_click": "Haga clic en una burbuja para ver el detalle."
-      }
-    };
-  </script>
   <script src="app.js"></script>
-  <script>
-    (function () {
-      var els = document.querySelectorAll('.reveal, .stagger');
-      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-      }, { threshold: 0.12 });
-      els.forEach(function (e) { io.observe(e); });
-    })();
-  </script>
-  <script>
-    (function () {
-      var c = document.getElementById('net');
-      if (!c || !c.getContext || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var g = c.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), W = 0, H = 0, pts = [], mouse = { x: -9999, y: -9999 }, visible = true, col = '#a4532a', col2 = '#a4532a';
-      function couleurs() { var cs = getComputedStyle(document.documentElement); col = cs.getPropertyValue('--primary').trim() || col; col2 = cs.getPropertyValue('--accent').trim() || col2; }
-      function taille() {
-        var r = c.getBoundingClientRect(); W = r.width; H = r.height; c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0);
-        var n = Math.round(Math.min(90, W * H / 14000));
-        pts = []; for (var i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 });
-      }
-      function frame() {
-        if (visible) {
-          g.clearRect(0, 0, W, H);
-          for (var i = 0; i < pts.length; i++) {
-            var p = pts[i]; p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
-            var dx = p.x - mouse.x, dy = p.y - mouse.y, d = dx * dx + dy * dy;
-            if (d < 14000) { p.x += dx * .012; p.y += dy * .012; }
-            for (var j = i + 1; j < pts.length; j++) {
-              var q = pts[j], ex = p.x - q.x, ey = p.y - q.y, e = ex * ex + ey * ey;
-              if (e < 13000) { g.globalAlpha = (1 - e / 13000) * .5; g.strokeStyle = (i + j) % 3 ? col : col2; g.lineWidth = 1; g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(q.x, q.y); g.stroke(); }
-            }
-            g.globalAlpha = .9; g.fillStyle = i % 4 ? col : col2; g.beginPath(); g.arc(p.x, p.y, 1.8, 0, 6.283); g.fill();
-          }
-          g.globalAlpha = 1;
-        }
-        requestAnimationFrame(frame);
-      }
-      couleurs(); taille(); requestAnimationFrame(frame);
-      window.addEventListener('resize', taille);
-      document.addEventListener('demo:theme', couleurs);
-      new MutationObserver(couleurs).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-      var hero = document.querySelector('.hero-wrap');
-      hero.addEventListener('pointermove', function (e) { var r = c.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
-      hero.addEventListener('pointerleave', function () { mouse.x = mouse.y = -9999; });
-      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(hero);
-    })();
-  </script>
 </body>
 </html>
